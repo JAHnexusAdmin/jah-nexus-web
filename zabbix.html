@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telemetría Zabbix | Monitorización de Infraestructura ISP — JAH Nexus</title>
+    <meta name="description" content="Integración Zabbix en JAH Nexus: monitorización SNMP de OLTs, radios y MikroTik, gráficas de tráfico, alertas de rendimiento y latencia en tiempo real para tu ISP.">
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        :root {
+            /* Tokens de diseño globales unificados JAH Nexus - Dark Mode */
+            --bg-base: #0B0E14;
+            --bg-card: #151A23;
+            --bg-card-hover: #1C232E;
+            --brand-blue: #1C64F2;
+            --brand-blue-hover: #154DBC;
+            --brand-navy: #051B44;
+            --text-main: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-radius-lg: 24px;
+            --border-radius-md: 16px;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+
+            /* Configuración del Énfasis Temático del Módulo (Ámbar de Telemetría de Red) */
+            --accent: #F59E0B;
+            --accent-dim: rgba(245, 158, 11, 0.12);
+            --accent-glow: rgba(245, 158, 11, 0.25);
+            --hover-border: rgba(245, 158, 11, 0.35);
+            --hover-shadow: 0 20px 60px rgba(245, 158, 11, 0.08);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Jerarquía de Títulos Estructurales */
+        h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: -0.03em; }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #FFFFFF 0%, #A5B4CB 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-accent {
+            background: linear-gradient(135deg, #F59E0B 0%, #FDE68A 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-brand { color: var(--brand-blue); }
+
+        /* Componentes de Interacción: Botones de Sistema unificados */
+        .btn-brand, .btn-accent, .btn-outline-ghost {
+            padding: 14px 32px;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+        }
+
+        .btn-brand {
+            background-color: var(--brand-blue);
+            color: white;
+        }
+        .btn-brand:hover {
+            background-color: var(--brand-blue-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(28, 100, 242, 0.3);
+            color: white;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: #0B0800;
+        }
+        .btn-accent:hover {
+            background-color: #D97706;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px var(--accent-glow);
+            color: #0B0800;
+        }
+
+        .btn-outline-ghost {
+            background-color: transparent;
+            color: white;
+            border: 1px solid var(--border-color);
+            font-weight: 600;
+        }
+        .btn-outline-ghost:hover {
+            background-color: var(--bg-card);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* Capa Navbar de Alto Rendimiento (Aceleración por Hardware y Composición) */
+        .navbar {
+            background-color: rgba(11, 14, 20, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            will-change: background-color, box-shadow;
+        }
+
+        .navbar.navbar-scrolled {
+            background-color: rgba(11, 14, 20, 0.97);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white !important;
+            text-decoration: none;
+        }
+        .logo-icon { color: var(--brand-blue); font-size: 1.8rem; }
+        
+        .nav-link {
+            color: var(--text-muted) !important;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin: 0 10px;
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.active { color: white !important; }
+
+        .dropdown-menu { background-color: var(--bg-card) !important; border-color: var(--border-color) !important; }
+        .dropdown-item { color: var(--text-muted); font-size: 0.9rem; }
+        .dropdown-item:hover { background-color: var(--bg-card-hover); color: white; }
+
+        /* Form Controls unificados para la captura de parámetros de red */
+        .form-control, .form-select {
+            background-color: var(--bg-base);
+            border: 1px solid var(--border-color);
+            color: white !important;
+            border-radius: var(--border-radius-md);
+            padding: 12px 16px;
+            transition: border-color 0.2s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: var(--bg-base);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+            outline: none;
+        }
+
+        /* Estructuras Semánticas de Contenedores */
+        .section-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }
+        .section-title { font-size: clamp(1.8rem, 3vw, 2.8rem); margin-bottom: 16px; }
+        .section-subtitle { color: var(--text-muted); max-width: 580px; line-height: 1.6; }
+
+        /* Hero Component Core */
+        .hero-section {
+            padding: 160px 0 40px;
+            position: relative;
+        }
+        .hero-container { position: relative; z-index: 1; }
+
+        .hero-glow {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70vw;
+            height: 70vw;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, rgba(11,14,20,0) 65%);
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(245,158,11,.3);
+            color: var(--accent);
+        }
+        .hero-title { font-size: clamp(2.8rem, 6vw, 5rem); line-height: 1.05; margin-bottom: 24px; }
+        .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; line-height: 1.7; }
+
+        /* Barra de Métricas Principales */
+        .stats-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 32px 40px;
+            margin-top: 60px;
+        }
+        .stat-number { font-size: 2.2rem; font-weight: 800; line-height: 1; color: var(--accent); }
+        .stat-label { color: var(--text-muted); font-size: 0.85rem; margin-top: 6px; }
+        .stat-divider { width: 1px; background: var(--border-color); align-self: stretch; }
+
+        /* Grilla Bento Estructural */
+        .features-section { padding: 40px 0 100px; }
+        .bento-grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
+
+        @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
+
+
+        /* Bento Cards Cohesivas */
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+        .feature-card:hover {
+            border-color: var(--hover-border);
+            background: var(--bg-card-hover);
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-card.accent-card {
+            background: linear-gradient(145deg, var(--bg-card) 0%, rgba(245,158,11,0.06) 100%);
+            border-color: rgba(245,158,11,0.25) !important;
+        }
+
+        .feat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+        .feat-title { font-size: 1.15rem; font-weight: 700; color: white; margin: 0; }
+        .feat-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin: 0; flex-grow: 1; }
+        
+        .tag-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; }
+        .tag-main { background: var(--accent-dim); color: var(--accent); }
+
+        /* Tarjetas de Visualización de Telemetría Dinámica */
+        .metric-live {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            height: 100%;
+        }
+        .metric-live-val { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+        .metric-live-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+        
+        /* Contenedores de Gráficos Semánticos puros estructurados con variables personalizadas CSS */
+        .chart-bar-wrap {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 60px;
+            margin-top: 12px;
+        }
+        .chart-bar {
+            background: var(--accent-dim);
+            border-radius: 4px 4px 0 0;
+            flex: 1;
+            transition: background 0.3s;
+            height: var(--bar-height, 10%);
+        }
+        .chart-bar.hi { background: rgba(245,158,11,0.5); }
+        .chart-bar.max { background: var(--accent); }
+
+        /* Ciclo Metodológico de Implementación (Workflow Section) */
+        .workflow-section { padding: 80px 0 100px; }
+        .workflow-step {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            padding: 28px 32px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            transition: all 0.3s ease;
+        }
+        .workflow-step:hover { border-color: rgba(245,158,11,0.3); }
+        .workflow-step h5 { font-weight: 700; margin-bottom: 8px; }
+        .workflow-step p { color: var(--text-muted); margin: 0; font-size: 0.92rem; }
+
+        .step-num {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            background: var(--accent-dim);
+            border: 1px solid rgba(245,158,11,0.3);
+            color: var(--accent);
+        }
+
+        /* Sección de Cierre de Conversión (CTA) */
+        .cta-section { padding: 100px 0; }
+        .cta-card {
+            border-radius: var(--border-radius-lg);
+            padding: 80px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #100A00 0%, rgba(245,158,11,0.08) 100%);
+            border: 1px solid rgba(245,158,11,0.3);
+        }
+        .cta-container { position: relative; z-index: 1; }
+        .cta-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            pointer-events: none;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%);
+        }
+        .cta-title { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 16px; }
+        .cta-subtitle { color: var(--text-muted); max-width: 500px; margin: 0 auto 40px; line-height: 1.6; }
+
+        /* Pie de Página */
+        footer { border-top: 1px solid var(--border-color); padding: 60px 0 30px; background-color: #05070a; }
+        .footer-logo { font-size: 1.2rem; font-weight: 800; color: white; text-decoration: none; display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+        .footer-heading { color: white; font-size: 1rem; margin-bottom: 20px; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--accent); }
+        .hover-white { transition: color 0.2s ease; }
+        .hover-white:hover { color: #FFFFFF !important; }
+        .footer-bottom { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+
+        @media (max-width: 768px) { .stats-bar { padding: 24px; } .cta-card { padding: 50px 24px; } .workflow-step { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+    <!-- Centinela Asíncrono de Rendimiento para Eliminar el Bloqueo del Hilo Principal -->
+    <div id="top-sentinel" style="position: absolute; top: 0; left: 0; width: 100%; height: 1px; pointer-events: none;"></div>
+
+    <!-- Barra de Navegación del Ecosistema con Atributos WCAG Saneados -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="ph-fill ph-graph logo-icon" aria-hidden="true"></i>
+                JAH <span style="font-weight: 400;">NEXUS</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir barra de telemetría e integraciones Zabbix" style="border-color: var(--border-color);">
+                <i class="ph ph-list" style="color: white; font-size: 1.5rem;" aria-hidden="true"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ecosistema</a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="sentinel.html">JAH Sentinel</a></li>
+                            <li><a class="dropdown-item" href="noc.html">Jah-NOC</a></li>
+                            <li><a class="dropdown-item" href="central.html">Jah Central</a></li>
+                            <li><a class="dropdown-item" href="paycontrol.html">JahPayControl</a></li>
+                            <li><hr class="dropdown-divider" style="border-color: var(--border-color);"></li>
+                            <li><a class="dropdown-item" style="color: var(--accent);" href="zabbix.html">Telemetría Zabbix</a></li>
+                            <li><a class="dropdown-item" href="netbox.html">DCIM NetBox</a></li>
+                        </ul>
+                    </li>                   
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Component Core -->
+    <section class="hero-section">
+        <div class="hero-glow"></div>
+        <div class="container hero-container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-9">
+                    <div class="hero-badge"><i class="ph-fill ph-chart-line-up" aria-hidden="true"></i> Telemetría de Infraestructura</div>
+                    <h1 class="hero-title"><span class="text-gradient">Monitoriza todo.</span><br><span class="text-accent">Zabbix integrado al núcleo.</span></h1>
+                    <p class="hero-subtitle mx-auto">La integración de JAH Nexus con Zabbix te entrega un motor de telemetría de clase enterprise completamente configurado para infraestructura ISP: OLTs, radios, MikroTik y todo tu backbone, bajo un mismo techo de visibilidad.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                        <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." 
+                        target="_blank" 
+                        rel="noopener" 
+                        class="btn-brand text-center text-decoration-none">
+                        Agendar Llamada Estratégica
+                        </a>
+                        <a href="#features" class="btn-outline-ghost">Explorar Integración</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bloque de Estadísticas e Intervalos de Polling -->
+            <div class="stats-bar">
+                <div class="row g-4 align-items-center">
+                    <div class="col-6 col-md-3 text-center"><div class="stat-number">SNMP</div><div class="stat-label">Monitorización de todos los nodos</div></div>
+
+                    <div class="col-6 col-md-3 text-center"><div class="stat-number">10K+</div><div class="stat-label">Métricas por nodo recolectadas</div></div>
+
+                    <div class="col-6 col-md-3 text-center"><div class="stat-number">1 min</div><div class="stat-label">Intervalo mínimo de polling</div></div>
+
+                    <div class="col-6 col-md-3 text-center"><div class="stat-number">365d</div><div class="stat-label">Histórico de métricas disponible</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Secciones del Motor de Telemetría (Bento Grid) -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-7">
+                    <span class="section-label">Motor de Telemetría</span>
+                    <h2 class="section-title text-gradient">Visibilidad profunda de tu infraestructura</h2>
+                    <p class="section-subtitle">Zabbix integrado en JAH Nexus no es solo monitorización. Es el sistema nervioso de tu red, alineado con los flujos de trabajo de tu equipo NOC y los modelos de IA de Sentinel.</p>
+                </div>
+                <div class="col-lg-5 text-center text-lg-end d-none d-lg-block position-relative">
+                    <img src="images/zabbix/visual-interface.png" alt="Zabbix Telemetry" class="img-fluid rounded-4 shadow-lg border border-secondary" style="border-color: rgba(255,255,255,0.1) !important; transform: perspective(800px) rotateY(-10deg) rotateX(2deg) translateY(10px); max-height: 220px; opacity: 0.9; box-shadow: -20px 20px 60px rgba(168,85,247,0.15) !important;">
+                </div>
+            </div>
+            <div class="bento-grid">
+                
+                <!-- Celda Expandida: Matriz de Servidores SNMP Sanitizada por Custom Properties -->
+                <div class="feature-card accent-card">
+                    <div class="d-flex align-items-start gap-4 flex-wrap">
+                        <div class="feat-icon"><i class="ph-fill ph-wifi-x" aria-hidden="true"></i></div>
+                        <div class="flex-grow-1">
+                            <span class="tag-pill tag-main mb-2 d-inline-block">SNMP Polling</span>
+                            <h3 class="feat-title mb-2">Monitorización SNMP de Toda la Infraestructura</h3>
+                            <p class="feat-desc">Templates preconfigurados para los equipos más utilizados en redes ISP de América Latina: OLTs Huawei MA5800/5600, radios Ubiquiti y Cambium, routers MikroTik CCR/RB series, switches Cisco/Juniper y concentradores PPPoE. El despliegue se realiza con auto-discovery de red, sin configuración manual host por host.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-4">
+                            <div class="metric-live">
+                                <div class="metric-live-label">OLT MA5800 — CPU</div>
+                                <div class="metric-live-val">23%</div>
+                                <div class="chart-bar-wrap">
+                                    <div class="chart-bar" style="--bar-height: 30%;"></div>
+                                    <div class="chart-bar hi" style="--bar-height: 55%;"></div>
+                                    <div class="chart-bar" style="--bar-height: 40%;"></div>
+                                    <div class="chart-bar" style="--bar-height: 20%;"></div>
+                                    <div class="chart-bar hi" style="--bar-height: 60%;"></div>
+                                    <div class="chart-bar" style="--bar-height: 35%;"></div>
+                                    <div class="chart-bar max" style="--bar-height: 23%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metric-live">
+                                <div class="metric-live-label">Radio Cambium — Latencia</div>
+                                <div class="metric-live-val">4.2ms</div>
+                                <div class="chart-bar-wrap">
+                                    <div class="chart-bar" style="--bar-height: 25%;"></div>
+                                    <div class="chart-bar" style="--bar-height: 30%;"></div>
+                                    <div class="chart-bar hi" style="--bar-height: 50%;"></div>
+                                    <div class="chart-bar max" style="--bar-height: 42%;"></div>
+                                    <div class="chart-bar hi" style="--bar-height: 38%;"></div>
+                                    <div class="chart-bar" style="--bar-height: 28%;"></div>
+                                    <div class="chart-bar" style="--bar-height: 30%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metric-live">
+                                <div class="metric-live-label">MikroTik CCR — RAM</div>
+                                <div class="metric-live-val">61%</div>
+                                <div class="chart-bar-wrap">
+                                    <div class="chart-bar" style="--bar-height: 45%;"></div>
+                                    <div class="chart-bar hi" style="--bar-height: 58%;"></div>
+                                    <div class="chart-bar max" style="--bar-height: 61%;"></div>
+                                    <div class="chart-bar hi" style="--bar-height: 55%;"></div>
+                                    <div class="chart-bar" style="--bar-height: 48%;"></div>
+                                    <div class="chart-bar" style="--bar-height: 52%;"></div>
+                                    <div class="chart-bar max" style="--bar-height: 61%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="feature-card d-flex flex-column">
+                    <div class="feat-icon"><i class="ph-fill ph-chart-line" aria-hidden="true"></i></div>
+                    <h3 class="feat-title">Gráficas de Tráfico en Tiempo Real</h3>
+                    <p class="feat-desc">Gráficas de tráfico de entrada/salida por interfaz, nodo y enlace WAN. Identifica cuándo y dónde tu red se satura para planificar expansiones.</p>
+                    <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                        <img src="images/zabbix/consumos-dedicados.png" alt="Gráficas de tráfico" class="img-fluid rounded-3 border border-secondary shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                    </div>
+                </div>
+                
+                <div class="feature-card d-flex flex-column">
+                    <div class="feat-icon"><i class="ph-fill ph-bell-z" aria-hidden="true"></i></div>
+                    <h3 class="feat-title">Alertas de Rendimiento Avanzadas</h3>
+                    <p class="feat-desc">Alertas por umbrales dinámicos: uso de CPU superior al 80%, latencia mayor a 20ms o pérdida de señal óptica. Notificaciones centralizadas.</p>
+                    <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                        <img src="images/zabbix/server-health.png" alt="Server Health" class="img-fluid rounded-3 border border-secondary shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feat-icon"><i class="ph-fill ph-activity" aria-hidden="true"></i></div>
+                    <h3 class="feat-title">Latencia y Pérdida de Paquetes</h3>
+                    <p class="feat-desc">Monitorización continua de latencia y jitter por nodo con ICMP y TCP. Detección temprana de degradación de enlaces antes de que impacte al cliente. Mapas de calor de latencia por zona geográfica.</p>
+                    <span class="tag-pill tag-main">Calidad de Enlace</span>
+                </div>
+                
+                <div class="feature-card d-flex flex-column">
+                    <div class="feat-icon"><i class="ph-fill ph-cpu" aria-hidden="true"></i></div>
+                    <h3 class="feat-title">CPU y RAM de OLTs y Radios</h3>
+                    <p class="feat-desc">Seguimiento histórico de la utilización de recursos de procesamiento en cada equipo crítico. Detecta cuellos de botella preventivamente.</p>
+                    
+                    <div class="mt-auto mb-4 p-3 rounded" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color);">
+                        <div class="d-flex align-items-center mb-2">
+                            <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-main);">OLT-CORE-NTE (CPU)</span>
+                            <span class="ms-auto tag-pill badge-warn" style="font-size: 0.7rem; padding: 2px 6px;">82% Load</span>
+                        </div>
+                        <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1); margin-bottom: 12px;">
+                            <div class="progress-bar" style="width: 82%; background: #F59E0B;"></div>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-main);">RTR-EDGE-01 (RAM)</span>
+                            <span class="ms-auto tag-pill tag-main" style="font-size: 0.7rem; padding: 2px 6px;">45% Load</span>
+                        </div>
+                        <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);">
+                            <div class="progress-bar" style="width: 45%; background: #3B82F6;"></div>
+                        </div>
+                    </div>
+
+                    <span class="tag-pill tag-main align-self-start">Recursos del Sistema</span>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feat-icon"><i class="ph-fill ph-plugs" aria-hidden="true"></i></div>
+                    <h3 class="feat-title">Integración Bidireccional con JAH Sentinel</h3>
+                    <p class="feat-desc">Los datos de Zabbix se envían en tiempo real al motor de IA de Sentinel como fuente de verdad primaria. Cuando Sentinel detecta una anomalía predictiva, puede consultar el historial de Zabbix para enriquecer el diagnóstico. Un ecosistema que se retroalimenta.</p>
+                    <span class="tag-pill tag-main">AIOps Feed</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fases de Implementación en Red -->
+    <section class="workflow-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-label">Implementación</span>
+                <h2 class="section-title text-gradient">Telemetría completa en 72 horas</h2>
+                <p class="section-subtitle mx-auto">Nuestro equipo despliega y configura la integración Zabbix-JAH Nexus con un proceso probado que minimiza el tiempo de puesta en marcha.</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="d-flex flex-column gap-4">
+                        <div class="workflow-step">
+                            <div class="step-num">01</div>
+                            <div>
+                                <h5>Inventario y Mapeo de Infraestructura</h5>
+                                <p>Levantamos el inventario de equipos a monitorizar and definimos la arquitectura de Zabbix Proxies para cubrir toda la topología de red sin puntos ciegos.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">02</div>
+                            <div>
+                                <h5>Despliegue de Templates y Auto-Discovery</h5>
+                                <p>Aplicamos los templates preconstruidos por tipo de equipo y activamos el auto-discovery de red para que Zabbix encuentre y agregue nodos automáticamente conforme crece tu infraestructura.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">03</div>
+                            <div>
+                                <h5>Configuración de Alertas y Umbrales</h5>
+                                <p>Ajustamos los umbrales de alerta a las condiciones reales de tu red. No alertas genéricas: umbrales calibrados para evitar fatiga de alarmas en tu equipo NOC.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">04</div>
+                            <div>
+                                <h5>Activación del Feed hacia JAH Sentinel</h5>
+                                <p>Conectamos el stream de telemetría de Zabbix con el motor de Sentinel. A partir de este momento, cada métrica recolectada alimenta los modelos predictivos de IA.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call To Action Unificado Conectado -->
+    <section id="contacto" class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-glow"></div>
+                <div class="cta-container">
+                    <div class="hero-badge" style="margin-bottom:24px;"><i class="ph-fill ph-chart-line-up" aria-hidden="true"></i> Telemetría Zabbix — Plan Professional</div>
+                    <h2 class="cta-title text-gradient">La oscuridad en tu red termina hoy.</h2>
+                    <p class="cta-subtitle">Solicita nuestra evaluación de cobertura de monitorización gratuita. En 30 minutos te decimos cuántos puntos ciegos tiene tu red actualmente.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                        <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" class="btn-accent text-decoration-none"><i class="ph-bold ph-calendar-check me-2" aria-hidden="true"></i>Agendar llamada</a>
+                        <a href="index.html" class="btn-outline-ghost"><i class="ph-bold ph-arrow-left me-2" aria-hidden="true"></i>Ver Todo el Ecosistema</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de Página Unificado del Sistema Core -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 pe-lg-5">
+                    <a href="index.html" class="footer-logo">
+                        <i class="ph-fill ph-graph" style="color:var(--brand-blue);" aria-hidden="true"></i>
+                        JAH NEXUS
+                    </a>
+                    <p class="mb-4" style="font-size:.9rem;color:var(--text-muted);">División tecnológica nacida en las trincheras de las telecomunicaciones. Empoderando ISPs en América Latina con herramientas nivel Enterprise.</p>
+                    <div class="d-flex gap-3">
+                        <a href="https://instagram.com/jahwifi.ags" target="_blank" rel="noopener" class="text-muted text-decoration-none hover-white" aria-label="Visitar perfil de Instagram corporativo de JAH Nexus">
+                            <i class="ph-bold ph-instagram-logo fs-4" aria-hidden="true"></i>
+                        </a>
+                        <a href="mailto:contacto@jahnexus.mx" class="text-muted text-decoration-none hover-white" aria-label="Enviar correo directo a ingenieros de telemetría Zabbix">
+                            <i class="ph-bold ph-envelope fs-4" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." class="text-muted text-decoration-none hover-white" aria-label="Llamar a la central técnica del soporte de red">
+                            <i class="ph-bold ph-whatsapp-logo fs-4" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 offset-lg-1">
+                    <h6 class="footer-heading">Módulos</h6>
+                    <ul class="footer-links">
+                        <li><a href="sentinel.html">JAH Sentinel</a></li>
+                        <li><a href="noc.html">Jah-NOC</a></li>
+                        <li><a href="central.html">Jah Central</a></li>
+                        <li><a href="paycontrol.html">JahPayControl</a></li>
+                        <li><a href="netbox.html">NetBox</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-4">
+                    <h6 class="footer-heading">Contacto</h6>
+                    <ul class="footer-links" style="font-size:.9rem;">
+                        <li class="d-flex gap-2" style="color:var(--text-muted);"><i class="ph-bold ph-map-pin mt-1" style="color:var(--brand-blue);" aria-hidden="true"></i> Heroe de Nacozari 189 1, Barrio de la Estación, CP 20259</li>
+                        <li class="d-flex gap-2 mt-3" style="color:var(--text-muted);"><i class="ph-bold ph-envelope mt-1" style="color:var(--brand-blue);" aria-hidden="true"></i> contacto@jahnexus.mx</li>
+                        <li class="d-flex gap-2 mt-2" style="color:var(--text-muted);"><i class="ph-bold ph-phone mt-1" style="color:var(--brand-blue);" aria-hidden="true"></i> +52 449 313 4110</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>&copy; 2024 JAH Nexus. Todos los derechos reservados.</div>
+                <div class="d-flex gap-3">
+                    <a href="#" style="color:var(--text-muted);text-decoration:none;">Privacidad</a>
+                    <a href="#" style="color:var(--text-muted);text-decoration:none;">Términos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Lógica de Control de UI de Alto Rendimiento -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.getElementById('mainNav');
+            const topSentinel = document.getElementById('top-sentinel');
+            
+            // Sustitución de callbacks síncronos 'onscroll' por la API nativa de IntersectionObserver (Zero Layout Thrashing)
+            if ('IntersectionObserver' in window) {
+                const navObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (!entry.isIntersecting) {
+                            nav.classList.add('navbar-scrolled');
+                        } else {
+                            nav.classList.remove('navbar-scrolled');
+                        }
+                    });
+                }, { threshold: 0 });
+                
+                navObserver.observe(topSentinel);
+            } else {
+                // Mecanismo pasivo de respaldo no bloqueante para compatibilidad retroactiva
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        nav.classList.add('navbar-scrolled');
+                    } else {
+                        nav.classList.remove('navbar-scrolled');
+                    }
+                }, { passive: true });
+            }
+        });
+    </script>
+</body>
+</html>

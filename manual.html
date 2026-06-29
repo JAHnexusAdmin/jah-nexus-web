@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAH Nexus | Manual del Ecosistema</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        :root {
+            /* Tokens de diseño globales unificados JAH Nexus - Dark Mode */
+            --bg-base: #0B0E14;
+            --bg-card: #151A23;
+            --bg-card-hover: #1C232E;
+            --brand-blue: #1C64F2;
+            --text-main: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-radius-lg: 24px;
+            --border-radius-md: 16px;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --accent: #06B6D4;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-weight: 700; color: #fff; }
+        .text-accent { color: var(--accent); }
+        .text-muted { color: var(--text-muted) !important; }
+
+        /* Navbar */
+        .navbar-custom { background: rgba(11, 14, 20, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
+        .navbar-brand { font-weight: 800; color: #fff !important; }
+
+        /* Hero */
+        .manual-hero { padding: 100px 0 60px; background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, var(--bg-base) 100%); border-bottom: 1px solid var(--border-color); text-align: center;}
+        .search-container { max-width: 600px; margin: 30px auto 0; position: relative; }
+        .search-input { width: 100%; padding: 16px 24px 16px 50px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 100px; color: #fff; font-size: 1.1rem; }
+        .search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1); }
+        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.3rem; }
+
+        /* Layout */
+        .sidebar { position: sticky; top: 100px; max-height: calc(100vh - 120px); overflow-y: auto; padding-right: 20px; }
+        .sidebar-link { display: block; padding: 8px 0; color: var(--text-muted); text-decoration: none; transition: 0.2s; border-left: 2px solid transparent; padding-left: 12px; margin-bottom: 4px;}
+        .sidebar-link:hover, .sidebar-link.active { color: var(--accent); border-color: var(--accent); }
+
+        /* Content */
+        .manual-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 40px; margin-bottom: 30px; transition: 0.3s; }
+        .manual-section h2 { font-size: 1.5rem; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
+        .manual-section p, .manual-section li { text-align: justify; }
+        
+        .tip-box { background: rgba(6, 182, 212, 0.1); border-left: 4px solid var(--accent); padding: 16px 24px; border-radius: 0 8px 8px 0; margin: 24px 0; text-align: left; }
+        .tip-box p { text-align: left; }
+        
+        .table-dark { --bs-table-bg: var(--bg-base); --bs-table-striped-bg: rgba(255,255,255,0.02); --bs-table-border-color: var(--border-color); }
+        
+        /* Placeholders Figuras */
+        .figure-placeholder { background: rgba(255,255,255,0.02); border: 1px dashed var(--border-color); border-radius: var(--border-radius-md); padding: 40px 20px; text-align: center; margin: 30px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px;}
+        .figure-placeholder i { font-size: 3rem; color: var(--text-muted); margin-bottom: 16px; opacity: 0.5; }
+        figcaption { font-size: 0.85rem; color: var(--text-muted); text-align: center; max-width: 80%; margin: 16px auto 0; line-height: 1.5; }
+
+        .hidden-section { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="ph-fill ph-planet" style="color: var(--brand-blue); font-size: 1.8rem;"></i>
+                JAH Nexus
+            </a>
+            <div class="d-flex gap-3">
+                <a href="index.html" class="btn btn-outline-light btn-sm rounded-pill px-3">Volver al Inicio</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="manual-hero">
+        <div class="container">
+            <h1>JAH Nexus: <span class="text-accent">Manual del Ecosistema</span></h1>
+            <p class="text-muted fs-5 max-w-700 mx-auto">Documentación oficial para la suite integral de soluciones para Proveedores de Servicios de Internet</p>
+            
+            <div class="search-container">
+                <i class="ph ph-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar en el manual (ej. AIOps, ARP, CMDB, WhatsApp, Módelo...)">
+            </div>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <div class="row">
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="sidebar">
+                    <h5 class="mb-4 text-white">Módulos</h5>
+                    
+                    <h6 class="mt-4 mb-2 text-accent" style="font-weight: 700;">I. JAH Sentinel</h6>
+                    <a href="#intro" class="sidebar-link">Introducción</a>
+                    <a href="#sec1" class="sidebar-link">1. Conceptos Fundamentales</a>
+                    <a href="#sec2" class="sidebar-link">2. Tipos de Usuarios</a>
+                    <a href="#sec3" class="sidebar-link">3. Navegación Principal</a>
+                    <a href="#sec4" class="sidebar-link">4. Módulo: Mapa (MapCanvas)</a>
+                    <a href="#sec5" class="sidebar-link">5. Módulo: Panel Overwatch</a>
+                    <a href="#sec6" class="sidebar-link">6. Módulo: CRUDManager</a>
+                    <a href="#sec7" class="sidebar-link">7. Módulo: Sentinel Chat</a>
+                    <a href="#sec8" class="sidebar-link">8. Módulo: Gestión de Usuarios</a>
+                    <a href="#sec9" class="sidebar-link">9. Módulo: Métricas de Red</a>
+                    <a href="#sec10" class="sidebar-link">10. Edición Topológica</a>
+                    <a href="#sec11" class="sidebar-link">11. Módulo: Rack View</a>
+                    <a href="#glosario" class="sidebar-link">Glosario y Referencias</a>
+
+                    <h6 class="mt-4 mb-2 text-accent" style="font-weight: 700;">II. JAH-NOC</h6>
+                    <a href="#noc-intro" class="sidebar-link">Introducción</a>
+                    <a href="#noc-sec1" class="sidebar-link">1. Redirecciones Marcatel</a>
+                    <a href="#noc-sec2" class="sidebar-link">2. Escaneo de Clientes (ARP)</a>
+                    
+                    <h6 class="mt-4 mb-2 text-accent" style="font-weight: 700;">III. JAH Central</h6>
+                    <a href="#central-intro" class="sidebar-link">Introducción</a>
+                    <a href="#central-sec1" class="sidebar-link">1. Dashboard Analítico</a>
+                    <a href="#central-sec2" class="sidebar-link">2. Asignación de Equipos</a>
+                    <a href="#central-sec3" class="sidebar-link">3. Gestión de Inventario</a>
+                    <a href="#central-sec4" class="sidebar-link">4. Registro de Instalaciones</a>
+                    <a href="#central-sec5" class="sidebar-link">5. Generación de Reportes</a>
+                    <a href="#central-sec6" class="sidebar-link">6. Registro de Actividad</a>
+                    <a href="#central-sec7" class="sidebar-link">7. Almacén CRM y Herramientas</a>
+
+                    <h6 class="mt-4 mb-2 text-accent" style="font-weight: 700;">IV. JahPayControl</h6>
+                    <a href="#paycontrol-intro" class="sidebar-link">Introducción</a>
+                    <a href="#paycontrol-sec1" class="sidebar-link">1. Dashboard</a>
+                    <a href="#paycontrol-sec2" class="sidebar-link">2. Gestión Morosos</a>
+                    <a href="#paycontrol-sec3" class="sidebar-link">3. Envío Masivo</a>
+                    <a href="#paycontrol-sec4" class="sidebar-link">4. Plantillas</a>
+                    <a href="#paycontrol-sec5" class="sidebar-link">5. Bandeja WA</a>
+                    <a href="#paycontrol-sec6" class="sidebar-link">6. Gestión de Usuarios</a>
+                    <a href="#paycontrol-sec7" class="sidebar-link">7. Administración</a>
+                    <a href="#paycontrol-sec8" class="sidebar-link">8. Logs del Sistema</a>
+                    <a href="#paycontrol-sec9" class="sidebar-link">9. Seguridad</a>
+
+                    <h6 class="mt-4 mb-2 text-accent" style="font-weight: 700;">V. NetBox (CMDB)</h6>
+                    <a href="#netbox-sec1" class="sidebar-link">1. Panel Principal & Sitios</a>
+                    <a href="#netbox-sec2" class="sidebar-link">2. Fabricantes y Modelos</a>
+                    <a href="#netbox-sec3" class="sidebar-link">3. Aprovisionamiento Equipos</a>
+                    <a href="#netbox-sec4" class="sidebar-link">4. Direccionamiento IP (IPAM)</a>
+                    <a href="#netbox-sec5" class="sidebar-link">5. Conexiones Físicas (Cables)</a>
+                    <a href="#netbox-sec6" class="sidebar-link">6. Gestión de Racks y Permisos</a>
+                </div>
+            </div>
+
+            <div class="col-lg-9" id="manualContent">
+                
+                <section class="manual-section" id="intro">
+                    <p class="lead">Bienvenido al manual operativo de JAH Sentinel, la plataforma avanzada de Gemelo Digital (Digital Twin) y AIOps (Inteligencia Artificial para Operaciones de TI). Este manual cubre todas las capacidades del sistema, basado en su diseño y flujos de trabajo profesionales[cite: 105, 106].</p>
+                </section>
+
+                <section class="manual-section" id="sec1">
+                    <h2>1. Conceptos Fundamentales</h2>
+                    <p>Antes de operar Sentinel, es vital comprender tres pilares esenciales del sistema:</p>
+                    <ul>
+                        <li class="mb-3"><strong>Digital Twin (Gemelo Digital):</strong> Sentinel no es solo una lista de equipos, es un mapa vivo. Todo activo físico (Sites, Torres, Routers) existe en una coordenada geográfica precisa y su color dinámico (Verde/Rojo) refleja su estado real de conectividad obtenido mediante pings e instrumentación SNMP[cite: 1].</li>
+                    </ul>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/sentinel/figura-1.png" alt="Figura" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/sentinel/figura-1.png]</p></div>'">
+                        <figcaption><strong>Figura 1:</strong> Vista del Gemelo Digital (Digital Twin) en JAH Sentinel. El mapa muestra la topología geo-referenciada con estados de salud en tiempo real y el panel lateral derecho (Overwatch) dedicado al triaje automático de incidentes.</figcaption>
+                    </figure>
+
+                    <ul>
+                        <li><strong>AIOps Integrado (Sentinel-Bot):</strong> En lugar de analizar densos logs en bruto cuando ocurre una anomalía, una Inteligencia Artificial local (Llama 3.2 1B [cite: 2]) analiza de forma continua la latencia, la pérdida de paquetes y el estado de los puertos físicos, generando un diagnóstico de triaje inmediato.</li>
+                    </ul>
+                </section>
+
+                <section class="manual-section" id="sec2">
+                    <h2>2. Tipos de Usuarios y Privilegios</h2>
+                    <p>El acceso a las funciones operativas y vistas de la Single Page Application está estrictamente controlado por el rol asignado a tu cuenta (RBAC [cite: 3]):</p>
+                    
+                    <div class="table-responsive mt-4">
+                        <table class="table table-dark table-striped align-middle border">
+                            <thead>
+                                <tr>
+                                    <th>Rol de Sistema</th>
+                                    <th>Capacidades Operativas</th>
+                                    <th>Restricciones de Código</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge bg-secondary">TECNICO (Operador NOC)</span></td>
+                                    <td>Acceso en modo lectura al Mapa, Capas, Métricas e Inventario general. Interacción nativa con el Sentinel-Bot para interpretar diagnósticos.</td>
+                                    <td>No posee acceso ni visibilidad del panel CRUD ni de la gestión de usuarios corporativos.</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-primary">SUPERVISOR / ADMIN</span></td>
+                                    <td>Hereda todas las funciones de lectura. Acceso total al gestor CRUD para altas/bajas de infraestructura física. Autoridad para autorizar flujos HITL.</td>
+                                    <td>Restringido para la edición, creación o eliminación de cuentas de usuarios administrativos.</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge" style="background-color: var(--accent);">SUPER_ADMIN</span></td>
+                                    <td>Control absoluto del sistema. Acceso completo a la consola de administración de identidades, reseteo de claves y auditoría global.</td>
+                                    <td>Ninguna restricción dentro del entorno.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="manual-section" id="sec3">
+                    <h2>3. Navegación Principal (NavRail)</h2>
+                    <p>En el flanco izquierdo de la interfaz web se ubica la barra de navegación vertical o NavRail, la cual distribuye los módulos core del ecosistema:</p>
+                    <div class="d-flex flex-column flex-md-row gap-4 align-items-start mt-3 mb-4">
+                        <img src="images/sentinel/navrail.png" alt="NavRail" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 80px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0&quot; style=&quot;width: 80px; min-height: 400px; padding: 20px 10px;&quot;><i class=&quot;ph ph-image&quot; style=&quot;font-size: 2rem;&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.65rem; word-break: break-word;&quot;>[navrail.png]</p></div>'">
+                        <ul class="m-0">
+                            <li class="mb-2"><strong>Mapa:</strong> Conduce de manera directa al lienzo interactivo del Gemelo Digital principal.</li>
+                            <li class="mb-2"><strong>Capas:</strong> Despliega selectores gráficos para encender o apagar visualmente subredes lógicas (ej. DEDICADOS, CRISLINE).</li>
+                            <li class="mb-2"><strong>Nodos:</strong> Abre el inventario maestro estructurado en formato tabular de alta densidad.</li>
+                            <li class="mb-2"><strong>Métricas:</strong> Invoca el panel analítico StatsView que consolida el Uptime global, promedios de latencia y anchos de banda agregados.</li>
+                            <li class="mb-2"><strong>CRUD:</strong> Herramienta exclusiva de ingeniería para dar de alta, modificar o retirar componentes físicos de la topología.</li>
+                            <li class="mb-2"><strong>Usuarios:</strong> Panel de administración jerárquico para el control de cuentas del personal técnico.</li>
+                            <li class="mb-2"><strong>AIOps:</strong> Despliega la ventana flotante de conversación inteligente con el Sentinel-Bot.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong><i class="ph-fill ph-lightbulb text-accent me-2"></i>Tip de diseño adaptativo:</strong> En dispositivos de visualización móvil, esta barra se desplaza de forma responsiva hacia el extremo inferior de la pantalla. El control derecho con el icono de la campana abrirá de inmediato el 'NOC Sheet' (Panel Overwatch).
+                    </div>
+                </section>
+
+                <section class="manual-section" id="sec4">
+                    <h2>4. Módulo: Gemelo Digital y Mapa (MapCanvas)</h2>
+                    <p>El MapCanvas representa el entorno primordial de control. Emplea un motor cartográfico GIS que procesa las variables de latitud y longitud de cada nodo de red.</p>
+                    
+                    <h5 class="mt-4">Interpretación Visual de Estados:</h5>
+                    <ul>
+                        <li><strong>Iconografía Diferenciada:</strong> Los activos de red modifican su representation visual dependiendo de su tipo de hardware (ROUTER, ANTENA).</li>
+                    </ul>
+
+                    <figure class="text-center my-4">
+                        <img src="images/sentinel/figura-2.png" alt="Figura" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/sentinel/figura-2.png]</p></div>'">
+                        <figcaption><strong>Figura 2:</strong> Ejemplos de iconografía diferenciada en el Gemelo Digital: Representación visual específica para nodos de tipo Router y Antena, permitiendo una rápida identificación del hardware en la topología de red.</figcaption>
+                    </figure>
+
+                    <ul class="list-unstyled mt-4 ms-3 border-start border-secondary ps-4">
+                        <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4">
+                            <div class="me-md-4 mb-3 mb-md-0">
+                                <span style="color:#10B981; font-weight: 600;">🟢 Verde Resplandeciente (ONLINE):</span> El canal telemétrico responde bajo condiciones ideales.
+                            </div>
+                            <img src="images/sentinel/node-online.png" alt="Nodo Online" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 180px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 180px; min-height: 100px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.5rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.65rem; word-break: break-word;&quot;>[node-online.png]</p></div>'">
+                        </li>
+                        <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4">
+                            <div class="me-md-4 mb-3 mb-md-0">
+                                <span style="color:#F59E0B; font-weight: 600;">🟠 Ámbar Pulsante (DEGRADED):</span> Indica degradación de servicio (ej. alta latencia o pérdida intermitente de paquetes). Requiere atención inmediata.
+                            </div>
+                            <img src="images/sentinel/node-degraded.png" alt="Nodo Degradado" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 180px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 180px; min-height: 100px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.5rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.65rem; word-break: break-word;&quot;>[node-degraded.png]</p></div>'">
+                        </li>
+                        <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-2">
+                            <div class="me-md-4 mb-3 mb-md-0">
+                                <span style="color:#EF4444; font-weight: 600;">🔴 Pulso Rojo (OFFLINE):</span> Pérdida total de comunicación o caída crítica de energía.
+                            </div>
+                            <img src="images/sentinel/node-offline.png" alt="Nodo Offline" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 180px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 180px; min-height: 100px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.5rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.65rem; word-break: break-word;&quot;>[node-offline.png]</p></div>'">
+                        </li>
+                    </ul>
+
+                    <h5 class="mt-4">Capacidades de Interactividad:</h5>
+                    <p>Al efectuar un clic sobre cualquier element posicionado en el mapa, se expandirá de forma automática la ventana de propiedades avanzadas a la derecha de la interfaz. Este panel expone la dirección IP de gestión, Uptime operativo y gráficas en tiempo real de consumo de CPU o flujos de tráfico vía SNMP. Si la densidad de la topología satura visualmente el área de trabajo, utilice el menú de Capas para filtrar y ocultar los segmentos de red que no correspondan a su monitoreo del turno.</p>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/sentinel/figura-3.png" alt="Figura" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/sentinel/figura-3.png]</p></div>'">
+                        <figcaption><strong>Figura 3:</strong> Ventana de propiedades extendidas del nodo "LORETO". Este panel de detalle permite consultar telemetría en tiempo real, incluyendo métricas clave como latencia (RTT), porcentaje de pérdida de paquetes, tiempo de actividad (Uptime) y niveles de potencia de transmisión (TX) vía SNMP.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="sec5">
+                    <h2>5. Módulo: Panel Overwatch (NOCRightPanel)</h2>
+                    <p>En la zona derecha de la pantalla reside el sistema unificado de alertas operativas del Centro de Operaciones de Red (NOC).</p>
+                    <ul>
+                        <li><strong>Consola de alertas unificada:</strong> Este panel, ubicado en la zona derecha de la pantalla, funciona como el sistema nervioso del Centro de Operaciones de Red (NOC) para la gestión de incidencias.</li>
+                        <li><strong>Monitoreo activo (Heartbeat):</strong> El sistema realiza auditorías automáticas sobre toda la infraestructura en ciclos constantes de 30 segundos; si un nodo no responde en dos ciclos, se marca como caído automáticamente.</li>
+                        <li><strong>Identificación prioritaria:</strong> El panel muestra de forma inmediata una lista de "Nodos Caídos", permitiendo al operador visualizar rápidamente los equipos que han perdido conectividad.</li>
+                    </ul>
+
+                    <figure class="text-center my-4">
+                        <img src="images/sentinel/figura-4.png" alt="Figura" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/sentinel/figura-4.png]</p></div>'">
+                        <figcaption><strong>Figura 4:</strong> Panel Overwatch (NOCRightPanel). Esta consola unificada despliega en tiempo real el listado jerárquico de nodos detectados como "OFFLINE" tras los ciclos de auditoría activa, sirviendo como punto de entrada crítico para el triaje de incidencias del NOC.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="sec6">
+                    <h2>6. Módulo: Gestión de Infraestructura (CRUDManager)</h2>
+                    <p>Módulo restringido por políticas de seguridad lógica únicamente para perfiles con rango de Supervisor y Administrador. Permite la edición estructural del Gemelo Digital.</p>
+                    
+                    <h5 class="mt-4">Flujo para dar de Alta un Nuevo Nodo de Red:</h5>
+                    <ol class="list-unstyled mt-4 ps-0">
+                        <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4">
+                            <div class="me-md-4 mb-3 mb-md-0">
+                                <strong>1.</strong> Haz clic en el icono correspondiente a la Base de Datos (CRUD) situado en el NavRail izquierdo.
+                            </div>
+                            <img src="images/sentinel/crud-icon.png" alt="Icono CRUD" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 150px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 150px; min-height: 80px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.5rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.65rem; word-break: break-word;&quot;>[crud-icon.png]</p></div>'">
+                        </li>
+                        <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4">
+                            <div class="me-md-4 mb-3 mb-md-0">
+                                <strong>2.</strong> Selecciona el comando azul destacado en la sección superior denominado <strong>+ Nuevo Nodo</strong>.
+                            </div>
+                            <img src="images/sentinel/nuevo-nodo-btn.png" alt="Botón Nuevo Nodo" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 200px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 200px; min-height: 80px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.5rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.65rem; word-break: break-word;&quot;>[nuevo-nodo-btn.png]</p></div>'">
+                        </li>
+                        <li class="mb-4">
+                            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3">
+                                <div class="me-md-4 mb-3 mb-md-0">
+                                    <strong>3.</strong> Complete los campos obligatorios del formulario estructurado NodesCRUD:
+                                </div>
+                                <img src="images/sentinel/form-full.png" alt="Formulario CRUD" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 250px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 250px; min-height: 120px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.5rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.65rem; word-break: break-word;&quot;>[form-full.png]</p></div>'">
+                            </div>
+                            <ul class="list-unstyled ms-4 border-start border-secondary ps-4">
+                                <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3">
+                                    <div class="me-md-4 mb-3 mb-md-0">
+                                        <strong>Nombre:</strong> Registre la nomenclatura interna normalizada (ej. OLT-NORTE-01).
+                                    </div>
+                                    <img src="images/sentinel/form-nombre.png" alt="Campo Nombre" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 250px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 250px; min-height: 70px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.2rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.6rem; word-break: break-word;&quot;>[form-nombre.png]</p></div>'">
+                                </li>
+                                <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3">
+                                    <div class="me-md-4 mb-3 mb-md-0">
+                                        <strong>IP:</strong> Dirección indispensable para el aprovisionamiento de las métricas SNMP y pings (ej. 192.168.10.5).
+                                    </div>
+                                    <img src="images/sentinel/form-ip.png" alt="Campo IP" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 250px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 250px; min-height: 70px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.2rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.6rem; word-break: break-word;&quot;>[form-ip.png]</p></div>'">
+                                </li>
+                                <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3">
+                                    <div class="me-md-4 mb-3 mb-md-0">
+                                        <strong>Tipo y Sub-tipo:</strong> Identifique si el objeto corresponde a una TORRE, SITE, DFO o EQUIPO, y configure su rol lógico (ROUTER, SWITCH).
+                                    </div>
+                                    <img src="images/sentinel/form-tipo.png" alt="Campos Tipo" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 250px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 250px; min-height: 100px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.2rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.6rem; word-break: break-word;&quot;>[form-tipo.png]</p></div>'">
+                                </li>
+                                <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-2">
+                                    <div class="me-md-4 mb-3 mb-md-0">
+                                        <strong>Zona y Coordenadas:</strong> Ingrese latitud y longitud. Este parámetro es estrictamente requerido para su posicionamiento en el mapa.
+                                    </div>
+                                    <img src="images/sentinel/form-zona.png" alt="Campos Zona" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 250px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 250px; min-height: 100px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.2rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.6rem; word-break: break-word;&quot;>[form-zona.png]</p></div>'">
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+                            <div class="me-md-4 mb-3 mb-md-0">
+                                <strong>4.</strong> Haz clic en <strong>Guardar Nodo</strong>. El servidor backend procesará la persistencia e informará inmediatamente a través de un canal de WebSocket [cite: 4] a todas las consolas web activas, renderizando el nodo sin requerir refrescar la página.
+                            </div>
+                            <img src="images/sentinel/guardar-nodo-btn.png" alt="Botón Guardar" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 200px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 200px; min-height: 80px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.5rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.65rem; word-break: break-word;&quot;>[guardar-nodo-btn.png]</p></div>'">
+                        </li>
+                    </ol>
+
+                    <h5 class="mt-4">Modificación y Remoción de Activos:</h5>
+                    <p>El sistema incorpora dos controles directos: el icono del <strong>Lápiz (Pencil)</strong> enfocado en la corrección de metadatos o relocalización geográfica del hardware; y el icono de la <strong>Papelera (Trash)</strong>, el cual remueve permanentemente el dispositivo y desestructura sus dependencias topológicas de fibra óptica en cascada. Este último requiere confirmación de seguridad doble y deja registro indeleble en la bitácora de auditoría de red (TopologyAuditLog).</p>
+
+                    <figure class="text-center my-4">
+                        <img src="images/sentinel/figura-5.png" alt="Figura" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/sentinel/figura-5.png]</p></div>'">
+                        <figcaption><strong>Figura 5:</strong> Controles de gestión de infraestructura: Iconos de edición (Lápiz) para corrección de metadatos y reubicación, e icono de eliminación (Papelera) para la remoción permanente de dispositivos, este último protegido por confirmación doble y registro en bitácora de auditoría.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="sec7">
+                    <h2>7. Módulo: Inteligencia Artificial (Sentinel Chat)</h2>
+                    <p>Más allá de los reportes automatizados ante caídas de infraestructura, JAH Sentinel provee un asistente interactivo en lenguaje natural mediante el componente ChatManager.</p>
+                    <ul>
+                        <li><strong>Acceso:</strong> Se invoca mediante el icono de cerebro amarillo ubicado en el NavRail.</li>
+                        <li><strong>Consultas Contextuales:</strong> Los operadores pueden interactuar mediante lenguaje natural libre. Ejemplos de uso:
+                            <ul class="list-unstyled mt-4 ms-3 border-start border-secondary ps-4">
+                                <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4">
+                                    <div class="me-md-4 mb-3 mb-md-0 text-muted fst-italic">
+                                        "¿Cuál es el estado del nodo TEPOZAN?"
+                                    </div>
+                                    <img src="images/sentinel/chat-tepozan.png" alt="Chat Nodo TEPOZAN" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 350px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 350px; min-height: 120px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.5rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.65rem; word-break: break-word;&quot;>[chat-tepozan.png]</p></div>'">
+                                </li>
+                                <li class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-2">
+                                    <div class="me-md-4 mb-3 mb-md-0 text-muted fst-italic">
+                                        "¿Cuál es el estado general de la red?"
+                                    </div>
+                                    <img src="images/sentinel/chat-general.png" alt="Chat Estado General" class="img-fluid rounded border border-secondary shadow-sm flex-shrink-0" style="width: 350px;" onerror="this.outerHTML='<div class=&quot;figure-placeholder m-0 flex-shrink-0 p-2&quot; style=&quot;width: 350px; min-height: 150px;&quot;><i class=&quot;ph ph-image mb-2&quot; style=&quot;font-size: 1.5rem;&quot;></i><p class=&quot;text-muted m-0&quot; style=&quot;font-size: 0.65rem; word-break: break-word;&quot;>[chat-general.png]</p></div>'">
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p>El asistente parsea la solicitud, cruza los datos con la base de métricas en vivo y genera una respuesta inteligible. Las sesiones y el hilo de la conversación se guardan de manera temporal dentro del estado global de la sesión operativa.</p>
+                </section>
+
+                <section class="manual-section" id="sec8">
+                    <h2>8. Módulo: Gestión de Usuarios (UserManagementView)</h2>
+                    <p>Esta consola central de seguridad informática está estrictamente reservada para el rol de Super Administrador.</p>
+                    <p>Visualizado a través del icono de múltiples usuarios en el NavRail, centraliza el padrón de operadores de la plataforma. Permite el alta estructurada de personal, asignación confidencial de contraseñas de primer ingreso y la administración del esquema de privilegios (TECNICO, SUPERVISOR, SUPER_ADMIN). Asimismo, integra capacidades de contingencia para forzar la expiración inmediata de llaves de acceso en caso de pérdida o compromiso de las credenciales de un operador.</p>
+
+                    <figure class="text-center my-4">
+                        <img src="images/sentinel/figura-6.png" alt="Figura" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/sentinel/figura-6.png]</p></div>'">
+                        <figcaption><strong>Figura 6:</strong> Interfaz del módulo "Gestión de Usuarios" (UserManagementView). Esta consola centralizada permite al Super Administrador el alta estructurada de personal, la asignación de roles jerárquicos (Técnico, Supervisor, Super Admin) y la gestión de seguridad para el restablecimiento de credenciales.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="sec9">
+                    <h2>9. Módulo: Métricas de Red (StatsView)</h2>
+                    <p>Ubicado en el ícono de "Actividad" (ondas de pulso) en el NavRail. Este panel proporciona un resumen gerencial del rendimiento global.</p>
+                    <ul>
+                        <li><strong>KPIs Principales:</strong> Monitorea en vivo el Uptime Global (porcentaje de nodos en línea), la Latencia Promedio general de la red, y el tráfico agregado Upstream/Downstream en Gbps.</li>
+                        <li><strong>Estado por Zona Operativa:</strong> Gráficos de barras que muestran la disponibilidad porcentual de cada zona configurada utilizando semáforos: Verde (&gt;90%), Ámbar (&gt;70%), y Rojo (&lt;70%).</li>
+                        <li><strong>Concentración de Carga (Radial Metrics):</strong> Gráficos circulares que exhiben el Top 3 de zonas operativas respecto a su densidad de infraestructura física instalada (nodos operacionales vs total).</li>
+                    </ul>
+
+                    <figure class="text-center my-4">
+                        <img src="images/sentinel/figura-7.png" alt="Figura" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/sentinel/figura-7.png]</p></div>'">
+                        <figcaption><strong>Figura 7:</strong> Consola de analítica de red (StatsView). Interfaz ejecutiva que consolida los indicadores de rendimiento clave (KPIs) globales en la fila superior y despliega el estado de disponibilidad semaforizado por zonas geográficas junto al desglose radial de concentración de carga.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="sec10">
+                    <h2>10. Módulo: Edición Topológica Avanzada</h2>
+                    <p>Acceso exclusivo para Supervisores y Administradores. El Gemelo Digital no solo ubica nodos, sino que dibuja y modela de forma interactiva las rutas de fibra óptica o radioenlaces.</p>
+                    <ul>
+                        <li><strong>Trazado de Rutas:</strong> Al activar el modo edición, se genera una línea interactiva en el mapa. Se hace clic en el nodo origen y se traza hasta el destino para consolidar una "Conexión". Esto permite al motor AIOps realizar el análisis de impacto y fallos en cadena.</li>
+                        <li><strong>Atajos de Teclado Profesionales:</strong>
+                            <ul>
+                                <li><code>Ctrl + Z</code>: Deshacer la última ruta trazada (Undo).</li>
+                                <li><code>Ctrl + Y</code>: Rehacer la última acción cancelada (Redo).</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <figure class="text-center my-4">
+                        <img src="images/sentinel/figura-8.png" alt="Figura" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/sentinel/figura-8.png]</p></div>'">
+                        <figcaption><strong>Figura 8:</strong> Modelado y Edición Topológica Avanzada. Vista interactiva del mapa cartográfico en modo edición, permitiendo el trazado manual de interconexiones lógicas y rutas de fibra óptica entre nodos para la estructuración de dependencias operativas.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="sec11">
+                    <h2>11. Módulo: Rack View (Vista de Gabinete)</h2>
+                    <p>Para aquellos activos tipificados estrictamente como SITE, la tarjeta lateral habilita el acceso a la pestaña Rack View, una abstracción física hiperrealista del gabinete.</p>
+                    <ul>
+                        <li><strong>Estructura Estándar de 42U:</strong> Despliega un bastidor de 42 Unidades de Rack de altura.</li>
+                        <li><strong>Drag and Drop (Arrastrar y Soltar):</strong> Permite tomar los equipos "huérfanos" (dispositivos asignados al sitio pero sin posición física definida) desde el inventario inferior, arrastrarlos y alojarlos exactamente en la Unidad de Rack (U) donde se encuentran atornillados.</li>
+                        <li><strong>Prevención de Colisiones:</strong> El sistema cuenta con validación de volumen físico; impide superponer hardware o ubicar un switch de 2U en un espacio disponible de 1U.</li>
+                        <li><strong>Auto-Acomodar (AIOps):</strong> Optimiza el tiempo de organización mediante un algoritmo inteligente que distribuye los equipos sueltos de forma lógica en los espacios vacíos del bastidor.</li>
+                        <li><strong>Inspección Profunda:</strong>
+                            <ul>
+                                <li><strong>Puertos y ODFs:</strong> Al hacer clic en un equipo del rack, se renderiza su vista frontal (Faceplate) mostrando el estado de sus puertos SFP/Ethernet: Verdes (Libres), Azules (En Uso), y Rojos (Caídos / Alarma).</li>
+                                <li><strong>Telemetría SNMP Dedicada:</strong> Al seleccionar el icono de señal del hardware rackeado, se abre un sub-panel con variables analíticas síncronas: Carga de CPU, Temperatura, Voltaje, Memoria Usada y gráficas individuales de tráfico RX/TX.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="row align-items-end my-4">
+                        <div class="col-md-5 mb-4 mb-md-0">
+                            <figure class="text-center m-0">
+                                <img src="images/sentinel/figura-9a.png" alt="Rack View" class="img-fluid rounded border border-secondary shadow-sm mb-3" onerror="this.outerHTML='<div class=&quot;figure-placeholder mb-3&quot; style=&quot;min-height: 400px;&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/sentinel/figura-9a.png]</p></div>'">
+                                <figcaption class="text-center text-muted mx-auto" style="font-size: 0.85rem; line-height: 1.5; max-width: 100%;"><strong>Figura 9:</strong> Módulo Rack View (Vista de Gabinete). Ilustra la distribución del bastidor estándar de 42U con hardware asignado.</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-md-7">
+                            <figure class="text-center m-0">
+                                <img src="images/sentinel/figura-9b.png" alt="Inspección Profunda" class="img-fluid rounded border border-secondary shadow-sm mb-3" onerror="this.outerHTML='<div class=&quot;figure-placeholder mb-3&quot; style=&quot;min-height: 300px;&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/sentinel/figura-9b.png]</p></div>'">
+                                <figcaption class="text-center text-muted mx-auto" style="font-size: 0.85rem; line-height: 1.5; max-width: 100%;"><strong>Figura 10:</strong> Inspección Profunda. Exhibe el faceplate digital de puertos (Ethernet/SFP) y el formulario para la gestión telemétrica del equipo.</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="manual-section" id="glosario">
+                    <h2>Glosario y Referencias Técnicas</h2>
+                    <ul class="list-group list-group-flush bg-transparent mt-3">
+                        <li class="list-group-item bg-transparent text-white border-secondary"><strong>[1] SNMP (Simple Network Management Protocol):</strong> Protocolo de la capa de aplicación estandarizado para la monitorización e intercambio de variables de estado entre elementos de red.</li>
+                        <li class="list-group-item bg-transparent text-white border-secondary"><strong>[2] Llama 3.2 1B:</strong> Modelo fundacional de procesamiento de lenguaje natural de gran escala, optimizado para inferencia en local con baja latencia sin envío de datos confidenciales a infraestructuras en la nube.</li>
+                        <li class="list-group-item bg-transparent text-white border-secondary"><strong>[3] RBAC (Role-Based Access Control):</strong> Mecanismo de seguridad lógica que regula y restringe las operaciones del software en función del rol de identidad verificado del usuario.</li>
+                        <li class="list-group-item bg-transparent text-white border-secondary"><strong>[4] WebSocket:</strong> Protocolo de comunicaciones bidireccional y persistente sobre una única conexión TCP, diseñado para la transmisión de payloads de eventos y telemetría en tiempo real.</li>
+                    </ul>
+                </section>
+
+                <div class="mt-5 mb-4 text-center">
+                    <h3 class="text-accent">II. JAH-NOC</h3>
+                    <p class="text-muted">Centralización Operativa del Centro de Operaciones de Red</p>
+                </div>
+
+                <section class="manual-section" id="noc-intro">
+                    <h2>Introducción a JAH-NOC</h2>
+                    <p>El Sistema <strong>JAH-NOC</strong> es una plataforma web avanzada diseñada para centralizar y simplificar de manera drástica las operaciones del Centro de Operaciones de Red, permitiendo realizar de forma rápida y eficiente tareas que anteriormente requerían acceso directo a múltiples routers.</p>
+                </section>
+
+                <section class="manual-section" id="noc-sec1">
+                    <h2>1. Apartado de Redireccionamiento (Desvíos Marcatel)</h2>
+                    <p>Este módulo permite gestionar la adición o remoción de direcciones IP de clientes dentro de las listas de desvío Marcatel configuradas en los enrutadores lógicos.</p>
+                    <p><strong>Acceso en la interfaz:</strong> Menú principal › <code>Redirecciones</code>.</p>
+                    
+                    <h5 class="mt-4 text-accent">Flujo para Agregar una Redirección:</h5>
+                    <ol>
+                        <li>Despliegue el campo <strong>Router MikroTik</strong> y seleccione el equipo donde se encuentra conectado el cliente.</li>
+                        <li>En el campo <strong>Dirección IP del Cliente</strong>, digite la IP correspondiente (ej. <code>10.1.2.251</code>).</li>
+                        <li>Haga clic en el botón azul centralizado <strong>Ejecutar Redirección</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/noc/form-redireccion.png" alt="Formulario de Redirecciones" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-arrows-merge&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/noc/form-redireccion.png]</p></div>'">
+                        <figcaption><strong>Figura NOC.1:</strong> Formulario de adición de redirecciones lógicas en enrutadores de borde.</figcaption>
+                    </figure>
+
+                    <div class="tip-box">
+                        <strong><i class="ph-fill ph-check-circle text-accent me-2"></i>Resultado Esperado:</strong> El sistema agregará automáticamente la IP a las listas de desvío configuradas de forma síncrona dentro del MikroTik seleccionado.
+                    </div>
+
+                    <h5 class="mt-4 text-accent">Flujo para Quitar una Redirección:</h5>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/noc/form-quitar.png" alt="Formulario para Quitar Redirección" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-x-circle&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/noc/form-quitar.png]</p></div>'">
+                    </figure>
+
+                    <ol>
+                        <li>En la cabecera del módulo, presione el botón rojo <strong>✖ Quitar Redirección</strong>.</li>
+                        <li>Seleccione el router MikroTik correspondiente y capture la IP que desea dar de baja.</li>
+                        <li>Presione el botón inferior <strong>Quitar Redirección</strong>. La IP será eliminada de la lista de desvío y volverá a utilizar su ruta normal de navegación.</li>
+                    </ol>
+                </section>
+
+                <section class="manual-section" id="noc-sec2">
+                    <h2>2. Módulo de Revisión y Escaneo de Clientes (ARP/Mora)</h2>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/noc/form-escaneo.png" alt="Formulario de Escaneo de Clientes" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-scan&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/noc/form-escaneo.png]</p></div>'">
+                    </figure>
+
+                    <p>Diseñado para escanear en tiempo real el estado de conexión (tabla ARP) y la suspensión por falta de pago (Morosos) en todos los routers de la red de manera simultánea.</p>
+                    <p><strong>Ruta de acceso:</strong> Menú principal › <code>Escaneo de Clientes</code>.</p>
+
+                    <h5 class="mt-4">Flujo de Diagnóstico Rápido:</h5>
+                    <p>Introduzca la dirección IP del abonado a verificar y haga clic en el comando <strong>Iniciar Escaneo</strong>. Una vez finalizado el barrido telemétrico, el sistema devolverá un indicador gráfico semaforizado con uno de los siguientes estados:</p>
+
+                    <div class="table-responsive mt-3">
+                        <table class="table table-dark table-striped align-middle border border-secondary">
+                            <thead>
+                                <tr>
+                                    <th>Indicador Gráfico</th>
+                                    <th>Estado Devuelto</th>
+                                    <th>Significado Técnico e Implicación</th>
+                                    <th>Acción Recomendada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge bg-success">🟢 VERDE</span></td>
+                                    <td><strong>En Línea</strong></td>
+                                    <td>El cliente se encuentra conectado y operando correctamente dentro de la red.</td>
+                                    <td>Ninguna. Operación normal.</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-warning text-dark">🟡 AMARILLO</span></td>
+                                    <td><strong>Fuera de Red</strong></td>
+                                    <td>El cliente no presenta adeudos, pero actualmente no existe conectividad detectada. Causas: Equipo apagado, desconectado o problemas de señal.</td>
+                                    <td>Verificar el equipo del cliente y revisar la conectividad física en campo.</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-danger">🔴 ROJO</span></td>
+                                    <td><strong>Falta de Pago</strong></td>
+                                    <td>El cliente presenta un adeudo pendiente y su servicio se encuentra suspendido.</td>
+                                    <td>Solicitar al cliente regularizar su pago ante la administración.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+
+                <div class="mt-5 mb-4 text-center">
+                    <h3 class="text-accent">III. JAH Central</h3>
+                    <p class="text-muted">Plataforma Central de Gestión, Monitoreo y Administración de Servicios</p>
+                </div>
+
+                <section class="manual-section" id="central-intro">
+                    <h2>Manual de Usuario JAH Central</h2>
+                    <p class="text-muted">Versión 1.0 | Suite Integral de Inventarios, Herramientas e Instalaciones</p>
+                    <p class="lead"><strong>JAH Central</strong> centraliza el control operativo de almacenes, herramientas asignadas a cuadrillas técnicas, progreso de órdenes de instalación domiciliarias y métricas comerciales de desempeño en un único panel unificado.</p>
+                </section>
+
+                <section class="manual-section" id="central-sec1">
+                    <h2>1. Dashboard Analítico</h2>
+                    <p>Es la pantalla raíz al ingresar al sistema. Permite conocer rápidamente la situación actual del inventario general y las operaciones sin necesidad de revisar cada módulo de forma individual.</p>
+                    
+                    <h5 class="mt-4">Componentes e Indicadores Principales:</h5>
+                    <ul>
+                        <li class="mb-2"><strong>Métricas de Control Superior:</strong> Conteo de Equipos Asignados a técnicos, Equipos actualmente En Uso en campo y existencias totales Disponibles en tu CRM.</li>
+                        <li class="mb-2"><strong>Gráficos Consolidados:</strong> Despliega el Estado General de stock, los Equipos Disponibles por Tipo de modelo (ej. Huawei EG8145V5, Router TP-Link 840), Estado de Instalaciones y barra de Materiales en uso por técnico.</li>
+                    </ul>
+
+                    <figure class="text-center my-4">
+                        <img src="images/central/dashboard.png" alt="Dashboard JAH Central" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-chart-pie-slice&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/central/dashboard.png]</p></div>'">
+                        <figcaption><strong>Figura CENTRAL.1:</strong> Interfaz del Dashboard principal y desglose por tipo de equipo.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="central-sec2">
+                    <h2>2. Asignación de Equipos y Consumo de Material</h2>
+                    <p>Módulo enfocado en registrar la entrega física de hardware y consumibles a las cuadrillas de planta externa.</p>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/central/asignacion.png" alt="Formulario de asignación de equipos y material" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-desktop&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/central/asignacion.png]</p></div>'">
+                    </figure>
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-accent">Asignar Equipos (ONUs/Routers):</h5>
+                            <ol>
+                                <li>La fecha se estampa de forma automática por el sistema.</li>
+                                <li>Seleccione el <strong>Técnico</strong> receptor en el menú desplegable.</li>
+                                <li>Indique el <strong>Tipo de Equipo</strong> e ingrese de forma manual el <strong>Número de Serie</strong> único.</li>
+                                <li>Seleccione la <strong>Condición del Equipo</strong> (Nuevo o Usado) y presione <strong>Guardar</strong>. Quedará asignado automáticamente.</li>
+                            </ol>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-accent">Registrar Consumo de Material:</h5>
+                            <ol>
+                                <li>Seleccione el Técnico e identifique el consumible/material entregado.</li>
+                                <li>Capture en el campo de texto la <strong>Cantidad consumida</strong> (ej. <em>2 cajas, 5 metros</em>).</li>
+                                <li>Haga clic en <strong>Guardar</strong> para descontar las unidades del almacén.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="manual-section" id="central-sec3">
+                    <h2>3. Gestión de Inventario</h2>
+                    <p><strong>Acceso:</strong> Menú lateral › <code>Gestión de Inventario</code>. Actúa como la bitácora maestra de auditoría de hardware y consumibles del ecosistema, permitiendo consultar estados de stock y realizar modificaciones directas.</p>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/central/inventario.png" alt="Pantalla de Gestión de Inventario" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-table&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/central/inventario.png]</p></div>'">
+                    </figure>
+
+                    <h5 class="mt-4">Acciones Soportadas por Registro:</h5>
+                    <ul>
+                        <li class="mb-2"><strong>Modificar Estado:</strong> Transiciona un hardware de stock entre los estados de <span class="badge bg-warning text-dark">Asignado</span> y <span class="badge bg-success">En Uso</span>.</li>
+                        <li class="mb-2"><strong>Motivo de Uso & Notas:</strong> Permite asignar un motivo de uso específico a cada equipo y editar el campo para ingresar anotaciones aclaratorias.</li>
+                        <li class="mb-2"><strong>Eliminar:</strong> Purga permanentemente registros cuando sea necesario por corrección.</li>
+                    </ul>
+                    <p><strong>Filtros superiores integrados:</strong> Barra de herramientas para buscar de forma rápida por Número de serie, Fecha exacta o Estado de equipo.</p>
+                </section>
+
+                <section class="manual-section" id="central-sec4">
+                    <h2>4. Registro de Instalaciones</h2>
+                    <p>Gestiona el flujo documental y técnico de las órdenes de trabajo de campo para altas domiciliarias.</p>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/central/instalaciones.png" alt="Pantalla de Registro de Instalaciones" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-clipboard-text&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/central/instalaciones.png]</p></div>'">
+                    </figure>
+
+                    <h5 class="mt-4">Parámetros requeridos para registrar una instalación:</h5>
+                    <div class="row bg-base p-3 rounded border border-secondary mx-1 my-3">
+                        <div class="col-md-6">
+                            <ul>
+                                <li>Fecha y Nombre completo del cliente</li>
+                                <li>Teléfono de contacto y Correo electrónico</li>
+                                <li>Dirección de instalación completa</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul>
+                                <li>Dirección IP Asignada</li>
+                                <li>Plan contratado (ej. 50 Megas)</li>
+                                <li>Técnico instalador asignado</li>
+                                <li>Horario e información/notas adicionales</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p>Después, seleccione el <strong>Estatus de la Instalación</strong>, pudiendo elegir entre: <em>Registrada, En Progreso, En Espera, Cerrada o Cancelada</em>. Finalmente presione <strong>Guardar Instalación</strong> para desplegarla en el listado inferior, donde podrá editar datos o generar un reporte en formato <strong>PDF</strong>.</p>
+                </section>
+
+                <section class="manual-section" id="central-sec5">
+                    <h2>5. Generación de Reportes Gerenciales</h2>
+                    <p><strong>Ubicación:</strong> Menú lateral › <code>Generar Reportes</code>. Centraliza los indicadores para la toma de decisiones directivas e informes mensuales de productividad.</p>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/central/reportes.png" alt="Pantalla de Generación de Reportes Gerenciales" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-chart-bar&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/central/reportes.png]</p></div>'">
+                    </figure>
+
+                    <h5 class="mt-4">Pasos para la Generación:</h5>
+                    <ol>
+                        <li>Seleccione la opción de periodo o rango cronológico que desea consultar.</li>
+                        <li>Haga clic en el comando <strong>Generar Reporte</strong>.</li>
+                    </ol>
+                    <p>Los reportes compilarán gráficos automáticos de: Desempeño y rendimiento por técnico (actividad de equipos e instalaciones), Motivos de uso del hardware, Material total consumido e Instalaciones realizadas con opción de impresión directa o descarga a <strong>PDF</strong>.</p>
+                </section>
+
+                <section class="manual-section" id="central-sec6">
+                    <h2>6. Registro de Actividad (Auditoría)</h2>
+                    <p><strong>Ruta:</strong> Menú lateral › <code>Registro de Actividad</code>. Almacena de forma automatizada y cronológica todas las acciones realizadas dentro del sistema JAH Central.</p>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/central/actividad.png" alt="Pantalla de Registro de Actividad" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-list-dashes&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/central/actividad.png]</p></div>'">
+                    </figure>
+
+                    <p>Ante auditorías de inventario, el administrador podrá consultar en esta tabla:</p>
+                    <ul>
+                        <li><strong>Fecha y Hora</strong> del movimiento.</li>
+                        <li><strong>Usuario</strong> operador que ejecutó el cambio (ej. <code>admin</code>).</li>
+                        <li><strong>Acción realizada</strong> (ej. <code>ASSIGNED_MATERIAL</code>, <code>EN_USE</code>).</li>
+                        <li><strong>Detalle del movimiento</strong> (ej. Conectores (10)) junto al <strong>Técnico relacionado</strong>.</li>
+                    </ul>
+                </section>
+
+                <section class="manual-section" id="central-sec7">
+                    <h2>7. Almacén CRM e Inventario de Herramientas</h2>
+                    
+                    <h5 class="text-accent">7.1 Almacén CRM:</h5>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/central/almacen-crm.png" alt="Pantalla de Almacén CRM" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-database&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/central/almacen-crm.png]</p></div>'">
+                    </figure>
+
+                    <p>Módulo de comunicación en tiempo real con las existencias de hardware del CRM de la compañía. Al ingresar al apartado, haga clic en <strong>Escanear</strong> y espere un par de segundos a que recolecte los números de serie registrados en stock. Si lo requiere, puede buscar un número de serie específico y dar clic en <strong>Asignar</strong> para ser redirigido de forma automática al módulo de asignación.</p>
+
+                    <h5 class="text-accent">7.2 Inventario de Herramientas (Checklist por Técnico):</h5>
+                    <p>Permite supervisar el kit de herramientas de trabajo asignado a cada cuadrilla en planta externa. Al seleccionar a uno de los técnicos del panel izquierdo, la interfaz mostrará el listado completo de herramientas entregadas y verificadas, la cantidad asignada y el porcentaje de <strong>Avance del checklist</strong>. Incluye controles rápidos para modificar la información o compilar el inventario técnico en un formato **PDF** por cuadrilla o vehículo.</p>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/central/herramientas.png" alt="Checklist de Herramientas" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-wrench&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/central/herramientas.png]</p></div>'">
+                        <figcaption><strong>Figura CENTRAL.2:</strong> Consola del Checklist por técnico e inventario de herramientas.</figcaption>
+                    </figure>
+                </section>
+
+
+                <div class="mt-5 mb-4 text-center">
+                    <h3 class="text-accent">IV. JahPayControl</h3>
+                    <p class="text-muted">Control de Morosidad y Mensajería Automática</p>
+                </div>
+
+                <section class="manual-section" id="paycontrol-intro">
+                    <h2>JahPayControl: Manual de Usuario</h2>
+                    <p class="text-muted">Versión 1.0 | Uso interno — Confidencial</p>
+                </section>
+
+                <section class="manual-section" id="paycontrol-sec1">
+                    <h2>1. Dashboard — Panel de Morosos</h2>
+                    <p>Es la pantalla principal al ingresar al sistema. Presenta un resumen visual del estado de cobranza y acceso rápido a acciones sobre cada cliente.</p>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-1-1.png" alt="Dashboard principal" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-1-1.png]</p></div>'">
+                        <figcaption><strong>Figura 1.1</strong> — Dashboard principal</figcaption>
+                    </figure>
+
+                    <h5 class="mt-4">1.1 Tabla de Clientes Morosos</h5>
+                    <p>Columnas disponibles: ID, Nombre, Zona, Días de Mora, Monto, Estado.</p>
+                    <p>Botones de acción por cliente:</p>
+                    <ul>
+                        <li><strong>Ver notas</strong> — historial de observaciones del cliente.</li>
+                        <li><strong>Bloquear servicio</strong> — suspende el acceso a internet.</li>
+                        <li><strong>Ping ONT</strong> — diagnóstico de conectividad vía MikroTik.</li>
+                    </ul>
+
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-1-2-funciones.png" alt="Funciones" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-1-2-funciones.png]</p></div>'">
+                        <figcaption><strong>Figura 1.2</strong> — Funciones</figcaption>
+                    </figure>
+
+                    <h5 class="mt-4">1.2 Filtros Disponibles</h5>
+                    <ul>
+                        <li>Por zona de servicio.</li>
+                        <li>Por días de mora.</li>
+                        <li>Por estado: Suspendido o Cortado.</li>
+                    </ul>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-1-2-filtros.png" alt="Filtros" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-1-2-filtros.png]</p></div>'">
+                        <figcaption><strong>Figura 1.2</strong> — Filtros</figcaption>
+                    </figure>
+
+                    <h5 class="mt-4">1.3 Sincronización con WispHub</h5>
+                    <p>Hacer clic en el botón Sincronizar con WispHub para importar los datos más recientes desde el CRM.</p>
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-1-3.png" alt="Figura" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-1-3.png]</p></div>'">
+                        <figcaption><strong>Figura 1.3</strong> — Sincronización</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="paycontrol-sec2">
+                    <h2>2. Gestión de Clientes Morosos</h2>
+                    
+                    <h5 class="mt-4">2.1 Agregar Nota a un Cliente</h5>
+                    <ol>
+                        <li>En la tabla, hacer clic en el ícono de comentario del cliente.</li>
+                        <li>Escribir la observación en el campo de texto.</li>
+                        <li>Hacer clic en Guardar Nota.</li>
+                    </ol>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-2-1.png" alt="Panel de gestión de clientes morosos" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-2-1.png]</p></div>'">
+                        <figcaption><strong>Figura 2.1</strong> — Panel de gestión de clientes morosos</figcaption>
+                    </figure>
+
+                    <h5 class="mt-4">2.2 Diagnóstico de Conectividad (Ping a ONT)</h5>
+                    <ol>
+                        <li>Hacer clic en el ícono de diagnóstico del cliente.</li>
+                        <li>El sistema ejecuta un ping al equipo via MikroTik.</li>
+                        <li>Se muestra el resultado: En línea / Sin respuesta.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-2-2.png" alt="Diagnóstico de Conectividad" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-2-2.png]</p></div>'">
+                        <figcaption><strong>Figura 2.2</strong> — Diagnóstico de Conectividad (Ping a ONT)</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="paycontrol-sec3">
+                    <h2>3. Envío Masivo de WhatsApp</h2>
+                    <p><strong>Acceso:</strong> Menú principal › Envío Masivo WhatsApp</p>
+                    <p>Permite notificar a múltiples clientes morosos de forma automatizada. Siga los cuatro pasos en orden.</p>
+                    
+                    <h5 class="mt-4">Paso 1 — Conectar WhatsApp</h5>
+                    <ol>
+                        <li>Si aparece el indicador Sin Conexión WA, hacer clic en Conectar.</li>
+                        <li>Esperar a que aparezca el código QR.</li>
+                        <li>En el teléfono: abrir WhatsApp › Configuración › Dispositivos Vinculados.</li>
+                        <li>Tocar Vincular Dispositivo y escanear el QR.</li>
+                        <li>Esperar confirmación: "WhatsApp Conectado y Listo".</li>
+                    </ol>
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-3-2.png" alt="Figura" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-3-2.png]</p></div>'">
+                        <figcaption><strong>Figura 3.2</strong> — Escanear código QR</figcaption>
+                    </figure>
+                    <div class="tip-box mt-3">
+                        <strong><i class="ph-fill ph-check-circle text-accent me-2"></i>RECOMENDACIÓN:</strong> Verificar el estado de WhatsApp antes de iniciar cualquier envío masivo.
+                    </div>
+
+                    <h5 class="mt-4">Paso 2 — Seleccionar Destinatarios</h5>
+                    <ol>
+                        <li>En la tabla de la derecha, marcar los clientes a notificar.</li>
+                        <li>Usar los botones de selección rápida:
+                            <ul>
+                                <li><strong>Todos</strong> — selecciona toda la lista.</li>
+                                <li><strong>No enviados hoy</strong> — excluye clientes ya contactados.</li>
+                                <li><strong>Ninguno</strong> — limpia la selección.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-3-3.png" alt="Selección de Destinatarios" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-3-3.png]</p></div>'">
+                        <figcaption><strong>Figura 3.3</strong> — Selección de Destinatarios</figcaption>
+                    </figure>
+
+                    <div class="tip-box mt-3">
+                        <strong><i class="ph-fill ph-push-pin text-accent me-2"></i>NOTA:</strong> Los clientes sin número de teléfono aparecen con ícono tachado y no son seleccionables.
+                    </div>
+
+                    <h5 class="mt-4">Paso 3 — Configurar el Mensaje</h5>
+                    <ol>
+                        <li>Seleccionar una plantilla del menú desplegable o redactar un mensaje personalizado.</li>
+                        <li>Usar variables dinámicas para personalizar el texto.</li>
+                        <li>La vista previa del mensaje se actualiza en tiempo real.</li>
+                        <li>Ajustar el Delay entre mensajes.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-3-4.png" alt="Configuración del mensaje" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-3-4.png]</p></div>'">
+                        <figcaption><strong>Figura 3.4</strong> — Configuración del mensaje</figcaption>
+                    </figure>
+
+                    <div class="tip-box mt-3" style="background: rgba(245,158,11,0.05); border-left-color: #f59e0b !important;">
+                        <strong style="color: #f59e0b;"><i class="ph-fill ph-warning-circle me-2"></i>IMPORTANTE:</strong> El delay mínimo recomendado es 300 segundos (5 minutos). Este valor es OBLIGATORIO para evitar bloqueos de cuenta por parte de WhatsApp.
+                    </div>
+
+                    <h5 class="mt-4">Paso 4 — Enviar</h5>
+                    <ol>
+                        <li>Hacer clic en Preparar Envío.</li>
+                        <li>Revisar y editar mensajes individuales si es necesario.</li>
+                        <li>Hacer clic en Confirmar y Enviar.</li>
+                        <li>Monitorear el progreso en el panel de Resultados.</li>
+                    </ol>
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-3-5.png" alt="Pantalla de confirmación y envío" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-3-5.png]</p></div>'">
+                        <figcaption><strong>Figura 3.5</strong> — Pantalla de confirmación y envío</figcaption>
+                    </figure>
+
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-3-6.png" alt="Panel de resultados" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-3-6.png]</p></div>'">
+                        <figcaption><strong>Figura 3.6</strong> — Panel de resultados</figcaption>
+                    </figure>
+
+                    <div class="tip-box mt-3" style="background: rgba(245,158,11,0.05); border-left-color: #f59e0b !important;">
+                        <strong style="color: #f59e0b;"><i class="ph-fill ph-warning-circle me-2"></i>NOTA:</strong> En caso de error 429 (servidor ocupado), esperar 10–15 segundos antes de reintentar.
+                    </div>
+                </section>
+
+                <section class="manual-section" id="paycontrol-sec4">
+                    <h2>4. Plantillas de Mensajes</h2>
+                    <p><strong>Acceso:</strong> Menú principal › Plantillas WA</p>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-4-0.png" alt="Acceso a Plantillas" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-4-0.png]</p></div>'">
+                    </figure>
+
+                    <h5 class="mt-4">4.1 Crear Nueva Plantilla</h5>
+                    <ol>
+                        <li>Hacer clic en Nueva Plantilla.</li>
+                        <li>Ingresar el nombre de la plantilla.</li>
+                        <li>Redactar el contenido del mensaje.</li>
+                        <li>Usar variables disponibles: <code>{nombre}</code>, <code>{monto}</code>, <code>{dias}</code>, <code>{zona}</code>, <code>{id}</code>.</li>
+                        <li>Para texto en negritas en WhatsApp, escribir <code>*texto*</code>.</li>
+                        <li>Hacer clic en Guardar Plantilla.</li>
+                    </ol>
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-4-1.png" alt="Lista de plantillas" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-4-1.png]</p></div>'">
+                        <figcaption><strong>Figura 4.1</strong> — Lista de plantillas</figcaption>
+                    </figure>
+
+                    <h5 class="mt-4">4.2 Editar Plantilla Existente</h5>
+                    <ol>
+                        <li>Localizar la plantilla en la lista.</li>
+                        <li>Hacer clic en el ícono de lápiz.</li>
+                        <li>Modificar nombre o contenido.</li>
+                        <li>Guardar cambios.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-4-2.png" alt="Editor de plantilla" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-4-2.png]</p></div>'">
+                        <figcaption><strong>Figura 4.2</strong> — Editor de plantilla</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="paycontrol-sec5">
+                    <h2>5. Bandeja de WhatsApp</h2>
+                    <p><strong>Acceso:</strong> Menú principal › Bandeja</p>
+                    <p>Permite gestionar conversaciones entrantes de clientes directamente desde el sistema.</p>
+                    
+                    <h5 class="mt-4">5.1 Funciones Disponibles</h5>
+                    <ul>
+                        <li>Ver conversaciones de clientes en tiempo real.</li>
+                        <li>Buscar contacto por nombre o número de teléfono.</li>
+                        <li>Filtrar mensajes: Todos / No Leídos.</li>
+                        <li>Responder mensajes directamente desde la interfaz.</li>
+                        <li>Usar plantillas de respuesta rápida (ícono de rayo ⚡).</li>
+                        <li>Recibir notificaciones de nuevos mensajes con sonido.</li>
+                    </ul>
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-5-1.png" alt="Bandeja de WhatsApp" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-5-1.png]</p></div>'">
+                        <figcaption><strong>Figura 5.1</strong> — Bandeja de WhatsApp</figcaption>
+                    </figure>
+
+                    <div class="tip-box mt-3" style="background: rgba(245,158,11,0.05); border-left-color: #f59e0b !important;">
+                        <strong style="color: #f59e0b;"><i class="ph-fill ph-warning-circle me-2"></i>NOTA:</strong> La Bandeja requiere que WhatsApp esté conectado en la sección de Envío Masivo.
+                    </div>
+                </section>
+
+                <section class="manual-section" id="paycontrol-sec6">
+                    <h2>6. Gestión de Usuarios</h2>
+                    <p><strong>Acceso:</strong> Menú principal › Usuarios — (solo Administradores)</p>
+                    
+                    <h5 class="mt-4">6.1 Crear Usuario</h5>
+                    <ol>
+                        <li>Completar los campos: Usuario, Contraseña, Nombre completo, Rol.</li>
+                        <li>Hacer clic en Crear Usuario.</li>
+                    </ol>
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-6-1.png" alt="Crear usuario" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-6-1.png]</p></div>'">
+                        <figcaption><strong>Figura 6.1</strong> — Crear usuario</figcaption>
+                    </figure>
+
+                    <h5 class="mt-4">6.2 Editar Usuario</h5>
+                    <ol>
+                        <li>En la tabla de usuarios, hacer clic en el ícono de lápiz.</li>
+                        <li>Modificar nombre o rol.</li>
+                    </ol>
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-6-2.png" alt="Editar usuario" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-6-2.png]</p></div>'">
+                        <figcaption><strong>Figura 6.2</strong> — Editar usuario</figcaption>
+                    </figure>
+
+                    <h5 class="mt-4">6.3 Cambiar Contraseña</h5>
+                    <ol>
+                        <li>Hacer clic en el ícono de llave del usuario.</li>
+                        <li>Escribir la nueva contraseña.</li>
+                    </ol>
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-6-3.png" alt="Restablecer contraseña" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-6-3.png]</p></div>'">
+                        <figcaption><strong>Figura 6.3</strong> — Restablecer contraseña</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="paycontrol-sec7">
+                    <h2>7. Panel de Administración</h2>
+                    <p><strong>Acceso:</strong> Menú principal › Administración — (solo Administradores)</p>
+                    
+                    <h5 class="mt-4">7.1 Estado de la Base de Datos</h5>
+                    <p>Muestra métricas clave del sistema:</p>
+                    <ul>
+                        <li>Tablas de la base de datos.</li>
+                        <li>Total de morosos registrados.</li>
+                        <li>Usuarios activos.</li>
+                        <li>Mensajes en cola de WhatsApp.</li>
+                    </ul>
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-7-1.png" alt="Estado de la base de datos" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-7-1.png]</p></div>'">
+                        <figcaption><strong>Figura 7.1</strong> — Estado de la base de datos</figcaption>
+                    </figure>
+
+                    <h5 class="mt-4">7.2 Respaldo de Base de Datos</h5>
+                    <ol>
+                        <li>Hacer clic en Descargar Respaldo SQL.</li>
+                        <li>Se descarga un archivo .sql con todos los datos del sistema.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-7-2.png" alt="Respaldo SQL" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-7-2.png]</p></div>'">
+                        <figcaption><strong>Figura 7.2</strong> — Respaldo SQL</figcaption>
+                    </figure>
+
+                    <div class="tip-box mt-3" style="background: rgba(245,158,11,0.05); border-left-color: #f59e0b !important;">
+                        <strong style="color: #f59e0b;"><i class="ph-fill ph-warning-circle me-2"></i>IMPORTANTE:</strong> Realizar respaldo semanal de la base de datos. En caso de pérdida de datos, este archivo permite la restauración completa.
+                    </div>
+
+                    <h5 class="mt-4">7.3 Configuración de CRM</h5>
+                    <div class="table-responsive mt-3">
+                        <table class="table table-dark table-striped align-middle border border-secondary">
+                            <thead>
+                                <tr>
+                                    <th>Método</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>WispHub (Automático)</strong></td>
+                                    <td>Sincronización vía API. Requiere URL and API Key.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CSV Manual</strong></td>
+                                    <td>Carga manual de archivo exportado desde cualquier CRM.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Webhook</strong></td>
+                                    <td>Integración por eventos en tiempo real.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Para WispHub: ingresar URL de API y API Key, luego usar Probar Conexión para validar antes de Guardar Cambios.</p>
+
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-7-3.png" alt="Configuración del CRM" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-7-3.png]</p></div>'">
+                        <figcaption><strong>Figura 7.3</strong> — Configuración del CRM</figcaption>
+                    </figure>
+
+                    <h5 class="mt-4">7.4 Importar CSV</h5>
+                    <ol>
+                        <li>Subir el archivo .csv exportado del CRM.</li>
+                        <li>Seleccionar el modo de importación:
+                            <ul>
+                                <li><strong>Agregar/actualizar</strong> — suma registros nuevos y actualiza existentes.</li>
+                                <li><strong>Reemplazar lista completa</strong> — sustituye todos los datos actuales.</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-7-4.png" alt="Importador CSV" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-7-4.png]</p></div>'">
+                        <figcaption><strong>Figura 7.4</strong> — Importador CSV</figcaption>
+                    </figure>
+
+                    <h5 class="mt-4">7.5 Cola de Mensajes WhatsApp</h5>
+                    <p>Muestra el estado de los últimos 10 mensajes procesados:</p>
+                    <ul>
+                        <li><strong>Pendientes</strong> — en espera de envío.</li>
+                        <li><strong>Enviados</strong> — entregados correctamente.</li>
+                        <li><strong>Errores</strong> — fallidos; revisar conexión de WhatsApp.</li>
+                    </ul>
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-7-5.png" alt="Figura" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-7-5.png]</p></div>'">
+                        <figcaption><strong>Figura 7.5</strong> — Monitoreo Whatsapp</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="paycontrol-sec8">
+                    <h2>8. Logs del Sistema</h2>
+                    <p><strong>Acceso:</strong> Menú principal › Logs</p>
+                    <p>Registro cronológico de todas las acciones realizadas en el sistema.</p>
+
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-8-0.png" alt="Acceso a Logs" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-8-0.png]</p></div>'">
+                    </figure>
+                    
+                    <h5 class="mt-4">8.1 Información Registrada</h5>
+                    <ul>
+                        <li>Usuario que realizó la acción.</li>
+                    </ul>
+
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-8-1.png" alt="Información registrada" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-8-1.png]</p></div>'">
+                        <figcaption><strong>Figura 8.1</strong> — Información registrada</figcaption>
+                    </figure>
+
+                    <h5 class="mt-4">8.2 Acciones Auditadas</h5>
+                    <ul>
+                        <li>Inicio y cierre de sesión.</li>
+                        <li>Sincronizaciones con WispHub.</li>
+                        <li>Envíos masivos de WhatsApp.</li>
+                        <li>Cambios de configuración del sistema.</li>
+                        <li>Creación y eliminación de usuarios.</li>
+                    </ul>
+
+                    <figure class="text-center my-4">
+                        <img src="images/paycontrol/figura-8-2.png" alt="Acciones auditadas" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-image&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/paycontrol/figura-8-2.png]</p></div>'">
+                        <figcaption><strong>Figura 8.2</strong> — Acciones auditadas</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="paycontrol-sec9">
+                    <h2>9. Seguridad y Buenas Prácticas</h2>
+                    <ol>
+                        <li>No compartir las credenciales de <code>jahadmin</code> con ningún integrante del equipo.</li>
+                        <li>Cambiar la contraseña maestra al menos cada 90 días.</li>
+                        <li>Realizar respaldo de la base de datos cada semana.</li>
+                        <li>Mantener el delay de WhatsApp en 300 segundos (mínimo) para evitar bloqueos.</li>
+                        <li>Verificar el estado de la conexión WhatsApp antes de iniciar envíos masivos.</li>
+                        <li>En caso de error 429, esperar 10–15 segundos antes de reintentar.</li>
+                        <li>Utilizar el rol Demo/Sandbox para capacitación de nuevos usuarios.</li>
+                        <li>Revisar los Logs periódicamente para detectar acciones no autorizadas.</li>
+                    </ol>
+
+                    <div class="tip-box mt-3 border-warning" style="background: rgba(245,158,11,0.05); padding: 16px; border-radius: 8px; border-left: 4px solid #f59e0b !important;">
+                        <strong style="color: #f59e0b;"><i class="ph-fill ph-warning-circle me-2"></i>IMPORTANTE:</strong> El incumplimiento del delay obligatorio puede resultar en el bloqueo permanente del número de WhatsApp utilizado para notificaciones.
+                    </div>
+                </section>
+
+                <div class="mt-5 mb-4 text-center">
+                    <h3 class="text-accent">V. NetBox (CMDB)</h3>
+                    <p class="text-muted">Manual de Operación de la Fuente de Verdad para Infraestructura de Red</p>
+                </div>
+
+                <section class="manual-section" id="netbox-sec1">
+                    <h2>1. Panel Principal & Gestión de Sitios (Sites)</h2>
+                    <p>NetBox actúa como el sistema CMDB estructural de documentación de red. Al iniciar sesión, el Dashboard despliega una vista general del estado de la infraestructura: conteo de dispositivos por tipo, resumen de direccionamiento IP (IPAM), ocupación de racks y logs de las últimas modificaciones.</p>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/dashboard.png" alt="Dashboard de NetBox" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-desktop&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/dashboard.png]</p></div>'">
+                    </figure>
+
+                    <h5 class="mt-4 text-accent">¿Cómo agregar un nuevo Sitio (Site)?</h5>
+                    <p>Los Sitios representan locaciones físicas geográficas precisas (Data Centers, Torres o Nodos de Distribución).</p>
+                    <ol>
+                        <li>En el menú lateral de navegación, despliegue <code>Organization</code> y haga clic en <code>Sites</code>.</li>
+                        <li>Haga clic en el botón azul superior derecho denominado <strong>+ Add</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/dashboard-sites.png" alt="Sitios en NetBox" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-tree-structure&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/dashboard-sites.png]</p></div>'">
+                    </figure>
+
+                    <ol start="3">
+                        <li>Complete los campos obligatorios del formulario: <strong>Name</strong> (Nombre del Sitio), <strong>Slug</strong> (Shorthand amigable único) y <strong>Status</strong> (marcar como <em>Active</em>).</li>
+                        <li>Opcionalmente, capture una descripción, variables de latitud/longitud y datos de contacto antes de presionar <strong>Save</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/form-site.png" alt="Formulario de nuevo Sitio" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-browser&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/form-site.png]</p></div>'">
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="netbox-sec2">
+                    <h2>2. Configuración de Fabricantes y Modelos de Hardware</h2>
+                    <p><strong>Nota técnica:</strong> Antes de añadir dispositivos físicos al inventario, es obligatorio definir las marcas (Manufacturers) y las plantillas estructurales de hardware (Device Types).</p>
+
+                    <h5 class="mt-4 text-accent">2.1 Fabricantes (Manufacturers):</h5>
+                    <p>Representa las marcas comerciales de los equipos instalados en producción (ej. Cisco, Huawei, MikroTik, Ubiquiti, Ruijie).</p>
+                    <ol>
+                        <li>Navegue a <code>Devices</code> › <code>Manufacturers</code>.</li>
+                        <li>Pulse en <strong>+ Add</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/manufacturers-list.png" alt="Lista de Fabricantes" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-list-dashes&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/manufacturers-list.png]</p></div>'">
+                    </figure>
+
+                    <ol start="3">
+                        <li>Ingrese el nombre del fabricante y una descripción opcional.</li>
+                        <li>Guarde con <strong>Save</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/manufacturer-add.png" alt="Agregar Fabricante" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-browser&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/manufacturer-add.png]</p></div>'">
+                    </figure>
+
+                    <h5 class="mt-4 text-accent">2.2 Tipos de Dispositivos (Device Types):</h5>
+                    <p>Define la plantilla del modelo específico del equipo, incluyendo el número estandarizado de interfaces físicas, puertos y Unidades de Rack (U) de altura que consume.</p>
+                    <ol>
+                        <li>Navegue a <code>Devices</code> › <code>Device Types</code>.</li>
+                        <li>Haga clic en <strong>+ Add</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/devicetypes-list.png" alt="Lista de Tipos de Dispositivos" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-list-dashes&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/devicetypes-list.png]</p></div>'">
+                    </figure>
+
+                    <ol start="3">
+                        <li>Seleccione el fabricante, ingrese el modelo y el número de parte.</li>
+                        <li>Configure las interfaces y puertos del modelo.</li>
+                        <li>Guarde con <strong>Save</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/devicetype-add.png" alt="Agregar Tipo de Dispositivo" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-browser&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/devicetype-add.png]</p></div>'">
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="netbox-sec3">
+                    <h2>3. Aprovisionamiento e Inventariado de Dispositivos (Devices)</h2>
+                    <p>Una vez creadas las plantillas de modelos, proceda al aprovisionamiento físico del hardware atornillado en los nodos.</p>
+                    <ol>
+                        <li>Navegue al módulo <code>Devices</code> › <code>Devices</code>.</li>
+                        <li>Pulse el botón verde <strong>+ Add</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/devices-list.png" alt="Lista de Dispositivos" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-list-dashes&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/devices-list.png]</p></div>'">
+                    </figure>
+
+                    <ol start="3">
+                        <li>Escriba el nombre único del dispositivo (ej. <code>SW-CORE-01</code>).</li>
+                        <li>Seleccione el <strong>Device Role</strong> o función de red (Switch, Router, OLT, Antena).</li>
+                        <li>Vincule el <strong>Device Type</strong> (fabricante y modelo del catálogo indexado).</li>
+                        <li>Asigne obligatoriamente el <strong>Sitio (Site)</strong> donde se encuentra operando el equipo.</li>
+                        <li>Complete de forma opcional el rack de montaje, la posición exacta, número de serie de fábrica y pulse <strong>Save</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/device-add.png" alt="Agregar Dispositivo" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-browser&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/device-add.png]</p></div>'">
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="netbox-sec4">
+                    <h2>4. Gestión del Direccionamiento IP (Módulo IPAM)</h2>
+                    <p>El núcleo IPAM permite amarrar de manera exacta direcciones de red IPv4/IPv6 a las interfaces de los dispositivos.</p>
+                    <h5 class="mt-4 text-accent">¿Cómo asignar una dirección IP a una interfaz?</h5>
+                    <ol>
+                        <li>Navegue a <code>IPAM</code> › <code>IP Addresses</code>.</li>
+                        <li>Haga clic en <strong>+ Add</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/ip-list.png" alt="Lista de Direcciones IP" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-list-dashes&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/ip-list.png]</p></div>'">
+                    </figure>
+
+                    <ol start="3">
+                        <li>Ingrese la dirección IP en formato CIDR (ej. <code>192.168.1.1/24</code>).</li>
+                        <li>Seleccione el Status en el que se encuentra (<em>Active, Reserved, Deprecated</em>).</li>
+                        <li>Busque el dispositivo y seleccione la interfaz correspondiente.</li>
+                        <li>Guarde con <strong>Save</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/ip-add.png" alt="Agregar Dirección IP" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-browser&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/ip-add.png]</p></div>'">
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="netbox-sec5">
+                    <h2>5. Registro de Conexiones Físicas (Cables)</h2>
+                    <p>Permite documentar las interconexiones l1 de fibra, radioenlaces o par de cobre punto a punto entre la infraestructura.</p>
+                    <h5 class="mt-4 text-accent">¿Cómo registrar una conexión entre dispositivos?</h5>
+                    <ol>
+                        <li>Abra el dispositivo origen desde <code>Devices</code> › <code>Devices</code>.</li>
+                        <li>Haga clic en la pestaña "Interfaces".</li>
+                        <li>Junto a la interfaz deseada, haga clic en el ícono de cable (🔌).</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/cables-interfaces.png" alt="Conexión de Interfaces" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-plugs-connected&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/cables-interfaces.png]</p></div>'">
+                    </figure>
+
+                    <ol start="4">
+                        <li>Seleccione el tipo de cable (CAT5e, CAT6, Fibra, DAC, etc.).</li>
+                        <li>Busque y seleccione el dispositivo y la interfaz destino.</li>
+                        <li>Opcionalmente, ingrese el color, longitud y etiqueta del cable.</li>
+                        <li>Haga clic en <strong>Save</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/cables-form.png" alt="Formulario de Cable" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-browser&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/cables-form.png]</p></div>'">
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="netbox-sec6">
+                    <h2>6. Gestión de Gabinetes (Racks) y Control de Acceso (RBAC)</h2>
+                    
+                    <h5 class="text-accent">6.1 Creación y Gestión de Racks (Gabinetes):</h5>
+                    <p>Mapea la distribución en espacio de los nodos.</p>
+                    
+                    <h5 class="mt-4 text-accent">¿Cómo crear y gestionar un rack?</h5>
+                    <ol>
+                        <li>Navegue a <code>DCIM</code> › <code>Racks</code>.</li>
+                        <li>Haga clic en <strong>+ Add</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/rack-list.png" alt="Lista de Racks" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-list-dashes&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/rack-list.png]</p></div>'">
+                    </figure>
+
+                    <ol start="3">
+                        <li>Asigne un nombre descriptivo al rack (ej. <code>RACK-DC-01</code>).</li>
+                        <li>Seleccione el Sitio donde está ubicado.</li>
+                        <li>Ingrese las dimensiones: altura en U, profundidad y ancho.</li>
+                        <li>Guarde con <strong>Save</strong>.</li>
+                        <li>Para agregar dispositivos al rack, edite cada dispositivo y asigne el rack y la posición en U.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/rack-form.png" alt="Formulario de Rack" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-browser&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/rack-form.png]</p></div>'">
+                    </figure>
+
+                    <h5 class="mt-4 text-accent">6.2 Administración de Usuarios y Privilegios (Seguridad):</h5>
+                    <p>NetBox permite controlar el acceso a la plataforma mediante usuarios, grupos y permisos granulares. El administrador puede definir exactamente qué puede ver y modificar cada usuario según su rol.</p>
+
+                    <h5 class="mt-4 text-accent">Tipos de acceso disponibles:</h5>
+                    <ul>
+                        <li class="mb-2"><strong>Administrador (Staff):</strong> acceso total a todas las funciones.</li>
+                        <li class="mb-2"><strong>Operador de red:</strong> puede agregar y modificar dispositivos e IPs.</li>
+                        <li class="mb-2"><strong>Solo lectura:</strong> puede consultar el inventario sin modificarlo.</li>
+                        <li class="mb-2"><strong>Personalizado:</strong> permisos configurados por módulo específico.</li>
+                    </ul>
+
+                    <h5 class="mt-4 text-accent">¿Cómo crear un usuario?</h5>
+                    <ol>
+                        <li>Navegue a <code>Admin</code> › <code>Users</code> (requiere acceso de administrador).</li>
+                        <li>Haga clic en <strong>+ Add</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/users-list.png" alt="Lista de Usuarios" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-list-dashes&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/users-list.png]</p></div>'">
+                    </figure>
+
+                    <ol start="3">
+                        <li>Complete el nombre de usuario, correo electrónico y contraseña.</li>
+                        <li>Asigne el usuario a los grupos correspondientes.</li>
+                        <li>Configure los permisos individuales si es necesario.</li>
+                        <li>Guarde con <strong>Save</strong>.</li>
+                    </ol>
+
+                    <figure class="text-center my-4">
+                        <img src="images/netbox/user-form.png" alt="Formulario de Usuario" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-browser&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/netbox/user-form.png]</p></div>'">
+                    </figure>
+                </section>
+                <div class="mt-5 mb-4 text-center">
+                    <h3 class="text-accent">VI. Zabbix</h3>
+                    <p class="text-muted">Manual de Operación, Monitoreo y Diagnóstico — JAH WIFI</p>
+                </div>
+
+                <section class="manual-section" id="zabbix-intro">
+                    <h2>Manual de Operación de Zabbix</h2>
+                    <p>Este manual proporciona una guía detallada para la operación, monitoreo y diagnóstico de la infraestructura de red utilizando la plataforma Zabbix. Este documento está diseñado exclusivamente para el personal técnico encargado de la supervisión de los equipos y enlaces de red.</p>
+                </section>
+
+                <section class="manual-section" id="zabbix-sec1">
+                    <h2>1. Interfaz y Navegación</h2>
+                    <p>El menú lateral de Zabbix permite el acceso a las funciones principales. Asegúrese de familiarizarse con los módulos de <strong>"Monitoring"</strong> para la visualización en tiempo real y <strong>"Data collection"</strong> para la gestión física de los dispositivos.</p>
+                    
+                    <figure class="text-center my-4">
+                        <img src="images/zabbix/visual-interface.png" alt="Interfaz de Monitoreo" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-gauge&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/zabbix/visual-interface.png]</p></div>'">
+                        <figcaption><strong>Figura ZABBIX.1:</strong> Vista de la consola de Monitoreo JAHWIFI en Zabbix.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="zabbix-sec2">
+                    <h2>2. Gestión de Inventario (Hosts)</h2>
+                    <p>Para visualizar el estado de salud de los equipos de core y distribución (MikroTik/Cisco), acceda a la sección de hosts. Utilice los filtros avanzados para buscar por grupo, dirección IP, nombre de equipo o severidad, permitiendo identificar rápidamente dispositivos con problemas o alarmas activas.</p>
+
+                    <figure class="text-center my-4">
+                        <img src="images/zabbix/hosts-list.png" alt="Gestión de Inventario" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-cpu&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/zabbix/hosts-list.png]</p></div>'">
+                        <figcaption><strong>Figura ZABBIX.2:</strong> Listado jerárquico de Hosts con métricas de disponibilidad y direccionamiento.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="zabbix-sec3">
+                    <h2>3. Vista de Topología</h2>
+                    <p>La plataforma cuenta con un mapa interactivo para el reconocimiento lógico de las dependencias. Un estado de color dinámico ayuda al operador en el triaje preliminar frente a eventos de caídas en cascada. Un estado <strong>"OK" en color verde</strong> indica conectividad operativa ideal. Cualquier cambio de color o variación de icono en los nodos requiere investigación inmediata por el técnico en turno.</p>
+
+                    <figure class="text-center my-4">
+                        <img src="images/zabbix/topology-map.png" alt="Vista Esquematica de Topología" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-tree-structure&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/zabbix/topology-map.png]</p></div>'">
+                        <figcaption><strong>Figura ZABBIX.3:</strong> Mapa esquemático de interconexiones operacionales e hilos de fibra.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="zabbix-sec4">
+                    <h2>4. Dashboards de Consumo</h2>
+                    <p>Zabbix centraliza el monitoreo de tráfico a través de dashboards de alta densidad de datos personalizados. Utilice los dashboards específicos según el tipo de segmento a auditar:</p>
+                    <ul>
+                        <li class="mb-2"><strong>Consumos Dedicados:</strong> Diseñado para analizar el ancho de banda histórico y actual en interfaces WAN dedicadas (ej. Ebenezerred, San Diego Zacatecas, Alamo Juan Rosales).</li>
+                        <li class="mb-2"><strong>Consumos STRIN:</strong> Panel analítico de tráfico enfocado en subredes de distribución agregadas y enlaces troncales (ej. Strin Teocal - Nochistlán, Totales La Chona).</li>
+                    </ul>
+
+                    <div class="row my-4">
+                        <div class="col-md-6 mb-3 mb-md-0 text-center">
+                            <img src="images/zabbix/consumos-dedicados.png" alt="Dashboard de Consumos Dedicados" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot; style=&quot;min-height: 180px;&quot;><i class=&quot;ph ph-chart-line&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/zabbix/consumos-dedicados.png]</p></div>'">
+                            <figcaption class="text-muted"><strong>Figura ZABBIX.4a:</strong> Gráficas de tráfico en Dashboard de Consumos Dedicados.</figcaption>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <img src="images/zabbix/consumos-strin.png" alt="Dashboard de Consumos STRIN" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot; style=&quot;min-height: 180px;&quot;><i class=&quot;ph ph-chart-donut shadow-sm&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/zabbix/consumos-strin.png]</p></div>'">
+                            <figcaption class="text-muted"><strong>Figura ZABBIX.4b:</strong> Dashboard de Consumos STRIN con distribución radial de Gbps.</figcaption>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="manual-section" id="zabbix-sec5">
+                    <h2>5. Diagnóstico de Interfaces</h2>
+                    <p>Para verificar el estado específico y el rendimiento por puerto de las interfaces físicas o lógicas (SFP, Bonding, Ethernet), utilice la vista avanzada de <strong>"Latest data"</strong> filtrada rigurosamente por host. Esto permite confirmar si un enlace se encuentra en estado <strong>"up" (1)</strong> o <strong>"down" (2)</strong> en tiempo real junto con el tiempo transcurrido desde su última verificación.</p>
+
+                    <figure class="text-center my-4">
+                        <img src="images/zabbix/latest-data.png" alt="Latest Data Interfaces" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-activity&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/zabbix/latest-data.png]</p></div>'">
+                        <figcaption><strong>Figura ZABBIX.5:</strong> Vista de telemetría de telemetría síncrona "Latest data" de interfaces de red.</figcaption>
+                    </figure>
+                </section>
+
+                <section class="manual-section" id="zabbix-sec6">
+                    <h2>6. Salud del Servidor Zabbix</h2>
+                    <p>Es indispensable monitorear el rendimiento del propio servidor Zabbix mediante el dashboard de telemetría interna <strong>"Zabbix server health"</strong>. El operador debe vigilar de manera permanente las siguientes métricas críticas para asegurar que el sistema de monitoreo no presente latencias operativas o pérdida de payloads:</p>
+                    <ul>
+                        <li class="mb-2"><strong>Values processed per second:</strong> Cantidad de variables telemétricas procesadas e indexadas por el motor por segundo.</li>
+                        <li class="mb-2"><strong>Cache usage:</strong> Niveles de memoria RAM consumida por los buffers del despachador interno.</li>
+                        <li class="mb-2"><strong>Queue size:</strong> El tamaño de la cola de elementos en espera de verificación; un incremento anómalo representa retrasos de red o hosts caídos.</li>
+                    </ul>
+
+                    <figure class="text-center my-4">
+                        <img src="images/zabbix/server-health.png" alt="Zabbix Server Health Dashboard" class="img-fluid rounded border border-secondary shadow-sm mb-2" onerror="this.outerHTML='<div class=&quot;figure-placeholder&quot;><i class=&quot;ph ph-heartbeat&quot;></i><p class=&quot;text-muted mt-2 mb-0&quot; style=&quot;font-size: 0.85rem;&quot;>[Requiere: images/zabbix/server-health.png]</p></div>'">
+                        <figcaption><strong>Figura ZABBIX.6:</strong> Consola unificada de salud de hardware y colas del Servidor Zabbix.</figcaption>
+                    </figure>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-4 border-top" style="border-color: var(--border-color) !important; background: var(--bg-base);">
+        <div class="container text-center text-muted">
+            <p class="mb-0">© 2026 JAH Nexus. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const sections = document.querySelectorAll('.manual-section');
+
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase().trim();
+
+                sections.forEach(section => {
+                    const text = section.innerText.toLowerCase();
+                    if (text.includes(query) || query === '') {
+                        section.classList.remove('hidden-section');
+                    } else {
+                        section.classList.add('hidden-section');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

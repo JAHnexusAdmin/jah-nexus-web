@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jah-NOC | Consola Central de Operaciones de Red para ISPs</title>
+    <meta name="description" content="Jah-NOC es la consola central de operaciones de red de JAH Nexus. Panel unificado para redirecciones de tráfico, soporte L1/L2, bitácora de eventos y revisión granular de clientes.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        :root {
+            /* Tokens de diseño globales unificados JAH Nexus - Dark Mode */
+            --bg-base: #0B0E14;
+            --bg-card: #151A23;
+            --bg-card-hover: #1C232E;
+            --brand-blue: #1C64F2;
+            --brand-blue-hover: #154DBC;
+            --brand-navy: #051B44;
+            --text-main: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-radius-lg: 24px;
+            --border-radius-md: 16px;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+
+            /* Configuración del Énfasis Temático del Módulo (Azul Comando NOC) */
+            --accent: #3B82F6;
+            --accent-dim: rgba(59, 130, 246, 0.12);
+            --accent-glow: rgba(59, 130, 246, 0.25);
+            --hover-border: rgba(59, 130, 246, 0.35);
+            --hover-shadow: 0 20px 60px rgba(59, 130, 246, 0.08);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Jerarquía Tipográfica Estándar */
+        h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: -0.03em; }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #FFFFFF 0%, #A5B4CB 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-accent {
+            background: linear-gradient(135deg, #3B82F6 0%, #93C5FD 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-brand { color: var(--brand-blue); }
+
+        /* Componentes de Interacción: Botones Unificados de Ecosistema */
+        .btn-brand, .btn-accent, .btn-outline-ghost {
+            padding: 14px 32px;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+        }
+
+        .btn-brand {
+            background-color: var(--brand-blue);
+            color: white;
+        }
+        .btn-brand:hover {
+            background-color: var(--brand-blue-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(28, 100, 242, 0.3);
+            color: white;
+        }
+
+        .btn-accent {
+            background-color: var(--brand-blue);
+            color: white;
+        }
+        .btn-accent:hover {
+            background-color: var(--brand-blue-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(28, 100, 242, 0.3);
+            color: white;
+        }
+
+        .btn-outline-ghost {
+            background-color: transparent;
+            color: white;
+            border: 1px solid var(--border-color);
+            font-weight: 600;
+        }
+        .btn-outline-ghost:hover {
+            background-color: var(--bg-card);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* Capa Navbar de Alto Rendimiento (Zero Layout Thrashing) */
+        .navbar {
+            background-color: rgba(11, 14, 20, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            will-change: background-color, box-shadow;
+        }
+
+        .navbar.navbar-scrolled {
+            background-color: rgba(11, 14, 20, 0.97);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white !important;
+            text-decoration: none;
+        }
+        .logo-icon { color: var(--brand-blue); font-size: 1.8rem; }
+        
+        .nav-link {
+            color: var(--text-muted) !important;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin: 0 10px;
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.active { color: white !important; }
+
+        .dropdown-menu { background-color: var(--bg-card) !important; border-color: var(--border-color) !important; }
+        .dropdown-item { color: var(--text-muted); font-size: 0.9rem; }
+        .dropdown-item:hover { background-color: var(--bg-card-hover); color: white; }
+
+        /* Form Controls unificados para modales funcionales */
+        .form-control, .form-select {
+            background-color: var(--bg-base);
+            border: 1px solid var(--border-color);
+            color: white !important;
+            border-radius: var(--border-radius-md);
+            padding: 12px 16px;
+            transition: border-color 0.2s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: var(--bg-base);
+            border-color: var(--brand-blue);
+            box-shadow: 0 0 0 3px rgba(28, 100, 242, 0.2);
+            outline: none;
+        }
+
+        /* Estructura de Secciones Basales */
+        .section-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            color: var(--brand-blue);
+        }
+        .section-title { font-size: clamp(1.8rem, 3vw, 2.8rem); margin-bottom: 16px; }
+        .section-subtitle { color: var(--text-muted); max-width: 580px; line-height: 1.6; }
+
+        /* Componente Hero Estructural */
+        .hero-section {
+            padding: 160px 0 40px;
+            position: relative;
+        }
+        .hero-glow {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70vw;
+            height: 70vw;
+            z-index: 0;
+            pointer-events: none;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(28,100,242,0.14) 0%, rgba(11,14,20,0) 65%);
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            background: rgba(28,100,242,0.1);
+            border: 1px solid rgba(28,100,242,0.3);
+            color: var(--brand-blue);
+        }
+        .hero-title { font-size: clamp(2.8rem, 6vw, 5rem); line-height: 1.05; margin-bottom: 24px; }
+        .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; line-height: 1.7; }
+
+        /* Panel Consolidador de Métricas */
+        .stats-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 32px 40px;
+            margin-top: 60px;
+        }
+        .stat-number { font-size: 2.2rem; font-weight: 800; line-height: 1; color: var(--brand-blue); }
+        .stat-label { color: var(--text-muted); font-size: 0.85rem; margin-top: 6px; }
+        .stat-divider { width: 1px; background: var(--border-color); align-self: stretch; }
+
+        /* Grid Asimétrico Bento */
+        .features-section { padding: 40px 0 100px; }
+        .bento-grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
+
+        @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(2, 1fr); } }
+
+
+        /* Tarjetas Bento del Ecosistema */
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+        .feature-card:hover {
+            border-color: var(--hover-border);
+            background: var(--bg-card-hover);
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-card.accent-card {
+            background: linear-gradient(145deg, var(--bg-card) 0%, rgba(28,100,242,0.07) 100%);
+            border-color: rgba(28,100,242,0.25) !important;
+        }
+
+        .feat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+        .feat-title { font-size: 1.15rem; font-weight: 700; color: white; margin: 0; }
+        .feat-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin: 0; flex-grow: 1; }
+        
+        .tag-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; }
+        .tag-main { background: var(--accent-dim); color: var(--accent); }
+
+        /* Consola de Simulación Operativa de Nodos sin Atributos Inline */
+        .console-bars-container { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+        
+        .console-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+        .console-bar:hover { border-color: rgba(28,100,242,0.3); background: var(--bg-card-hover); }
+        .console-bar-text { font-size: 0.85rem; color: var(--text-muted); }
+        .console-bar-badge { font-size: 0.7rem; }
+        
+        /* Semántica Estricta de Estados de Telemetría */
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .status-ok { background: #22C55E; }
+        .status-warn { background: #F59E0B; }
+        .status-err { background: #EF4444; }
+        
+        .badge-warn { background: rgba(245,158,11,0.1); color: #F59E0B; }
+        .badge-err { background: rgba(239,68,68,0.1); color: #EF4444; }
+
+        /* Flujo de Operación (Workflow Sections) */
+        .workflow-section { padding: 80px 0 100px; }
+        .workflow-step {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            padding: 28px 32px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            transition: all 0.3s ease;
+        }
+        .workflow-step:hover { border-color: rgba(28,100,242,0.3); }
+        .workflow-step h5 { font-weight: 700; margin-bottom: 8px; }
+        .workflow-step p { color: var(--text-muted); margin: 0; font-size: 0.92rem; }
+
+        .step-num {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            background: rgba(28,100,242,0.1);
+            border: 1px solid rgba(28,100,242,0.3);
+            color: var(--brand-blue);
+        }
+
+        /* Sección Autónoma Call to Action */
+        .cta-section { padding: 100px 0; }
+        .cta-card {
+            border-radius: var(--border-radius-lg);
+            padding: 80px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #070F2A 0%, rgba(28,100,242,0.1) 100%);
+            border: 1px solid rgba(28,100,242,0.35);
+        }
+        .cta-container { position: relative; z-index: 1; }
+        .cta-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            pointer-events: none;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(28,100,242,0.12) 0%, transparent 70%);
+        }
+        .cta-title { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 16px; }
+        .cta-subtitle { color: var(--text-muted); max-width: 500px; margin: 0 auto 40px; line-height: 1.6; }
+
+        /* Pie de Página */
+        footer { border-top: 1px solid var(--border-color); padding: 60px 0 30px; background-color: #05070a; }
+        .footer-logo { font-size: 1.2rem; font-weight: 800; color: white; text-decoration: none; display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+        .footer-heading { color: white; font-size: 1rem; margin-bottom: 20px; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--brand-blue); }
+        .hover-white { transition: color 0.2s ease; }
+        .hover-white:hover { color: #FFFFFF !important; }
+        .footer-bottom { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+
+        @media (max-width: 768px) { .stats-bar { padding: 24px; } .cta-card { padding: 50px 24px; } .workflow-step { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+    <div id="top-sentinel" style="position: absolute; top: 0; left: 0; width: 100%; height: 1px; pointer-events: none;"></div>
+
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="ph-fill ph-graph logo-icon" aria-hidden="true"></i>
+                JAH <span style="font-weight: 400;">NEXUS</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir panel operativo de control NOC" style="border-color: var(--border-color);">
+                <i class="ph ph-list" style="color: white; font-size: 1.5rem;" aria-hidden="true"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ecosistema</a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="sentinel.html">JAH Sentinel</a></li>
+                            <li><a class="dropdown-item" style="color: var(--brand-blue);" href="noc.html">Jah-NOC</a></li>
+                            <li><a class="dropdown-item" href="central.html">Jah Central</a></li>
+                            <li><a class="dropdown-item" href="paycontrol.html">JahPayControl</a></li>
+                            <li><hr class="dropdown-divider" style="border-color: var(--border-color);"></li>
+                            <li><a class="dropdown-item" href="zabbix.html">Telemetría Zabbix</a></li>
+                            <li><a class="dropdown-item" href="netbox.html">DCIM NetBox</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                        <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" class="btn-brand text-decoration-none">Agendar llamada</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-glow"></div>
+        <div class="container position-relative" style="z-index: 1;">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-9">
+                    <div class="hero-badge"><i class="ph-fill ph-desktop-tower" aria-hidden="true"></i> Operaciones SYS-01</div>
+                    <h1 class="hero-title"><span class="text-gradient">Control total.</span><br><span class="text-accent">Jah-NOC en el centro del comando.</span></h1>
+                    <p class="hero-subtitle mx-auto">La consola de operaciones de red que unifica todo lo que tu equipo necesita en una sola pantalla. Redirecciones de tráfico, soporte de Nivel 1 y 2, bitácora de eventos y revisión granular de clientes — sin saltar entre herramientas.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                        <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" class="btn-accent text-decoration-none">Agendar llamada</a>
+                        <a href="#features" class="btn-outline-ghost">Ver Funciones</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-bar">
+                <div class="row g-4 align-items-center">
+                    <div class="col-6 col-md-3 text-center"><div class="stat-number">1 Panel</div><div class="stat-label">Single pane of glass operativo</div></div>
+
+                    <div class="col-6 col-md-3 text-center"><div class="stat-number">L1/L2</div><div class="stat-label">Soporte técnico integrado</div></div>
+
+                    <div class="col-6 col-md-3 text-center"><div class="stat-number">100%</div><div class="stat-label">Trazabilidad de eventos</div></div>
+
+                    <div class="col-6 col-md-3 text-center"><div class="stat-number">Real-time</div><div class="stat-label">Estado de clientes y nodos</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="row mb-5 align-items-center">
+                <div class="col-lg-7">
+                    <span class="section-label">Módulo SYS-01</span>
+                    <h2 class="section-title text-gradient">La consola que tu equipo NOC siempre necesitó</h2>
+                    <p class="section-subtitle">Diseñado en colaboración con operadores de red reales. Cada panel, cada acción, cada vista optimizada para reducir el tiempo de respuesta y eliminar los errores manuales.</p>
+                </div>
+                <div class="col-lg-5 text-center text-lg-end d-none d-lg-block position-relative">
+                    <img src="images/noc/form-quitar.png" alt="Interfaz NOC" class="img-fluid rounded-4 shadow-lg border border-secondary" style="border-color: rgba(255,255,255,0.1) !important; transform: perspective(800px) rotateY(-10deg) rotateX(2deg) translateY(10px); max-height: 220px; opacity: 0.9; box-shadow: -20px 20px 60px rgba(28,100,242,0.15) !important;">
+                </div>
+            </div>
+            <div class="bento-grid">
+                
+                <div class="feature-card accent-card">
+                    <div class="d-flex align-items-start gap-4 flex-wrap">
+                        <div class="feat-icon"><i class="ph-fill ph-arrows-split" aria-hidden="true"></i></div>
+                        <div class="flex-grow-1">
+                            <span class="tag-pill tag-main mb-2 d-inline-block">Tráfico</span>
+                            <h3 class="feat-title mb-2">Panel de Redirecciones de Tráfico</h3>
+                            <p class="feat-desc">Desde Jah-NOC puedes aplicar desvíos de tráfico en segundos: redirige clientes entre nodos de acceso, redistribuye carga entre backbones durante mantenimientos y aplica políticas de QoS por segmento de red. Cada cambio queda registrado en la bitácora con el usuario, timestamp y justificación. Nunca más "¿quién hizo ese cambio?"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="console-bars-container">
+                        <div class="console-bar">
+                            <div class="status-dot status-ok"></div>
+                            <span class="console-bar-text">Nodo Oriente-A — 847 clientes activos — Carga: 34%</span>
+                            <span class="ms-auto tag-pill tag-main console-bar-badge">ESTABLE</span>
+                        </div>
+                        <div class="console-bar">
+                            <div class="status-dot status-warn"></div>
+                            <span class="console-bar-text">Nodo Centro-B — 1,234 clientes — Carga: 89%</span>
+                            <span class="ms-auto tag-pill badge-warn console-bar-badge">ALTO</span>
+                        </div>
+                        <div class="console-bar">
+                            <div class="status-dot status-err"></div>
+                            <span class="console-bar-text">Nodo Norte-C — Sin señal desde hace 12 min</span>
+                            <span class="ms-auto tag-pill badge-err console-bar-badge">ALERTA</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feat-icon"><i class="ph-fill ph-user-circle" aria-hidden="true"></i></div>
+                    <h3 class="feat-title">Revisión Granular de Clientes</h3>
+                    <p class="feat-desc">Ficha completa del suscriptor: historial de incidentes, estado de ONT, velocidad en tiempo real, IP asignada, plan contratado y bitácora. Todo en un solo clic desde la consola NOC.</p>
+                    
+                    <div class="mt-auto mb-4 p-3 rounded" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color);">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="status-dot status-ok me-2" style="box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);"></div>
+                            <span style="font-size: 0.85rem; color: var(--text-main); font-weight: 600;">ONT-ZTE-0912</span>
+                            <span class="ms-auto" style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">IP: 10.168.2.254</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-4">
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between mb-2" style="font-size: 0.75rem; font-weight: 600;">
+                                    <span style="color: var(--text-muted);">Rx (Down)</span>
+                                    <span style="color: #22C55E;">124 Mbps</span>
+                                </div>
+                                <div class="progress" style="height: 4px; background: rgba(255,255,255,0.05);">
+                                    <div class="progress-bar" style="width: 85%; background: #22C55E;"></div>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between mb-2" style="font-size: 0.75rem; font-weight: 600;">
+                                    <span style="color: var(--text-muted);">Tx (Up)</span>
+                                    <span style="color: var(--accent);">45 Mbps</span>
+                                </div>
+                                <div class="progress" style="height: 4px; background: rgba(255,255,255,0.05);">
+                                    <div class="progress-bar" style="width: 45%; background: var(--accent);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="tag-pill tag-main align-self-start">360° del Cliente</span>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feat-icon"><i class="ph-fill ph-git-diff" aria-hidden="true"></i></div>
+                    <h3 class="feat-title">Aplicación de Desvíos</h3>
+                    <p class="feat-desc">Ejecuta desvíos de tráfico de emergencia con flujos de trabajo guiados: selecciona el segmento, elige el nodo de destino, revisa el impacto estimado y aplica el cambio en tiempo real.</p>
+                    
+                    <div class="mt-auto mb-4 d-flex align-items-center justify-content-between p-3 rounded" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color);">
+                        <div class="text-center">
+                            <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Origen</div>
+                            <div class="tag-pill tag-main" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white;">VLAN 100</div>
+                        </div>
+                        <div class="text-center flex-grow-1 px-3 position-relative">
+                            <div style="height: 2px; background: repeating-linear-gradient(90deg, var(--accent), var(--accent) 4px, transparent 4px, transparent 8px); opacity: 0.5;"></div>
+                            <i class="ph-fill ph-arrow-circle-right position-absolute top-50 start-50 translate-middle" style="color: var(--accent); font-size: 1.5rem; background: var(--bg-card); padding: 0 4px;"></i>
+                        </div>
+                        <div class="text-center">
+                            <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Destino</div>
+                            <div class="tag-pill badge-warn" style="border: 1px solid rgba(245,158,11,0.2);">BGP-WAN-2</div>
+                        </div>
+                    </div>
+
+                    <span class="tag-pill tag-main align-self-start">Desvíos Guiados</span>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feat-icon"><i class="ph-fill ph-list-checks" aria-hidden="true"></i></div>
+                    <h3 class="feat-title">Bitácora de Eventos Auditada</h3>
+                    <p class="feat-desc">Cada acción ejecutada en Jah-NOC queda registrada: configuraciones aplicadas, tickets abiertos, desvíos activados, cambios de estado. Filtrado por usuario, fecha, tipo de evento y nodo afectado. Cumplimiento regulatorio garantizado.</p>
+                    <span class="tag-pill tag-main">Auditoría Completa</span>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feat-icon"><i class="ph-fill ph-headset" aria-hidden="true"></i></div>
+                    <h3 class="feat-title">Herramientas de Soporte Nivel 1</h3>
+                    <p class="feat-desc">Scripts de diagnóstico con un clic: ping, traceroute, diagnóstico ONT, reset de PPPoE, verificación de señal óptica. El agente de soporte resuelve en la primera llamada sin escalar. Tiempo de resolución L1 reducido en un 55%.</p>
+                    <span class="tag-pill tag-main">L1 Toolkit</span>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feat-icon"><i class="ph-fill ph-shield-check" aria-hidden="true"></i></div>
+                    <h3 class="feat-title">Escalación Inteligente a Nivel 2</h3>
+                    <p class="feat-desc">Cuando un caso supera la capacidad L1, Jah-NOC transfiere el ticket al ingeniero de red correcto, adjuntando automáticamente el diagnóstico realizado, historial del nodo y logs relevantes. Cero pérdida de contexto en la escalación.</p>
+                    <span class="tag-pill tag-main">Escalación L2</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="workflow-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="section-label">Flujo de Operación</span>
+                <h2 class="section-title text-gradient">De la alerta a la resolución en minutos</h2>
+                <p class="section-subtitle mx-auto">Jah-NOC estructura el caos operativo en un protocolo claro y repetible que cualquier operador puede seguir.</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="d-flex flex-column gap-4">
+                        <div class="workflow-step">
+                            <div class="step-num">01</div>
+                            <div>
+                                <h5>Detección y Clasificación Automática</h5>
+                                <p>Jah-NOC recibe alertas de Zabbix y JAH Sentinel, las clasifica por severidad y las asigna al operador de turno con contexto completo ya incluido.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">02</div>
+                            <div>
+                                <h5>Diagnóstico desde la Consola</h5>
+                                <p>El operador ejecuta las herramientas de diagnóstico integradas sin salir de la interfaz: ping, OLT status, estado de sesiones PPPoE y análisis de interfaz.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">03</div>
+                            <div>
+                                <h5>Acción: Desvío, Remediación o Escalación</h5>
+                                <p>Según el diagnóstico, el operador aplica el desvío de tráfico, ejecuta la solución o escala a L2 con toda la información necesaria empaquetada en el ticket.</p>
+                            </div>
+                        </div>
+                        <div class="workflow-step">
+                            <div class="step-num">04</div>
+                            <div>
+                                <h5>Cierre y Registro en Bitácora</h5>
+                                <p>El caso se cierra con causa raíz documentada, acciones tomadas y tiempo de resolución registrado. Los datos alimentan los reportes de SLA mensuales automáticamente.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-glow"></div>
+                <div class="cta-container">
+                    <div class="hero-badge" style="margin-bottom:24px;"><i class="ph-fill ph-desktop-tower" aria-hidden="true"></i> Jah-NOC — Módulo SYS-01</div>
+                    <h2 class="cta-title text-gradient">Unifica las operaciones de tu red hoy.</h2>
+                    <p class="cta-subtitle">Contáctanos para una demostración en vivo de Jah-NOC. Te mostramos cómo tu equipo pasaría a operar desde el día uno.</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                        <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" class="btn-accent text-decoration-none"><i class="ph-bold ph-calendar-check me-2" aria-hidden="true"></i>Agendar llamada</a>
+                        <a href="index.html" class="btn-outline-ghost"><i class="ph-bold ph-arrow-left me-2" aria-hidden="true"></i>Ver Todo el Ecosistema</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 pe-lg-5">
+                    <a href="index.html" class="footer-logo">
+                        <i class="ph-fill ph-graph" style="color:var(--brand-blue);" aria-hidden="true"></i>
+                        JAH NEXUS
+                    </a>
+                    <p class="mb-4" style="font-size:.9rem;color:var(--text-muted);">División tecnológica nacida en las trincheras de las telecomunicaciones. Empoderando ISPs en América Latina con herramientas nivel Enterprise.</p>
+                    <div class="d-flex gap-3">
+                        <a href="https://instagram.com/jahwifi.ags" target="_blank" rel="noopener" class="text-decoration-none hover-white" style="color:var(--text-muted);" aria-label="Visitar el perfil corporativo de Instagram de JAH Nexus">
+                            <i class="ph-bold ph-instagram-logo fs-4" aria-hidden="true"></i>
+                        </a>
+                        <a href="mailto:contacto@jahnexus.mx" class="text-decoration-none hover-white" style="color:var(--text-muted);" aria-label="Enviar un correo técnico a la mesa de operaciones central">
+                            <i class="ph-bold ph-envelope fs-4" aria-hidden="true"></i>
+                        </a>
+                        <a href="tel:+524493134110" class="text-decoration-none hover-white" style="color:var(--text-muted);" aria-label="Llamar a soporte técnico instantáneo de JAH Nexus">
+                            <i class="ph-bold ph-whatsapp-logo fs-4" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 offset-lg-1">
+                    <h6 class="footer-heading">Módulos</h6>
+                    <ul class="footer-links">
+                        <li><a href="sentinel.html">JAH Sentinel</a></li>
+                        <li><a href="noc.html">Jah-NOC</a></li>
+                        <li><a href="central.html">Jah Central</a></li>
+                        <li><a href="paycontrol.html">JahPayControl</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-4">
+                    <h6 class="footer-heading">Contacto</h6>
+                    <ul class="footer-links" style="font-size:.9rem;">
+                        <li class="d-flex gap-2" style="color:var(--text-muted);"><i class="ph-bold ph-map-pin mt-1" style="color:var(--brand-blue);" aria-hidden="true"></i> Heroe de Nacozari 189 1, Barrio de la Estación, CP 20259</li>
+                        <li class="d-flex gap-2 mt-3" style="color:var(--text-muted);"><i class="ph-bold ph-envelope mt-1" style="color:var(--brand-blue);" aria-hidden="true"></i> contacto@jahnexus.mx</li>
+                        <li class="d-flex gap-2 mt-2" style="color:var(--text-muted);"><i class="ph-bold ph-phone mt-1" style="color:var(--brand-blue);" aria-hidden="true"></i> +52 449 313 4110</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>&copy; 2024 JAH Nexus. Todos los derechos reservados.</div>
+                <div class="d-flex gap-3">
+                    <a href="#" style="color:var(--text-muted);text-decoration:none;">Privacidad</a>
+                    <a href="#" style="color:var(--text-muted);text-decoration:none;">Términos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="demoModal" tabindex="-1" aria-labelledby="demoModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-start" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--border-radius-lg);">
+                <div class="modal-header border-0 pb-0 justify-content-between align-items-center" style="padding: 32px 32px 0;">
+                    <h4 class="modal-title text-gradient" id="demoModalTitle">Implementar Consola Jah-NOC</h4>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar modal"></button>
+                </div>
+                <div class="modal-body" style="padding: 32px;">
+                    <p class="text-muted small mb-4">Unifica tus alertas de infraestructura y reduce el tiempo de resolución L1/L2. Agenda una sesión técnica guiada con nuestros ingenieros core.</p>
+                    <form id="nocLeadForm" onsubmit="event.preventDefault(); alert('Solicitud de demostración del módulo SYS-01 Jah-NOC recibida correctamente.');">
+                        <div class="mb-3">
+                            <label for="ispName" class="form-label text-white small fw-semibold">Nombre de la Empresa / ISP</label>
+                            <input type="text" class="form-control" id="ispName" placeholder="Ej. JAH WIFI" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="ispEmail" class="form-label text-white small fw-semibold">Correo Electrónico de Ingeniería</label>
+                            <input type="email" class="form-control" id="ispEmail" placeholder="noc@jahnexus.mx" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="coreRouters" class="form-label text-white small fw-semibold">Enrutadores de Core Predominantes</label>
+                            <select class="form-select" id="coreRouters">
+                                <option value="mikrotik">MikroTik (CCR Series / RouterOS)</option>
+                                <option value="huawei">Huawei Core (NE Series)</option>
+                                <option value="cisco">Cisco Systems / Juniper Networks</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-brand w-100 py-3 fw-bold">Solicitar Acceso a Consola SYS-01</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.getElementById('mainNav');
+            const topSentinel = document.getElementById('top-sentinel');
+            
+            // Reemplazo del evento scroll por IntersectionObserver (Zero Layout Thrashing)
+            if ('IntersectionObserver' in window) {
+                const navObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (!entry.isIntersecting) {
+                            nav.classList.add('navbar-scrolled');
+                        } else {
+                            nav.classList.remove('navbar-scrolled');
+                        }
+                    });
+                }, { threshold: 0 });
+                
+                navObserver.observe(topSentinel);
+            } else {
+                // Fallback pasivo no bloqueante para navegadores antiguos
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        nav.classList.add('navbar-scrolled');
+                    } else {
+                        nav.classList.remove('navbar-scrolled');
+                    }
+                }, { passive: true });
+            }
+        });
+    </script>
+</body>
+</html>
