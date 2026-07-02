@@ -1,0 +1,94 @@
+---
+// Footer.astro — Componente compartido del ecosistema JAH Nexus
+const WA_URL = "https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus.";
+---
+
+<footer>
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Columna Marca -->
+      <div class="col-lg-4 pe-lg-5">
+        <a href="/" class="footer-logo" aria-label="Ir al inicio de JAH Nexus">
+          <i class="ph-fill ph-graph text-brand" aria-hidden="true"></i>
+          JAH NEXUS
+        </a>
+        <p class="text-muted mb-4" style="font-size: 0.9rem;">
+          División tecnológica nacida en las trincheras de las telecomunicaciones.
+          Empoderando ISPs en América Latina con herramientas nivel Enterprise.
+        </p>
+        <div class="d-flex gap-3">
+          <a
+            href="https://instagram.com/jahwifi.ags"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-muted text-decoration-none hover-white"
+            aria-label="Perfil de Instagram de JAH Nexus"
+          >
+            <i class="ph-bold ph-instagram-logo fs-4" aria-hidden="true"></i>
+          </a>
+          <a
+            href="mailto:contacto@jahnexus.mx"
+            class="text-muted text-decoration-none hover-white"
+            aria-label="Enviar correo a JAH Nexus"
+          >
+            <i class="ph-bold ph-envelope fs-4" aria-hidden="true"></i>
+          </a>
+          <a
+            href={WA_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-muted text-decoration-none hover-white"
+            aria-label="Chat de WhatsApp de JAH Nexus"
+          >
+            <i class="ph-bold ph-whatsapp-logo fs-4" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna Módulos -->
+      <div class="col-6 col-lg-3 offset-lg-1">
+        <h6 class="footer-heading">Módulos</h6>
+        <ul class="footer-links">
+          <li><a href="/sentinel">JAH Sentinel</a></li>
+          <li><a href="/noc">Jah-NOC</a></li>
+          <li><a href="/central">Jah Central</a></li>
+          <li><a href="/paycontrol">JahPayControl</a></li>
+          <li><a href="/zabbix">Telemetría Zabbix</a></li>
+          <li><a href="/netbox">DCIM NetBox</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna Contacto -->
+      <div class="col-6 col-lg-4">
+        <h6 class="footer-heading">Contacto</h6>
+        <ul class="footer-links">
+          <li class="footer-contact-item mb-3">
+            <i class="ph-bold ph-map-pin footer-contact-icon" aria-hidden="true"></i>
+            <span>
+              JAH NEXUS<br>
+              Heroe de Nacozari 189 1, Barrio de la Estación, CP 20259
+            </span>
+          </li>
+          <li class="footer-contact-item mb-2">
+            <i class="ph-bold ph-envelope footer-contact-icon" aria-hidden="true"></i>
+            <span>contacto@jahnexus.mx</span>
+          </li>
+          <li class="footer-contact-item">
+            <i class="ph-bold ph-phone footer-contact-icon" aria-hidden="true"></i>
+            <span>+52 449 313 4110</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div>&copy; 2025 JAH Nexus. Todos los derechos reservados.</div>
+      <div class="d-flex gap-3">
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,272 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Telemetría Zabbix | Monitorización de Infraestructura ISP — JAH Nexus"
+  description="Integración Zabbix en JAH Nexus: monitorización SNMP de OLTs, radios y MikroTik, gráficas de tráfico, alertas de rendimiento y latencia en tiempo real para tu ISP."
+  currentPage="zabbix"
+>
+  <style slot="head" is:global>
+    :root {
+        /* Configuración del Énfasis Temático del Módulo (Ámbar de Telemetría de Red) */
+        --accent: #F59E0B;
+        --accent-dim: rgba(245, 158, 11, 0.12);
+        --accent-glow: rgba(245, 158, 11, 0.25);
+        --hover-border: rgba(245, 158, 11, 0.35);
+        --hover-shadow: 0 20px 60px rgba(245, 158, 11, 0.08);
+    }
+
+    .metric-live {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 16px 20px;
+        height: 100%;
+    }
+    .metric-live-val { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+    .metric-live-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+    
+    .chart-bar-wrap {
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+        height: 60px;
+        margin-top: 12px;
+    }
+    .chart-bar {
+        background: var(--accent-dim);
+        border-radius: 4px 4px 0 0;
+        flex: 1;
+        transition: background 0.3s;
+        height: var(--bar-height, 10%);
+    }
+    .chart-bar.hi { background: rgba(245,158,11,0.5); }
+    .chart-bar.max { background: var(--accent); }
+  </style>
+
+  <section class="hero-section">
+      <div class="hero-glow"></div>
+      <div class="container position-relative hero-content-layer">
+          <div class="row justify-content-center text-center">
+              <div class="col-lg-9">
+                  <div class="hero-badge"><i class="ph-fill ph-chart-line-up" aria-hidden="true"></i> Telemetría de Infraestructura</div>
+                  <h1 class="hero-title"><span class="text-gradient">Monitoriza todo.</span><br><span class="text-accent">Zabbix integrado al núcleo.</span></h1>
+                  <p class="hero-subtitle mx-auto">La integración de JAH Nexus con Zabbix te entrega un motor de telemetría de clase enterprise completamente configurado para infraestructura ISP: OLTs, radios, MikroTik y todo tu backbone, bajo un mismo techo de visibilidad.</p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mt-4">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="btn-brand text-center text-decoration-none">
+                      Agendar Llamada Estratégica
+                      </a>
+                      <a href="#features" class="btn-outline-ghost">Explorar Integración</a>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="stats-bar">
+              <div class="row g-4 align-items-center">
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">SNMP</div><div class="stat-label">Monitorización de todos los nodos</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">10K+</div><div class="stat-label">Métricas por nodo recolectadas</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">1 min</div><div class="stat-label">Intervalo mínimo de polling</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">365d</div><div class="stat-label">Histórico de métricas disponible</div></div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section id="features" class="features-section">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-7">
+                  <span class="section-label">Motor de Telemetría</span>
+                  <h2 class="section-title text-gradient">Visibilidad profunda de tu infraestructura</h2>
+                  <p class="section-subtitle">Zabbix integrado en JAH Nexus no es solo monitorización. Es el sistema nervioso de tu red, alineado con los flujos de trabajo de tu equipo NOC y los modelos de IA de Sentinel.</p>
+              </div>
+              <div class="col-lg-5 text-center text-lg-end d-none d-lg-block position-relative">
+                  <img src="/images/zabbix/visual-interface.png" alt="Zabbix Telemetry" class="img-fluid rounded-4 shadow-lg border img-module-preview">
+              </div>
+          </div>
+          <div class="bento-grid">
+              
+              <div class="feature-card accent-card" style="grid-column: span 2;">
+                  <div class="d-flex align-items-start gap-4 flex-wrap">
+                      <div class="feat-icon"><i class="ph-fill ph-wifi-x" aria-hidden="true"></i></div>
+                      <div class="flex-grow-1">
+                          <span class="tag-pill tag-main mb-2">SNMP Polling</span>
+                          <h3 class="feat-title mb-2">Monitorización SNMP de Toda la Infraestructura</h3>
+                          <p class="feat-desc">Templates preconfigurados para los equipos más utilizados en redes ISP de América Latina: OLTs Huawei MA5800/5600, radios Ubiquiti y Cambium, routers MikroTik CCR/RB series, switches Cisco/Juniper y concentradores PPPoE. El despliegue se realiza con auto-discovery de red, sin configuración manual host por host.</p>
+                      </div>
+                  </div>
+                  
+                  <div class="row g-3 mt-4">
+                      <div class="col-md-4">
+                          <div class="metric-live">
+                              <div class="metric-live-label">OLT MA5800 — CPU</div>
+                              <div class="metric-live-val">23%</div>
+                              <div class="chart-bar-wrap">
+                                  <div class="chart-bar" style="--bar-height: 30%;"></div>
+                                  <div class="chart-bar hi" style="--bar-height: 55%;"></div>
+                                  <div class="chart-bar" style="--bar-height: 40%;"></div>
+                                  <div class="chart-bar" style="--bar-height: 20%;"></div>
+                                  <div class="chart-bar hi" style="--bar-height: 60%;"></div>
+                                  <div class="chart-bar" style="--bar-height: 35%;"></div>
+                                  <div class="chart-bar max" style="--bar-height: 23%;"></div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="metric-live">
+                              <div class="metric-live-label">Radio Cambium — Latencia</div>
+                              <div class="metric-live-val">4.2ms</div>
+                              <div class="chart-bar-wrap">
+                                  <div class="chart-bar" style="--bar-height: 25%;"></div>
+                                  <div class="chart-bar" style="--bar-height: 30%;"></div>
+                                  <div class="chart-bar hi" style="--bar-height: 50%;"></div>
+                                  <div class="chart-bar max" style="--bar-height: 42%;"></div>
+                                  <div class="chart-bar hi" style="--bar-height: 38%;"></div>
+                                  <div class="chart-bar" style="--bar-height: 28%;"></div>
+                                  <div class="chart-bar" style="--bar-height: 30%;"></div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="metric-live">
+                              <div class="metric-live-label">MikroTik CCR — RAM</div>
+                              <div class="metric-live-val">61%</div>
+                              <div class="chart-bar-wrap">
+                                  <div class="chart-bar" style="--bar-height: 45%;"></div>
+                                  <div class="chart-bar hi" style="--bar-height: 58%;"></div>
+                                  <div class="chart-bar max" style="--bar-height: 61%;"></div>
+                                  <div class="chart-bar hi" style="--bar-height: 55%;"></div>
+                                  <div class="chart-bar" style="--bar-height: 48%;"></div>
+                                  <div class="chart-bar" style="--bar-height: 52%;"></div>
+                                  <div class="chart-bar max" style="--bar-height: 61%;"></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-chart-line" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Gráficas de Tráfico en Tiempo Real</h3>
+                  <p class="feat-desc">Gráficas de tráfico de entrada/salida por interfaz, nodo y enlace WAN. Identifica cuándo y dónde tu red se satura para planificar expansiones.</p>
+                  <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                      <img src="/images/zabbix/consumos-dedicados.png" alt="Gráficas de tráfico" class="img-fluid rounded-3 border shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-bell-z" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Alertas de Rendimiento Avanzadas</h3>
+                  <p class="feat-desc">Alertas por umbrales dinámicos: uso de CPU superior al 80%, latencia mayor a 20ms o pérdida de señal óptica. Notificaciones centralizadas.</p>
+                  <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                      <img src="/images/zabbix/server-health.png" alt="Server Health" class="img-fluid rounded-3 border shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                  </div>
+              </div>
+              
+              <div class="feature-card">
+                  <div class="feat-icon"><i class="ph-fill ph-activity" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Latencia y Pérdida de Paquetes</h3>
+                  <p class="feat-desc">Monitorización continua de latencia y jitter por nodo con ICMP y TCP. Detección temprana de degradación de enlaces antes de que impacte al cliente. Mapas de calor de latencia por zona geográfica.</p>
+                  <span class="tag-pill tag-main align-self-start mt-auto">Calidad de Enlace</span>
+              </div>
+              
+              <div class="feature-card d-flex flex-column">
+                  <div class="feat-icon"><i class="ph-fill ph-cpu" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">CPU y RAM de OLTs y Radios</h3>
+                  <p class="feat-desc">Seguimiento histórico de la utilización de recursos de procesamiento en cada equipo crítico. Detecta cuellos de botella preventivamente.</p>
+                  
+                  <div class="mt-auto mb-4 p-3 rounded" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color);">
+                      <div class="d-flex align-items-center mb-2">
+                          <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-main);">OLT-CORE-NTE (CPU)</span>
+                          <span class="ms-auto tag-pill badge-warn" style="font-size: 0.7rem; padding: 2px 6px;">82% Load</span>
+                      </div>
+                      <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1); margin-bottom: 12px;">
+                          <div class="progress-bar" style="width: 82%; background: #F59E0B;"></div>
+                      </div>
+                      <div class="d-flex align-items-center mb-2">
+                          <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-main);">RTR-EDGE-01 (RAM)</span>
+                          <span class="ms-auto tag-pill tag-main" style="font-size: 0.7rem; padding: 2px 6px;">45% Load</span>
+                      </div>
+                      <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);">
+                          <div class="progress-bar" style="width: 45%; background: #3B82F6;"></div>
+                      </div>
+                  </div>
+
+                  <span class="tag-pill tag-main align-self-start">Recursos del Sistema</span>
+              </div>
+              
+              <div class="feature-card" style="grid-column: span 2;">
+                  <div class="feat-icon"><i class="ph-fill ph-plugs" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Integración Bidireccional con JAH Sentinel</h3>
+                  <p class="feat-desc">Los datos de Zabbix se envían en tiempo real al motor de IA de Sentinel como fuente de verdad primaria. Cuando Sentinel detecta una anomalía predictiva, puede consultar el historial de Zabbix para enriquecer el diagnóstico. Un ecosistema que se retroalimenta.</p>
+                  <span class="tag-pill tag-main align-self-start mt-auto">AIOps Feed</span>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="workflow-section">
+      <div class="container">
+          <div class="text-center mb-5">
+              <span class="section-label">Implementación</span>
+              <h2 class="section-title text-gradient">Telemetría completa en 72 horas</h2>
+              <p class="section-subtitle mx-auto">Nuestro equipo despliega y configura la integración Zabbix-JAH Nexus con un proceso probado que minimiza el tiempo de puesta en marcha.</p>
+          </div>
+          <div class="row justify-content-center">
+              <div class="col-lg-8">
+                  <div class="d-flex flex-column gap-4">
+                      <div class="workflow-step">
+                          <div class="step-num">01</div>
+                          <div>
+                              <h5>Inventario y Mapeo de Infraestructura</h5>
+                              <p>Levantamos el inventario de equipos a monitorizar and definimos la arquitectura de Zabbix Proxies para cubrir toda la topología de red sin puntos ciegos.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">02</div>
+                          <div>
+                              <h5>Despliegue de Templates y Auto-Discovery</h5>
+                              <p>Aplicamos los templates preconstruidos por tipo de equipo y activamos el auto-discovery de red para que Zabbix encuentre y agregue nodos automáticamente conforme crece tu infraestructura.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">03</div>
+                          <div>
+                              <h5>Configuración de Alertas y Umbrales</h5>
+                              <p>Ajustamos los umbrales de alerta a las condiciones reales de tu red. No alertas genéricas: umbrales calibrados para evitar fatiga de alarmas en tu equipo NOC.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">04</div>
+                          <div>
+                              <h5>Activación del Feed hacia JAH Sentinel</h5>
+                              <p>Conectamos el stream de telemetría de Zabbix con el motor de Sentinel. A partir de este momento, cada métrica recolectada alimenta los modelos predictivos de IA.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="cta-section" id="contacto">
+      <div class="container">
+          <div class="cta-card" style="background: linear-gradient(135deg, #100A00 0%, rgba(245,158,11,0.08) 100%);">
+              <div class="cta-glow"></div>
+              <div class="cta-container">
+                  <div class="hero-badge" style="margin-bottom:24px;"><i class="ph-fill ph-chart-line-up" aria-hidden="true"></i> Telemetría Zabbix — Plan Professional</div>
+                  <h2 class="cta-title text-gradient">La oscuridad en tu red termina hoy.</h2>
+                  <p class="cta-subtitle">Solicita nuestra evaluación de cobertura de monitorización gratuita. En 30 minutos te decimos cuántos puntos ciegos tiene tu red actualmente.</p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" rel="noopener noreferrer" class="btn-accent text-decoration-none"><i class="ph-bold ph-calendar-check me-2" aria-hidden="true"></i>Agendar llamada</a>
+                      <a href="/" class="btn-outline-ghost"><i class="ph-bold ph-arrow-left me-2" aria-hidden="true"></i>Ver Todo el Ecosistema</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+</Layout>

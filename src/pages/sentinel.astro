@@ -1,0 +1,222 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="JAH Sentinel | AIOps para ISPs"
+  description="Motor de Inteligencia Artificial para diagnóstico topológico en tiempo real. Análisis predictivo de nodos y resolución automática."
+  currentPage="sentinel"
+>
+  <style slot="head" is:global>
+    :root {
+      --accent: #06B6D4;
+      --accent-dim: rgba(6, 182, 212, 0.12);
+      --accent-glow: rgba(6, 182, 212, 0.25);
+      --hover-border: rgba(6, 182, 212, 0.35);
+      --hover-shadow: 0 20px 60px rgba(6, 182, 212, 0.08);
+    }
+    
+    /* Animación Semántica del Anillo Autónomo AIOps */
+    @keyframes pulse {
+        0%, 100% { transform: scale(0.9); opacity: 0.7; }
+        50% { transform: scale(1.05); opacity: 0.4; }
+    }
+    .pulse-ring { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; display: inline-block; }
+
+    /* Bloques de Métricas Internas Sanitizados */
+    .mini-metric {
+        background: rgba(6, 182, 212, 0.05);
+        border: 1px solid rgba(6, 182, 212, 0.2);
+        border-radius: 16px;
+        padding: 20px;
+        text-align: center;
+    }
+    .mini-metric-num { font-size: 1.8rem; font-weight: 800; color: var(--accent); }
+    .mini-metric-label { font-size: 0.8rem; color: var(--text-muted); }
+  </style>
+
+  <!-- Hero Component Core -->
+  <section class="hero-section">
+      <div class="hero-glow"></div>
+      <div class="container position-relative hero-content-layer">
+          <div class="row justify-content-center text-center">
+              <div class="col-lg-9">
+                  <div class="hero-badge"><span class="pulse-ring" aria-hidden="true"></span> AIOps · Inteligencia Operacional</div>
+                  <h1 class="hero-title"><span class="text-gradient">Tu red predice el futuro.</span><br><span class="text-accent">JAH Sentinel lo hace realidad.</span></h1>
+                  <p class="hero-subtitle mx-auto">El motor de Inteligencia Artificial que convierte tu infraestructura de red en un organismo que se autodiagnostica. Deja de apagar incendios y empieza a prevenirlos con análisis topológico en tiempo real.</p>
+                  
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mt-4">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="btn-brand text-center text-decoration-none">
+                      Activar Sentinel en mi ISP
+                      </a>
+                      <a href="#features" class="btn-outline-ghost">Ver Capacidades</a>
+                  </div>
+              </div>
+          </div>
+          
+          <!-- Panel Métricas Cohesivo -->
+          <div class="stats-bar">
+              <div class="row g-4 align-items-center">
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">-72%</div><div class="stat-label">Reducción de MTTR promedio</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">94%</div><div class="stat-label">Precisión en predicción de fallas</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">&lt;2s</div><div class="stat-label">Latencia de análisis topológico</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">24/7</div><div class="stat-label">Vigilancia autónoma sin operador</div></div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Bento Grid de Capacidades Core -->
+  <section id="features" class="features-section">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-7">
+                  <span class="section-label">Capacidades del Motor</span>
+                  <h2 class="section-title text-gradient">Inteligencia diseñada para las trincheras de los ISPs</h2>
+                  <p class="section-subtitle">Cada función de JAH Sentinel fue construida con un único propósito: eliminar el tiempo muerto entre la falla y la solución.</p>
+              </div>
+              <div class="col-lg-5 text-center text-lg-end d-none d-lg-block position-relative">
+                  <img src="/images/sentinel/figura-1.png" alt="Sentinel Dashboard" class="img-fluid rounded-4 shadow-lg img-module-preview">
+              </div>
+          </div>
+          <div class="bento-grid">
+              
+              <div class="feature-card accent-card" style="grid-column: span 2;">
+                  <div class="d-flex align-items-start gap-4 flex-wrap">
+                      <div class="feat-icon"><i class="ph-fill ph-brain" aria-hidden="true"></i></div>
+                      <div class="flex-grow-1">
+                          <span class="tag-pill tag-main mb-2">Core AIOps</span>
+                          <h3 class="feat-title mb-2">Análisis Predictivo de Nodos</h3>
+                          <p class="feat-desc">El motor de ML de Sentinel ingiere métricas históricas de cada nodo — latencia, pérdida de paquetes, temperatura de equipo, uso de CPU — y construye un perfil de comportamiento único. Cuando un nodo comienza a desviarse de su patrón normal, Sentinel emite una alerta predictiva hasta 45 minutos antes de que el cliente reporte la falla.</p>
+                      </div>
+                  </div>
+                  <div class="d-flex gap-2 flex-wrap mt-2">
+                      <span class="tag-pill tag-main"><i class="ph-bold ph-check-circle me-1" aria-hidden="true"></i> Machine Learning</span>
+                      <span class="tag-pill tag-main"><i class="ph-bold ph-check-circle me-1" aria-hidden="true"></i> Series Temporales</span>
+                      <span class="tag-pill tag-main"><i class="ph-bold ph-check-circle me-1" aria-hidden="true"></i> Alertas Preventivas</span>
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column">
+                  <div class="feat-icon"><i class="ph-fill ph-git-merge" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Resolución Automática de Capa 3</h3>
+                  <p class="feat-desc">Cuando Sentinel detecta un fallo en la capa de red, ejecuta playbooks automáticamente: ajusta rutas BGP, reinicia OSPFv3 y notifica al operador.</p>
+                  
+                  <div class="mt-auto mb-4 p-3 rounded" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); font-family: monospace; font-size: 0.75rem; color: #10B981;">
+                      <div style="color: #6B7280; margin-bottom: 8px;">> _ sentinel run-playbook --target bgp-wan-1</div>
+                      <div>[✓] Connecting to edge router...</div>
+                      <div>[✓] Detecting BGP flap on AS65001</div>
+                      <div>[✓] Applying policy map RE-ROUTE-BACKUP</div>
+                      <div style="color: var(--text-main); margin-top: 8px;">Status: <span style="color: #3B82F6;">REMEDIATED (2.4s)</span></div>
+                  </div>
+
+                  <span class="tag-pill tag-main align-self-start">Automatización L3</span>
+              </div>
+              
+              <div class="feature-card d-flex flex-column">
+                  <div class="feat-icon"><i class="ph-fill ph-map-trifold" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Visibilidad GIS en Tiempo Real</h3>
+                  <p class="feat-desc">Cada nodo y enlace proyectado sobre un mapa geoespacial interactivo. Identifica clusters de caídas y correlaciona fallas con eventos climáticos.</p>
+                  <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                      <img src="/images/sentinel/figura-8.png" alt="Visibilidad GIS" class="img-fluid rounded-3 border shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                  </div>
+              </div>
+              
+              <div class="feature-card" style="grid-column: span 2;">
+                  <div class="feat-icon"><i class="ph-fill ph-timer" aria-hidden="true"></i></div>
+                  <h3 class="feat-title mt-3">Reducción Drástica del MTTR</h3>
+                  <p class="feat-desc">Sentinel ataca los tres componentes del MTTR: detección instantánea, diagnóstico automatizado y coordinación inteligente de campo. ISPs partners reportan una reducción de 72% en los primeros 90 días.</p>
+                  <div class="row g-2 mt-4">
+                      <div class="col-12 col-md-4"><div class="mini-metric"><div class="mini-metric-num">45m</div><div class="mini-metric-label">Anticipación de alertas</div></div></div>
+                      <div class="col-12 col-md-4"><div class="mini-metric"><div class="mini-metric-num">3m</div><div class="mini-metric-label">Diagnóstico auto</div></div></div>
+                      <div class="col-12 col-md-4"><div class="mini-metric"><div class="mini-metric-num">60%</div><div class="mini-metric-label">Sin técnico</div></div></div>
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column">
+                  <div class="feat-icon"><i class="ph-fill ph-bell-ringing" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Alertas Contextuales Inteligentes</h3>
+                  <p class="feat-desc">Las alertas de Sentinel no son ruido. Cada notificación incluye contexto completo y clientes afectados. Integración con Telegram y webhooks.</p>
+                  <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                      <img src="/images/sentinel/chat-tepozan.png" alt="Alertas Telegram" class="img-fluid rounded-3 border shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column">
+                  <div class="feat-icon"><i class="ph-fill ph-chart-bar" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Reportes de Salud de Red</h3>
+                  <p class="feat-desc">Informes automáticos con SLA compliance, uptime por zona y top 10 de nodos problemáticos. Datos que respaldan decisiones de inversión.</p>
+                  <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                      <img src="/images/sentinel/figura-3.png" alt="Reporte Salud" class="img-fluid rounded-3 border shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Protocolo Operativo -->
+  <section class="workflow-section">
+      <div class="container">
+          <div class="text-center mb-5">
+              <span class="section-label">Protocolo de Operación</span>
+              <h2 class="section-title text-gradient">Cómo Sentinel protege tu red</h2>
+              <p class="section-subtitle mx-auto">Un ciclo continuo de inteligencia que opera en segundo plano, sin descanso, los 365 días del año.</p>
+          </div>
+          <div class="row justify-content-center">
+              <div class="col-lg-8">
+                  <div class="d-flex flex-column gap-4">
+                      <div class="workflow-step">
+                          <div class="step-num">01</div>
+                          <div>
+                              <h5>Ingesta de Telemetría Continua</h5>
+                              <p>Sentinel consume datos de Zabbix, SNMP, syslog, NetFlow y APIs de equipos OLT, MikroTik y Radios en un stream de datos unificado en tiempo real.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">02</div>
+                          <div>
+                              <h5>Correlación y Diagnóstico IA</h5>
+                              <p>Los modelos de ML correlacionan anomalías entre sí, eliminan falsos positivos y determinan la causa raíz con un confidence score visible para el operador NOC.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">03</div>
+                          <div>
+                              <h5>Acción Automática o Asistida</h5>
+                              <p>Dependiendo de la política configurada, Sentinel ejecuta la remediación de forma autónoma o presenta al operador un plan de acción listo para aprobar con un clic.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">04</div>
+                          <div>
+                              <h5>Aprendizaje y Retroalimentación</h5>
+                              <p>Cada incidente resuelto alimenta los modelos. Tu instancia de Sentinel se vuelve más precisa con el tiempo, adaptándose a la topología única de tu red.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Sección Call To Action Conectada Cohesiva -->
+  <section id="contacto" class="cta-section">
+      <div class="container">
+          <div class="cta-card">
+              <div class="cta-glow"></div>
+              <div class="cta-container">
+                  <div class="hero-badge" style="margin-bottom:24px;"><i class="ph-fill ph-brain" aria-hidden="true"></i> JAH Sentinel — Plan Enterprise</div>
+                  <h2 class="cta-title text-gradient">Tu red inteligente empieza hoy.</h2>
+                  <p class="cta-subtitle">Agenda una sesión de demostración de 30 minutos con nuestro equipo técnico. Te mostramos Sentinel operando sobre un entorno similar al tuyo, con datos reales.</p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" rel="noopener noreferrer" class="btn-accent text-decoration-none"><i class="ph-bold ph-calendar-check me-2" aria-hidden="true"></i>Agendar llamada</a>
+                      <a href="/" class="btn-outline-ghost"><i class="ph-bold ph-arrow-left me-2" aria-hidden="true"></i>Ver Todo el Ecosistema</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+</Layout>

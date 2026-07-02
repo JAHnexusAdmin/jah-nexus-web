@@ -1,0 +1,191 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="JAH Nexus | Sistema Operativo y NOC Inteligente para ISPs"
+  description="Centraliza la administración, monitorización, inventario y facturación de tu ISP con JAH Nexus. Diagnóstico con Inteligencia Artificial (AIOps) para redes eficientes."
+  currentPage="index"
+>
+  <!-- Hero Section -->
+  <section class="hero-section text-center text-lg-start">
+      <div class="hero-glow"></div>
+      <div class="container hero-content-layer">
+          <div class="row align-items-center justify-content-center min-vh-75">
+              <div class="col-lg-8 text-center">
+                  <div class="d-inline-block mb-3 px-3 py-1 rounded-pill" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-muted);">
+                      <i class="ph-fill ph-rocket-launch text-brand me-1" aria-hidden="true"></i> Creado por un ISP para ISPs
+                  </div>
+                  <h1 class="hero-title text-gradient">
+                      Transforma la complejidad de tu ISP en una ventaja competitiva.
+                  </h1>
+                  <p class="hero-subtitle">
+                      El primer Centro de Operaciones unificado diseñado para centralizar telemetría, gestión, inventario y facturación. Automatiza tu red con inteligencia AIOps.
+                  </p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mt-4">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." 
+                      target="_blank" 
+                      rel="noopener" 
+                      class="btn-brand text-center text-decoration-none">
+                      Agendar Llamada Estratégica
+                      </a>
+                      <a href="/manual" class="btn-outline-brand text-center text-decoration-none d-flex align-items-center justify-content-center gap-2" style="padding: 12px 32px; border-radius: 100px; font-weight: 600;">
+                          <i class="ph-bold ph-book-open" aria-hidden="true"></i> Ver Manual
+                      </a>
+                      <a href="#ecosistema" class="btn-outline-brand text-center">Explorar Ecosistema</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Social Proof Banner -->
+  <section class="social-proof" style="border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 30px 0; margin: 40px 0 80px; background: rgba(255,255,255,0.01);">
+      <div class="container">
+          <div class="client-logos d-flex justify-content-center align-items-center gap-4 flex-wrap" style="opacity: 0.6; filter: grayscale(100%); transition: all 0.3s;">
+              <h6 class="text-muted mb-0 me-3" style="margin: 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Integraciones Nativas & Respaldo:</h6>
+              <div class="d-flex align-items-center gap-2"><i class="ph-fill ph-wifi-high fs-4 text-brand" aria-hidden="true"></i> JAH WiFi</div>
+              <div class="d-flex align-items-center gap-2"><i class="ph-bold ph-plugs-connected fs-4" aria-hidden="true"></i> Integración WispHub</div>
+              <div class="d-flex align-items-center gap-2"><i class="ph-bold ph-router fs-4" aria-hidden="true"></i> MikroTik OS</div>
+              <div class="d-flex align-items-center gap-2"><i class="ph-bold ph-chart-line-up fs-4" aria-hidden="true"></i> Zabbix Core</div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Ecosistema (Bento Grid Unificada) -->
+  <section id="ecosistema" class="bento-section">
+      <div class="container">
+          <div class="section-header text-center mb-5">
+              <h2 class="h1">Un Ecosistema, 6 Pilares</h2>
+              <p class="text-muted mx-auto mt-3" style="max-width: 50%;">Deja de saltar entre 5 sistemas diferentes. Centralizamos todas las operaciones críticas en un único 'Single Pane of Glass'. Selecciona un módulo para conocer más.</p>
+          </div>
+
+          <div class="bento-grid">
+              
+              <!-- Sentinel -->
+              <div class="feature-card bento-card highlight card-sentinel" style="grid-column: span 2;">
+                  <div class="d-flex justify-content-between align-items-start">
+                      <i class="ph-fill ph-brain bento-icon" style="font-size: 3.5rem; color: #06B6D4; margin-bottom: 20px;" aria-hidden="true"></i>
+                      <span class="bento-badge ai" style="background: rgba(6, 182, 212, 0.1); color: #06B6D4; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">AIOps</span>
+                  </div>
+                  <h3 class="bento-title" style="font-size: 1.25rem; margin-bottom: 12px; color: white; display: flex; align-items: center; gap: 10px;">JAH Sentinel <span style="font-weight: 300; font-size: 1rem; color: var(--text-muted)">| El Cerebro</span></h3>
+                  <p class="bento-desc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; flex-grow: 1;">Motor de Inteligencia Artificial para diagnóstico topológico en tiempo real. Análisis predictivo de nodos, resolución automática de nivel 3 y visibilidad GIS.</p>
+                  <a href="/sentinel" class="bento-link" style="margin-top: auto; padding-top: 20px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: all 0.3s ease; opacity: 0.8;">Explorar Sentinel <i class="ph-bold ph-arrow-right" aria-hidden="true"></i></a>
+              </div>
+
+              <!-- NOC -->
+              <div class="feature-card bento-card card-noc" style="grid-column: span 1;">
+                  <div class="d-flex justify-content-between align-items-start">
+                      <i class="ph-fill ph-desktop-tower bento-icon" style="font-size: 2.5rem; color: var(--brand-blue); margin-bottom: 20px;" aria-hidden="true"></i>
+                      <span class="bento-badge" style="background: rgba(28, 100, 242, 0.1); color: var(--brand-blue); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">SYS-01</span>
+                  </div>
+                  <h3 class="bento-title" style="font-size: 1.25rem; margin-bottom: 12px; color: white; display: flex; align-items: center; gap: 10px;">Jah-NOC</h3>
+                  <p class="bento-desc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; flex-grow: 1;">Consola central de operaciones. Panel para redirecciones de tráfico y revisión de clientes.</p>
+                  <a href="/noc" class="bento-link" style="margin-top: auto; padding-top: 20px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: all 0.3s ease; opacity: 0.8;">Explorar NOC <i class="ph-bold ph-arrow-right" aria-hidden="true"></i></a>
+              </div>
+
+              <!-- Central Inventario -->
+              <div class="feature-card bento-card card-central" style="grid-column: span 1;">
+                  <div class="d-flex justify-content-between align-items-start">
+                      <i class="ph-fill ph-package bento-icon" style="font-size: 2.5rem; color: var(--brand-blue); margin-bottom: 20px;" aria-hidden="true"></i>
+                      <span class="bento-badge" style="background: rgba(28, 100, 242, 0.1); color: var(--brand-blue); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">INV-02</span>
+                  </div>
+                  <h3 class="bento-title" style="font-size: 1.25rem; margin-bottom: 12px; color: white; display: flex; align-items: center; gap: 10px;">Jah Central</h3>
+                  <p class="bento-desc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; flex-grow: 1;">Control logístico de campo. Auditoría de CPEs, asignaciones y prevención de fugas de hardware.</p>
+                  <a href="/central" class="bento-link" style="margin-top: auto; padding-top: 20px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: all 0.3s ease; opacity: 0.8;">Explorar Central <i class="ph-bold ph-arrow-right" aria-hidden="true"></i></a>
+              </div>
+
+              <!-- PayControl -->
+              <div class="feature-card bento-card card-pay" style="grid-column: span 2;">
+                  <div class="d-flex justify-content-between align-items-start">
+                      <i class="ph-fill ph-wallet bento-icon text-pay" style="font-size: 2.5rem; margin-bottom: 20px;" aria-hidden="true"></i>
+                      <span class="bento-badge pay" style="background: rgba(212, 62, 122, 0.1); color: #D43E7A; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">FIN-03</span>
+                  </div>
+                  <h3 class="bento-title text-pay">JahPayControl</h3>
+                  <p class="bento-desc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; flex-grow: 1;">Sistema definitivo de gestión de morosos. Sincronización nativa con WispHub, notificaciones masivas automatizadas por WhatsApp y diagnóstico Ping ONT en tiempo real.</p>
+                  <a href="/paycontrol" class="bento-link" style="margin-top: auto; padding-top: 20px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: all 0.3s ease; opacity: 0.8;">Explorar PayControl <i class="ph-bold ph-arrow-right" aria-hidden="true"></i></a>
+              </div>
+
+              <!-- Zabbix -->
+              <div class="feature-card bento-card card-zabbix" style="grid-column: span 1;">
+                  <i class="ph-fill ph-chart-line-up bento-icon" style="font-size: 2.5rem; color: var(--brand-blue); margin-bottom: 20px;" aria-hidden="true"></i>
+                  <h3 class="bento-title" style="font-size: 1.25rem; margin-bottom: 12px; color: white; display: flex; align-items: center; gap: 10px;">Telemetría Zabbix</h3>
+                  <p class="bento-desc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; flex-grow: 1;">Monitorización SNMP, gráficas de tráfico, latencia y rendimiento histórico de infraestructura.</p>
+                  <a href="/zabbix" class="bento-link" style="margin-top: auto; padding-top: 20px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: all 0.3s ease; opacity: 0.8;">Ver Integración <i class="ph-bold ph-arrow-right" aria-hidden="true"></i></a>
+              </div>
+
+              <!-- NetBox -->
+              <div class="feature-card bento-card card-netbox" style="grid-column: span 1;">
+                  <i class="ph-fill ph-tree-structure bento-icon" style="font-size: 2.5rem; color: var(--brand-blue); margin-bottom: 20px;" aria-hidden="true"></i>
+                  <h3 class="bento-title" style="font-size: 1.25rem; margin-bottom: 12px; color: white; display: flex; align-items: center; gap: 10px;">DCIM NetBox</h3>
+                  <p class="bento-desc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; flex-grow: 1;">Source of Truth. Documentación 100% precisa de Racks, ODFs e IPs. El conocimiento se queda en la empresa.</p>
+                  <a href="/netbox" class="bento-link" style="margin-top: auto; padding-top: 20px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 5px; transition: all 0.3s ease; opacity: 0.8;">Ver Integración <i class="ph-bold ph-arrow-right" aria-hidden="true"></i></a>
+              </div>
+
+          </div>
+      </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="precios" class="pricing-section" style="padding: 100px 0;">
+      <div class="container">
+          <div class="text-center mb-5">
+              <h2>Transparencia y Escalabilidad sin Fricción</h2>
+              <p class="text-muted fs-5">El futuro de tu ISP no admite cuellos de botella. Invierte de forma inteligente, empieza con una base sólida de grado carrier y expande tu ecosistema modularmente, pagando solo por lo que usas.</p>
+          </div>
+          
+          <div class="row g-4 justify-content-center">
+              
+              <!-- Setup -->
+              <div class="col-md-6 col-lg-4">
+                  <div class="pricing-card" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--border-radius-lg); padding: 40px; height: 100%; transition: transform 0.3s ease;">
+                      <h5>Onboarding & Arquitectura Core</h5>
+                      <p class="text-muted fs-6">Despliegue experto, ingeniería de red a la medida y puesta a punto. Cero estrés.</p>
+                      <div class="price-amount" style="font-size: 2.5rem; font-weight: 800; margin: 20px 0;">$500 <span style="font-size: 1rem; color: var(--text-muted); font-weight: 400;">USD / único</span></div>
+                      <ul class="price-features" style="list-style: none; padding: 0; margin: 30px 0;">
+                          <li style="margin-bottom: 15px; color: var(--text-muted); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: var(--brand-blue); font-size: 1.2rem;" aria-hidden="true"></i> Auditoría e ingeniería de red base</li>
+                          <li style="margin-bottom: 15px; color: var(--text-muted); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: var(--brand-blue); font-size: 1.2rem;" aria-hidden="true"></i> Instalación en tu Infraestructura (Cloud/Local)</li>
+                          <li style="margin-bottom: 15px; color: var(--text-muted); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: var(--brand-blue); font-size: 1.2rem;" aria-hidden="true"></i> Hardening y seguridad de servidores</li>
+                          <li style="margin-bottom: 15px; color: var(--text-muted); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: var(--brand-blue); font-size: 1.2rem;" aria-hidden="true"></i> Acompañamiento VIP inicial</li>
+                      </ul>
+                      <a href="https://wa.me/524493134110?text=Hola,%20quiero%20agendar%20la%20implementaci%C3%B3n%20de%20JAH%20Nexus." target="_blank" class="btn-outline-brand w-100 text-decoration-none text-center d-block">Agendar Implementación</a>
+                  </div>
+              </div>
+
+              <!-- Modular -->
+              <div class="col-md-6 col-lg-4">
+                  <div class="pricing-card popular" style="background-color: var(--brand-navy); border: 1px solid var(--brand-blue); position: relative; border-radius: var(--border-radius-lg); padding: 40px; height: 100%; transition: transform 0.3s ease;">
+                      <div class="popular-badge" style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--brand-blue); color: white; padding: 4px 16px; border-radius: 100px; font-size: 0.8rem; font-weight: 700;">Escalabilidad Inteligente</div>
+                      <h5 class="text-white">Poder Modular</h5>
+                      <p class="text-muted fs-6 text-opacity-75">Desbloquea el potencial operativo. Adquiere solo el software que transformará tu red.</p>
+                      <div class="price-amount text-white" style="font-size: 2.5rem; font-weight: 800; margin: 20px 0;">$100 <span style="font-size: 1rem; font-weight: 400; opacity: 0.8;">USD / plataforma al mes</span></div>
+                      <ul class="price-features" style="list-style: none; padding: 0; margin: 30px 0;">
+                          <li style="margin-bottom: 15px; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: white; font-size: 1.2rem;" aria-hidden="true"></i> Integra JAH NOC, Sentinel, PayControl o NetBox</li>
+                          <li style="margin-bottom: 15px; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: white; font-size: 1.2rem;" aria-hidden="true"></i> Mantenimiento, monitoreo y parches</li>
+                          <li style="margin-bottom: 15px; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: white; font-size: 1.2rem;" aria-hidden="true"></i> Actualizaciones con nuevas funcionalidades</li>
+                          <li style="margin-bottom: 15px; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: white; font-size: 1.2rem;" aria-hidden="true"></i> Soporte técnico especializado</li>
+                      </ul>
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20conocer%20los%20m%C3%B3dulos%20de%20JAH%20Nexus." target="_blank" class="btn-premium w-100 text-decoration-none text-center d-block">Elegir Plataformas</a>
+                  </div>
+              </div>
+
+              <!-- Enterprise -->
+              <div class="col-md-6 col-lg-4">
+                  <div class="pricing-card" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--border-radius-lg); padding: 40px; height: 100%; transition: transform 0.3s ease;">
+                      <h5>Carrier Class Full</h5>
+                      <p class="text-muted fs-6">El ecosistema completo para operadores regionales que demandan control total.</p>
+                      <div class="price-amount" style="font-size: 2.5rem; font-weight: 800; margin: 20px 0;">A Medida</div>
+                      <ul class="price-features" style="list-style: none; padding: 0; margin: 30px 0;">
+                          <li style="margin-bottom: 15px; color: var(--text-muted); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: var(--brand-blue); font-size: 1.2rem;" aria-hidden="true"></i> Todo el ecosistema integrado</li>
+                          <li style="margin-bottom: 15px; color: var(--text-muted); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: var(--brand-blue); font-size: 1.2rem;" aria-hidden="true"></i> Desarrollos, flujos y APIs personalizadas</li>
+                          <li style="margin-bottom: 15px; color: var(--text-muted); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: var(--brand-blue); font-size: 1.2rem;" aria-hidden="true"></i> Capacitación In-House a tus ingenieros</li>
+                          <li style="margin-bottom: 15px; color: var(--text-muted); display: flex; align-items: center; gap: 10px;"><i class="ph-bold ph-check" style="color: var(--brand-blue); font-size: 1.2rem;" aria-hidden="true"></i> SLA corporativo y línea directa 24/7</li>
+                      </ul>
+                      <a href="https://wa.me/524493134110?text=Hola,%20represento%20a%20un%20ISP%20grande%20y%20buscamos%20un%20plan%20A%20Medida." target="_blank" class="btn-outline-brand w-100 text-decoration-none text-center d-block">Hablar con Expertos</a>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+  </section>
+</Layout>

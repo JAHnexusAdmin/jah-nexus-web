@@ -1,0 +1,218 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="NetBox IPAM/DCIM | Source of Truth para Infraestructura ISP — JAH Nexus"
+  description="NetBox integrado en JAH Nexus: control de Racks, ODFs, asignación de roles y direccionamiento IPv4/IPv6. Infraestructura 100% documentada, nunca más en hojas de cálculo."
+  currentPage="netbox"
+>
+  <style slot="head" is:global>
+    :root {
+        /* Configuración del Énfasis Temático del Módulo (Violeta de Infraestructura Core) */
+        --accent: #8B5CF6;
+        --accent-dim: rgba(139, 92, 246, 0.12);
+        --accent-glow: rgba(139, 92, 246, 0.25);
+        --hover-border: rgba(139, 92, 246, 0.35);
+        --hover-shadow: 0 20px 60px rgba(139, 92, 246, 0.08);
+    }
+
+    .ip-block {
+        font-family: monospace;
+        font-size: 0.85rem;
+        padding: 8px 14px;
+        background: var(--accent-dim);
+        border: 1px solid rgba(139,92,246,0.2);
+        border-radius: 8px;
+        color: #C4B5FD;
+        display: inline-block;
+    }
+    
+    .rack-visualization-container { max-width: 340px; }
+
+    .rack-unit {
+        height: 28px;
+        border: 1px solid rgba(139,92,246,0.2);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        font-size: 0.75rem;
+        font-family: monospace;
+        transition: all 0.2s;
+        margin-bottom: 8px;
+    }
+    .rack-unit.used { background: rgba(139,92,246,0.12); color: #C4B5FD; }
+    .rack-unit.empty { background: var(--bg-card); color: var(--text-muted); }
+    .rack-unit:hover { border-color: rgba(139,92,246,0.5); }
+  </style>
+
+  <section class="hero-section">
+      <div class="hero-glow"></div>
+      <div class="container position-relative hero-content-layer">
+          <div class="row justify-content-center text-center">
+              <div class="col-lg-9">
+                  <div class="hero-badge"><i class="ph-fill ph-tree-structure" aria-hidden="true"></i> IPAM / DCIM · Source of Truth</div>
+                  <h1 class="hero-title"><span class="text-gradient">Tu infraestructura,</span><br><span class="text-accent">documentada con precisión quirúrgica.</span></h1>
+                  <p class="hero-subtitle mx-auto">NetBox integrado en JAH Nexus es la fuente de verdad de tu infraestructura. Cada rack, cada ODF, cada dirección IP, cada cable documentado y accesible en segundos. Porque el conocimiento de tu red no puede depender de la memoria de un técnico.</p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mt-4">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="btn-brand text-center text-decoration-none">
+                      Agendar Llamada Estratégica
+                      </a>
+                      <a href="#features" class="btn-outline-ghost">Explorar DCIM/IPAM</a>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="stats-bar">
+              <div class="row g-4 align-items-center">
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">IPAM</div><div class="stat-label">Control IPv4 e IPv6 completo</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">DCIM</div><div class="stat-label">Modelado físico de datacenter</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">API</div><div class="stat-label">REST API para automatización</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">100%</div><div class="stat-label">Infraestructura documentada</div></div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section id="features" class="features-section">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-7">
+                  <span class="section-label">IPAM + DCIM</span>
+                  <h2 class="section-title text-gradient">La fuente de verdad que tu ISP necesita</h2>
+                  <p class="section-subtitle">Cuando un técnico renuncia, el conocimiento de la red no se va con él. NetBox en JAH Nexus garantiza que la infraestructura esté 100% documentada, siempre actualizada y accesible para todo el equipo.</p>
+              </div>
+              <div class="col-lg-5 text-center text-lg-end d-none d-lg-block position-relative">
+                  <img src="/images/netbox/dashboard-sites.png" alt="NetBox Dashboard" class="img-fluid rounded-4 shadow-lg border img-module-preview">
+              </div>
+          </div>
+          <div class="bento-grid">
+              
+              <div class="feature-card accent-card" style="grid-column: span 2;">
+                  <div class="d-flex align-items-start gap-4 flex-wrap">
+                      <div class="feat-icon"><i class="ph-fill ph-server" aria-hidden="true"></i></div>
+                      <div class="flex-grow-1">
+                          <span class="tag-pill tag-main mb-2">DCIM</span>
+                          <h3 class="feat-title mb-2">Control de Racks y ODFs</h3>
+                          <p class="feat-desc">Modela virtualmente cada gabinete de red, rack de datacenter y panel ODF de tu infraestructura. Asigna equipos a unidades de rack específicas, documenta la capacidad disponible, registra el cableado entre paneles y visualiza la ocupación de cada sitio de red desde cualquier lugar. Nunca más "¿en qué puerto está conectado este uplink?"</p>
+                      </div>
+                  </div>
+                  
+                  <div class="d-flex flex-column gap-2 mt-4 rack-visualization-container">
+                      <div class="rack-unit used">U1 · OLT Huawei MA5800-X17 · 17U</div>
+                      <div class="rack-unit used">U18 · MikroTik CCR2004-16G · 1U</div>
+                      <div class="rack-unit empty">U19 · — Disponible —</div>
+                      <div class="rack-unit used">U20 · ODF 48 Puertos LC/PC · 2U</div>
+                      <div class="rack-unit empty">U22 · — Disponible —</div>
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-network" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Direccionamiento IPv4 / IPv6</h3>
+                  <p class="feat-desc">Gestión completa del espacio de direcciones IP: prefijos, rangos de asignación, IPs individuales y VLANs. Sabe en tiempo real qué IPs están asignadas, cuáles están libres y qué dispositivo las usa.</p>
+                  <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                      <img src="/images/netbox/ip-list.png" alt="Listado de IPs" class="img-fluid rounded-3 border shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-user-check" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Asignación de Roles y Permisos</h3>
+                  <p class="feat-desc">Define quién puede ver, editar o aprovisionar recursos en NetBox. Los ingenieros senior tienen acceso total, el equipo NOC puede consultar pero no modificar. Control de acceso granular por función.</p>
+                  <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                      <img src="/images/netbox/users-list.png" alt="Control de usuarios" class="img-fluid rounded-3 border shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-plugs-connected" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Modelado de Cableado y Conexiones</h3>
+                  <p class="feat-desc">Documenta cada conexión física: fibra, cobre, patch cords y enlaces WAN. Desde qué puerto de OLT sale el splitter, hasta en qué ONT termina el hilo. Un mapa siempre disponible.</p>
+                  <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                      <img src="/images/netbox/cables-form.png" alt="Conexión de cables" class="img-fluid rounded-3 border shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                  </div>
+              </div>
+              
+              <div class="feature-card" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-code" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">REST API para Automatización</h3>
+                  <p class="feat-desc">NetBox expone una API REST completa y documentada. Integrala con tus scripts de aprovisionamiento, con Ansible para configuración automatizada o con JAH Sentinel para enriquecer el contexto de los incidentes con datos de inventario físico en tiempo real.</p>
+                  <span class="tag-pill tag-main align-self-start mt-auto">API First</span>
+              </div>
+              
+              <div class="feature-card" style="grid-column: span 2;">
+                  <div class="feat-icon"><i class="ph-fill ph-buildings" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Sitios y Ubicaciones Físicas</h3>
+                  <p class="feat-desc">Organiza la infraestructura por región, ciudad, sitio de red y piso de rack. Cada activo tiene una ubicación física documentada. Los equipos de mantenimiento saben exactamente adónde ir cuando hay un problema físico, sin llamar a nadie para preguntar.</p>
+                  <span class="tag-pill tag-main align-self-start mt-auto">Geografía Física</span>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="workflow-section">
+      <div class="container">
+          <div class="text-center mb-5">
+              <span class="section-label">Estrategia de Documentación</span>
+              <h2 class="section-title text-gradient">De hoja de cálculo a Source of Truth</h2>
+              <p class="section-subtitle mx-auto">La migración de tu documentación actual a NetBox es un proceso guiado que realizamos junto a tu equipo técnico.</p>
+          </div>
+          <div class="row justify-content-center">
+              <div class="col-lg-8">
+                  <div class="d-flex flex-column gap-4">
+                      <div class="workflow-step">
+                          <div class="step-num">01</div>
+                          <div>
+                              <h5>Auditoría de Documentación Existente</h5>
+                              <p>Recopilamos y evaluamos toda la documentación actual: hojas de cálculo, diagramas de Visio, archivos de texto y conocimiento tácito del equipo para construir el mapa de migración.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">02</div>
+                          <div>
+                              <h5>Modelado de la Estructura de Datos</h5>
+                              <p>Definimos la jerarquía de sitios, racks y dispositivos según la topología real de tu red. Configuramos los tipos de dispositivos, roles y campos personalizados que tu operación requiere.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">03</div>
+                          <div>
+                              <h5>Migración e Importación Masiva</h5>
+                              <p>Utilizamos la API de NetBox para migrar la información existente de forma masiva. Los datos se validan automáticamente para eliminar duplicados y errores antes de la importación definitiva.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">04</div>
+                          <div>
+                              <h5>Activación y Capacitación del Equipo</h5>
+                              <p>Entrenamos a tu equipo en los flujos de actualización de NetBox. Implementamos las integraciones con JAH Sentinel y Jah-NOC para que la documentación siempre esté al día sin esfuerzo extra.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="cta-section" id="contacto">
+      <div class="container">
+          <div class="cta-card" style="background: linear-gradient(135deg, #0D0714 0%, rgba(139,92,246,0.08) 100%);">
+              <div class="cta-glow"></div>
+              <div class="cta-container">
+                  <div class="hero-badge" style="margin-bottom: 24px;"><i class="ph-fill ph-tree-structure" aria-hidden="true"></i> NetBox IPAM/DCIM — Plan Professional</div>
+                  <h2 class="cta-title text-gradient">Tu infraestructura merece estar documentada.</h2>
+                  <p class="cta-subtitle">Agenda una sesión de diagnóstico. Te decimos qué información crítica de tu red está en riesgo de perderse y cómo NetBox la protege permanentemente.</p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" rel="noopener noreferrer" class="btn-accent text-decoration-none"><i class="ph-bold ph-calendar-check me-2" aria-hidden="true"></i>Agendar llamada</a>
+                      <a href="/" class="btn-outline-ghost"><i class="ph-bold ph-arrow-left me-2" aria-hidden="true"></i>Ver Todo el Ecosistema</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+</Layout>

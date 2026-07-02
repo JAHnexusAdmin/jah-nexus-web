@@ -1,92 +1,53 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAH Nexus | Manual del Ecosistema</title>
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="JAH Nexus | Manual del Ecosistema"
+  description="Documentación oficial para la suite integral de soluciones para Proveedores de Servicios de Internet"
+  currentPage="manual"
+>
+  <style slot="head">
+    /* Layout Manual */
+    .sidebar { position: sticky; top: 100px; max-height: calc(100vh - 120px); overflow-y: auto; padding-right: 20px; }
+    .sidebar-link { display: block; padding: 8px 0; color: var(--text-muted); text-decoration: none; transition: 0.2s; border-left: 2px solid transparent; padding-left: 12px; margin-bottom: 4px;}
+    .sidebar-link:hover, .sidebar-link.active { color: var(--accent); border-color: var(--accent); }
+
+    /* Content */
+    .manual-hero { padding: 100px 0 60px; background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, var(--bg-base) 100%); border-bottom: 1px solid var(--border-color); text-align: center;}
+    .search-container { max-width: 600px; margin: 30px auto 0; position: relative; }
+    .search-input { width: 100%; padding: 16px 24px 16px 50px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 100px; color: #fff; font-size: 1.1rem; }
+    .search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1); }
+    .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.3rem; }
+
+    .manual-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 40px; margin-bottom: 30px; transition: 0.3s; }
+    .manual-section h2 { font-size: 1.5rem; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    /* Jerarquía Tipográfica */
+    .manual-section p, .manual-section li { 
+        text-align: left; 
+        max-width: 65ch; 
+        margin-left: 0; 
+    }
+    .manual-section ul, .manual-section ol {
+        max-width: 65ch;
+    }
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    .tip-box { background: rgba(6, 182, 212, 0.1); border-left: 4px solid var(--accent); padding: 16px 24px; border-radius: 0 8px 8px 0; margin: 24px 0; text-align: left; max-width: 65ch; }
+    .tip-box p { text-align: left; margin: 0; }
     
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    .table-dark { --bs-table-bg: var(--bg-base); --bs-table-striped-bg: rgba(255,255,255,0.02); --bs-table-border-color: var(--border-color); }
+    
+    /* Placeholders Figuras */
+    .figure-placeholder { background: rgba(255,255,255,0.02); border: 1px dashed var(--border-color); border-radius: var(--border-radius-md); padding: 40px 20px; text-align: center; margin: 30px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px;}
+    .figure-placeholder i { font-size: 3rem; color: var(--text-muted); margin-bottom: 16px; opacity: 0.5; }
+    figcaption { font-size: 0.85rem; color: var(--text-muted); text-align: center; max-width: 80%; margin: 16px auto 0; line-height: 1.5; }
+    .hidden-section { display: none !important; }
+  </style>
 
-    <style>
-        :root {
-            /* Tokens de diseño globales unificados JAH Nexus - Dark Mode */
-            --bg-base: #0B0E14;
-            --bg-card: #151A23;
-            --bg-card-hover: #1C232E;
-            --brand-blue: #1C64F2;
-            --text-main: #FFFFFF;
-            --text-muted: #94A3B8;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --border-radius-lg: 24px;
-            --border-radius-md: 16px;
-            --font-main: 'Plus Jakarta Sans', sans-serif;
-            --accent: #06B6D4;
-        }
+  
 
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            font-family: var(--font-main);
-            line-height: 1.6;
-        }
-
-        h1, h2, h3, h4, h5, h6 { font-weight: 700; color: #fff; }
-        .text-accent { color: var(--accent); }
-        .text-muted { color: var(--text-muted) !important; }
-
-        /* Navbar */
-        .navbar-custom { background: rgba(11, 14, 20, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); }
-        .navbar-brand { font-weight: 800; color: #fff !important; }
-
-        /* Hero */
-        .manual-hero { padding: 100px 0 60px; background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, var(--bg-base) 100%); border-bottom: 1px solid var(--border-color); text-align: center;}
-        .search-container { max-width: 600px; margin: 30px auto 0; position: relative; }
-        .search-input { width: 100%; padding: 16px 24px 16px 50px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 100px; color: #fff; font-size: 1.1rem; }
-        .search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1); }
-        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.3rem; }
-
-        /* Layout */
-        .sidebar { position: sticky; top: 100px; max-height: calc(100vh - 120px); overflow-y: auto; padding-right: 20px; }
-        .sidebar-link { display: block; padding: 8px 0; color: var(--text-muted); text-decoration: none; transition: 0.2s; border-left: 2px solid transparent; padding-left: 12px; margin-bottom: 4px;}
-        .sidebar-link:hover, .sidebar-link.active { color: var(--accent); border-color: var(--accent); }
-
-        /* Content */
-        .manual-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--border-radius-md); padding: 40px; margin-bottom: 30px; transition: 0.3s; }
-        .manual-section h2 { font-size: 1.5rem; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
-        .manual-section p, .manual-section li { text-align: justify; }
-        
-        .tip-box { background: rgba(6, 182, 212, 0.1); border-left: 4px solid var(--accent); padding: 16px 24px; border-radius: 0 8px 8px 0; margin: 24px 0; text-align: left; }
-        .tip-box p { text-align: left; }
-        
-        .table-dark { --bs-table-bg: var(--bg-base); --bs-table-striped-bg: rgba(255,255,255,0.02); --bs-table-border-color: var(--border-color); }
-        
-        /* Placeholders Figuras */
-        .figure-placeholder { background: rgba(255,255,255,0.02); border: 1px dashed var(--border-color); border-radius: var(--border-radius-md); padding: 40px 20px; text-align: center; margin: 30px 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px;}
-        .figure-placeholder i { font-size: 3rem; color: var(--text-muted); margin-bottom: 16px; opacity: 0.5; }
-        figcaption { font-size: 0.85rem; color: var(--text-muted); text-align: center; max-width: 80%; margin: 16px auto 0; line-height: 1.5; }
-
-        .hidden-section { display: none !important; }
-    </style>
-</head>
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-custom sticky-top py-3">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
-                <i class="ph-fill ph-planet" style="color: var(--brand-blue); font-size: 1.8rem;"></i>
-                JAH Nexus
-            </a>
-            <div class="d-flex gap-3">
-                <a href="index.html" class="btn btn-outline-light btn-sm rounded-pill px-3">Volver al Inicio</a>
-            </div>
-        </div>
-    </nav>
+    
 
     <header class="manual-hero">
         <div class="container">
@@ -899,7 +860,7 @@
                         <li>Hacer clic en Nueva Plantilla.</li>
                         <li>Ingresar el nombre de la plantilla.</li>
                         <li>Redactar el contenido del mensaje.</li>
-                        <li>Usar variables disponibles: <code>{nombre}</code>, <code>{monto}</code>, <code>{dias}</code>, <code>{zona}</code>, <code>{id}</code>.</li>
+                        <li>Usar variables disponibles: <code>&#123;nombre&#125;</code>, <code>&#123;monto&#125;</code>, <code>&#123;dias&#125;</code>, <code>&#123;zona&#125;</code>, <code>&#123;id&#125;</code>.</li>
                         <li>Para texto en negritas en WhatsApp, escribir <code>*texto*</code>.</li>
                         <li>Hacer clic en Guardar Plantilla.</li>
                     </ol>
@@ -1455,5 +1416,5 @@
             });
         });
     </script>
-</body>
-</html>
+
+</Layout>

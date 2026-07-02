@@ -1,0 +1,259 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Jah-NOC | Consola Central de Operaciones de Red para ISPs"
+  description="Jah-NOC es la consola central de operaciones de red de JAH Nexus. Panel unificado para redirecciones de tráfico, soporte L1/L2, bitácora de eventos y revisión granular de clientes."
+  currentPage="noc"
+>
+  <style slot="head" is:global>
+    :root {
+        /* Configuración del Énfasis Temático del Módulo (Azul Comando NOC) */
+        --accent: #3B82F6;
+        --accent-dim: rgba(59, 130, 246, 0.12);
+        --accent-glow: rgba(59, 130, 246, 0.25);
+        --hover-border: rgba(59, 130, 246, 0.35);
+        --hover-shadow: 0 20px 60px rgba(59, 130, 246, 0.08);
+    }
+
+    /* Consola de Simulación Operativa de Nodos sin Atributos Inline */
+    .console-bars-container { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    
+    .console-bar {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.3s ease;
+    }
+    .console-bar:hover { border-color: rgba(28,100,242,0.3); background: var(--bg-card-hover); }
+    .console-bar-text { font-size: 0.85rem; color: var(--text-muted); }
+    .console-bar-badge { font-size: 0.7rem; }
+    
+    /* Semántica Estricta de Estados de Telemetría */
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .status-ok { background: #22C55E; }
+    .status-warn { background: #F59E0B; }
+    .status-err { background: #EF4444; }
+    
+    .badge-warn { background: rgba(245,158,11,0.1); color: #F59E0B; }
+    .badge-err { background: rgba(239,68,68,0.1); color: #EF4444; }
+  </style>
+
+  <section class="hero-section">
+      <div class="hero-glow"></div>
+      <div class="container position-relative hero-content-layer">
+          <div class="row justify-content-center text-center">
+              <div class="col-lg-9">
+                  <div class="hero-badge"><i class="ph-fill ph-desktop-tower" aria-hidden="true"></i> Operaciones SYS-01</div>
+                  <h1 class="hero-title"><span class="text-gradient">Control total.</span><br><span class="text-accent">Jah-NOC en el centro del comando.</span></h1>
+                  <p class="hero-subtitle mx-auto">La consola de operaciones de red que unifica todo lo que tu equipo necesita en una sola pantalla. Redirecciones de tráfico, soporte de Nivel 1 y 2, bitácora de eventos y revisión granular de clientes — sin saltar entre herramientas.</p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mt-4">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" rel="noopener noreferrer" class="btn-brand text-decoration-none">Agendar llamada</a>
+                      <a href="#features" class="btn-outline-ghost">Ver Funciones</a>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="stats-bar">
+              <div class="row g-4 align-items-center">
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">1 Panel</div><div class="stat-label">Single pane of glass operativo</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">L1/L2</div><div class="stat-label">Soporte técnico integrado</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">100%</div><div class="stat-label">Trazabilidad de eventos</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">Real-time</div><div class="stat-label">Estado de clientes y nodos</div></div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section id="features" class="features-section">
+      <div class="container">
+          <div class="row mb-5 align-items-center">
+              <div class="col-lg-7">
+                  <span class="section-label">Módulo SYS-01</span>
+                  <h2 class="section-title text-gradient">La consola que tu equipo NOC siempre necesitó</h2>
+                  <p class="section-subtitle">Diseñado en colaboración con operadores de red reales. Cada panel, cada acción, cada vista optimizada para reducir el tiempo de respuesta y eliminar los errores manuales.</p>
+              </div>
+              <div class="col-lg-5 text-center text-lg-end d-none d-lg-block position-relative">
+                  <img src="/images/noc/form-quitar.png" alt="Interfaz NOC" class="img-fluid rounded-4 shadow-lg border img-module-preview">
+              </div>
+          </div>
+          <div class="bento-grid">
+              
+              <div class="feature-card accent-card" style="grid-column: span 2;">
+                  <div class="d-flex align-items-start gap-4 flex-wrap">
+                      <div class="feat-icon"><i class="ph-fill ph-arrows-split" aria-hidden="true"></i></div>
+                      <div class="flex-grow-1">
+                          <span class="tag-pill tag-main mb-2">Tráfico</span>
+                          <h3 class="feat-title mb-2">Panel de Redirecciones de Tráfico</h3>
+                          <p class="feat-desc">Desde Jah-NOC puedes aplicar desvíos de tráfico en segundos: redirige clientes entre nodos de acceso, redistribuye carga entre backbones durante mantenimientos y aplica políticas de QoS por segmento de red. Cada cambio queda registrado en la bitácora con el usuario, timestamp y justificación. Nunca más "¿quién hizo ese cambio?"</p>
+                      </div>
+                  </div>
+                  
+                  <div class="console-bars-container mt-4">
+                      <div class="console-bar">
+                          <div class="status-dot status-ok"></div>
+                          <span class="console-bar-text">Nodo Oriente-A — 847 clientes activos — Carga: 34%</span>
+                          <span class="ms-auto tag-pill tag-main console-bar-badge">ESTABLE</span>
+                      </div>
+                      <div class="console-bar">
+                          <div class="status-dot status-warn"></div>
+                          <span class="console-bar-text">Nodo Centro-B — 1,234 clientes — Carga: 89%</span>
+                          <span class="ms-auto tag-pill badge-warn console-bar-badge">ALTO</span>
+                      </div>
+                      <div class="console-bar">
+                          <div class="status-dot status-err"></div>
+                          <span class="console-bar-text">Nodo Norte-C — Sin señal desde hace 12 min</span>
+                          <span class="ms-auto tag-pill badge-err console-bar-badge">ALERTA</span>
+                      </div>
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-user-circle" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Revisión Granular de Clientes</h3>
+                  <p class="feat-desc">Ficha completa del suscriptor: historial de incidentes, estado de ONT, velocidad en tiempo real, IP asignada, plan contratado y bitácora. Todo en un solo clic desde la consola NOC.</p>
+                  
+                  <div class="mt-auto mb-4 p-3 rounded" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color);">
+                      <div class="d-flex align-items-center mb-3">
+                          <div class="status-dot status-ok me-2" style="box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);"></div>
+                          <span style="font-size: 0.85rem; color: var(--text-main); font-weight: 600;">ONT-ZTE-0912</span>
+                          <span class="ms-auto" style="font-size: 0.75rem; color: var(--text-muted); font-family: monospace;">IP: 10.168.2.254</span>
+                      </div>
+                      <div class="d-flex align-items-center gap-4">
+                          <div class="flex-grow-1">
+                              <div class="d-flex justify-content-between mb-2" style="font-size: 0.75rem; font-weight: 600;">
+                                  <span style="color: var(--text-muted);">Rx (Down)</span>
+                                  <span style="color: #22C55E;">124 Mbps</span>
+                              </div>
+                              <div class="progress" style="height: 4px; background: rgba(255,255,255,0.05);">
+                                  <div class="progress-bar" style="width: 85%; background: #22C55E;"></div>
+                              </div>
+                          </div>
+                          <div class="flex-grow-1">
+                              <div class="d-flex justify-content-between mb-2" style="font-size: 0.75rem; font-weight: 600;">
+                                  <span style="color: var(--text-muted);">Tx (Up)</span>
+                                  <span style="color: var(--accent);">45 Mbps</span>
+                              </div>
+                              <div class="progress" style="height: 4px; background: rgba(255,255,255,0.05);">
+                                  <div class="progress-bar" style="width: 45%; background: var(--accent);"></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <span class="tag-pill tag-main align-self-start">360° del Cliente</span>
+              </div>
+              
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-git-diff" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Aplicación de Desvíos</h3>
+                  <p class="feat-desc">Ejecuta desvíos de tráfico de emergencia con flujos de trabajo guiados: selecciona el segmento, elige el nodo de destino, revisa el impacto estimado y aplica el cambio en tiempo real.</p>
+                  
+                  <div class="mt-auto mb-4 d-flex align-items-center justify-content-between p-3 rounded" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color);">
+                      <div class="text-center">
+                          <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Origen</div>
+                          <div class="tag-pill tag-main" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white;">VLAN 100</div>
+                      </div>
+                      <div class="text-center flex-grow-1 px-3 position-relative">
+                          <div style="height: 2px; background: repeating-linear-gradient(90deg, var(--accent), var(--accent) 4px, transparent 4px, transparent 8px); opacity: 0.5;"></div>
+                          <i class="ph-fill ph-arrow-circle-right position-absolute top-50 start-50 translate-middle" style="color: var(--accent); font-size: 1.5rem; background: var(--bg-card); padding: 0 4px;" aria-hidden="true"></i>
+                      </div>
+                      <div class="text-center">
+                          <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Destino</div>
+                          <div class="tag-pill badge-warn" style="border: 1px solid rgba(245,158,11,0.2);">BGP-WAN-2</div>
+                      </div>
+                  </div>
+
+                  <span class="tag-pill tag-main align-self-start">Desvíos Guiados</span>
+              </div>
+              
+              <div class="feature-card">
+                  <div class="feat-icon"><i class="ph-fill ph-list-checks" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Bitácora de Eventos Auditada</h3>
+                  <p class="feat-desc">Cada acción ejecutada en Jah-NOC queda registrada: configuraciones aplicadas, tickets abiertos, desvíos activados, cambios de estado. Filtrado por usuario, fecha, tipo de evento y nodo afectado. Cumplimiento regulatorio garantizado.</p>
+                  <span class="tag-pill tag-main align-self-start mt-auto">Auditoría Completa</span>
+              </div>
+              
+              <div class="feature-card">
+                  <div class="feat-icon"><i class="ph-fill ph-headset" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Herramientas de Soporte L1</h3>
+                  <p class="feat-desc">Scripts de diagnóstico con un clic: ping, traceroute, diagnóstico ONT, reset de PPPoE, verificación de señal óptica. El agente de soporte resuelve en la primera llamada sin escalar. Tiempo de resolución L1 reducido en un 55%.</p>
+                  <span class="tag-pill tag-main align-self-start mt-auto">L1 Toolkit</span>
+              </div>
+              
+              <div class="feature-card" style="grid-column: span 2;">
+                  <div class="feat-icon"><i class="ph-fill ph-shield-check" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Escalación Inteligente a L2</h3>
+                  <p class="feat-desc">Cuando un caso supera la capacidad L1, Jah-NOC transfiere el ticket al ingeniero de red correcto, adjuntando automáticamente el diagnóstico realizado, historial del nodo y logs relevantes. Cero pérdida de contexto en la escalación.</p>
+                  <span class="tag-pill tag-main align-self-start mt-auto">Escalación L2</span>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="workflow-section">
+      <div class="container">
+          <div class="text-center mb-5">
+              <span class="section-label">Flujo de Operación</span>
+              <h2 class="section-title text-gradient">De la alerta a la resolución en minutos</h2>
+              <p class="section-subtitle mx-auto">Jah-NOC estructura el caos operativo en un protocolo claro y repetible que cualquier operador puede seguir.</p>
+          </div>
+          <div class="row justify-content-center">
+              <div class="col-lg-8">
+                  <div class="d-flex flex-column gap-4">
+                      <div class="workflow-step">
+                          <div class="step-num">01</div>
+                          <div>
+                              <h5>Detección y Clasificación Automática</h5>
+                              <p>Jah-NOC recibe alertas de Zabbix y JAH Sentinel, las clasifica por severidad y las asigna al operador de turno con contexto completo ya incluido.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">02</div>
+                          <div>
+                              <h5>Diagnóstico desde la Consola</h5>
+                              <p>El operador ejecuta las herramientas de diagnóstico integradas sin salir de la interfaz: ping, OLT status, estado de sesiones PPPoE y análisis de interfaz.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">03</div>
+                          <div>
+                              <h5>Acción: Desvío, Remediación o Escalación</h5>
+                              <p>Según el diagnóstico, el operador aplica el desvío de tráfico, ejecuta la solución o escala a L2 con toda la información necesaria empaquetada en el ticket.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">04</div>
+                          <div>
+                              <h5>Cierre y Registro en Bitácora</h5>
+                              <p>El caso se cierra con causa raíz documentada, acciones tomadas y tiempo de resolución registrado. Los datos alimentan los reportes de SLA mensuales automáticamente.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="cta-section">
+      <div class="container">
+          <div class="cta-card" style="background: linear-gradient(135deg, #070F2A 0%, rgba(28,100,242,0.1) 100%);">
+              <div class="cta-glow"></div>
+              <div class="cta-container">
+                  <div class="hero-badge" style="margin-bottom:24px;"><i class="ph-fill ph-desktop-tower" aria-hidden="true"></i> Jah-NOC — Módulo SYS-01</div>
+                  <h2 class="cta-title text-gradient">Unifica las operaciones de tu red hoy.</h2>
+                  <p class="cta-subtitle">Contáctanos para una demostración en vivo de Jah-NOC. Te mostramos cómo tu equipo pasaría a operar desde el día uno.</p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" rel="noopener noreferrer" class="btn-brand text-decoration-none"><i class="ph-bold ph-calendar-check me-2" aria-hidden="true"></i>Agendar llamada</a>
+                      <a href="/" class="btn-outline-ghost"><i class="ph-bold ph-arrow-left me-2" aria-hidden="true"></i>Ver Todo el Ecosistema</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+</Layout>

@@ -1,0 +1,414 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="JahPayControl | Sistema de Cobranza Automatizada para ISPs — JAH Nexus"
+  description="JahPayControl automatiza la gestión de morosos de tu ISP: sincronización nativa con WispHub, notificaciones masivas por WhatsApp, diagnóstico Ping ONT en tiempo real y suspensión/reactivación automática."
+  currentPage="paycontrol"
+>
+  <style slot="head" is:global>
+    :root {
+        /* Configuración del Énfasis Temático de la Marca JahPayControl */
+        --pay-pink: #D43E7A;
+        --pay-orange: #F39337;
+        --pay-gradient: linear-gradient(135deg, var(--pay-pink) 0%, var(--pay-orange) 100%);
+        --pay-gradient-hover: linear-gradient(135deg, #B83267 0%, #D8812F 100%);
+        
+        /* Mapeo del color de énfasis secundario para consistencia bento */
+        --accent: var(--pay-pink);
+        --accent-dim: rgba(212, 62, 122, 0.12);
+        --accent-glow: rgba(212, 62, 122, 0.25);
+        --hover-border: rgba(212, 62, 122, 0.35);
+        --hover-shadow: 0 20px 60px rgba(212, 62, 122, 0.08);
+    }
+
+    .text-pay {
+        background: var(--pay-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .btn-pay {
+        background: var(--pay-gradient);
+        color: white;
+    }
+    .btn-pay:hover {
+        background: var(--pay-gradient-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(212, 62, 122, 0.35);
+        color: white;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--pay-pink);
+        box-shadow: 0 0 0 3px rgba(212, 62, 122, 0.2);
+    }
+
+    .section-label { color: var(--pay-pink); }
+
+    .hero-glow {
+        background: radial-gradient(circle, rgba(212,62,122,0.1) 0%, rgba(243,147,55,0.06) 40%, rgba(11,14,20,0) 70%);
+    }
+    .hero-glow-2 {
+        position: absolute;
+        top: 60%;
+        right: -5%;
+        width: 35vw;
+        height: 35vw;
+        background: radial-gradient(circle, rgba(243,147,55,0.07) 0%, rgba(11,14,20,0) 70%);
+        z-index: 0;
+        pointer-events: none;
+        border-radius: 50%;
+    }
+    .hero-badge {
+        background: linear-gradient(135deg, rgba(212,62,122,0.12), rgba(243,147,55,0.1)) !important;
+        border: 1px solid rgba(212,62,122,0.3) !important;
+        color: var(--pay-orange) !important;
+    }
+
+    .feature-card::before {
+        background: linear-gradient(90deg, transparent, #D43E7A, #F39337, transparent);
+    }
+    .feature-card:hover {
+        border-color: rgba(212, 62, 122, 0.35);
+        box-shadow: 0 20px 60px rgba(212, 62, 122, 0.08);
+    }
+    .feature-card.accent-card {
+        background: linear-gradient(145deg, var(--bg-card) 0%, rgba(212, 62, 122, 0.06) 50%, rgba(243, 147, 55, 0.04) 100%);
+        border-color: rgba(212, 62, 122, 0.25) !important;
+    }
+    .feat-icon {
+        background: rgba(212, 62, 122, 0.12);
+        color: #D43E7A;
+    }
+    .tag-pay { background: linear-gradient(135deg, rgba(212, 62, 122, 0.15), rgba(243, 147, 55, 0.15)); color: #F39337; border: 1px solid rgba(212, 62, 122, 0.2); }
+
+    .moroso-pill {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 18px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+    }
+    .moroso-pill:hover { border-color: rgba(212, 62, 122, 0.3); background: var(--bg-card-hover); }
+    .moroso-title { font-weight: 600; font-size: 0.85rem; }
+    .moroso-meta { font-size: 0.75rem; color: var(--text-muted); }
+    .moroso-amount { font-weight: 800; color: var(--pay-pink); }
+    
+    .icon-warn { color: #F59E0B; }
+    .icon-err { color: #EF4444; }
+    .icon-muted { color: #94A3B8; }
+
+    .wa-bubble {
+        background: #1C2B21;
+        border: 1px solid rgba(37, 211, 102, 0.25);
+        border-radius: 16px 16px 16px 4px;
+        padding: 14px 18px;
+        font-size: 0.85rem;
+        position: relative;
+        max-width: 360px;
+    }
+    .wa-bubble .wa-sender { font-weight: 700; color: #25D366; font-size: 0.78rem; margin-bottom: 6px; }
+    .wa-bubble .wa-time { font-size: 0.7rem; color: var(--text-muted); text-align: right; margin-top: 8px; }
+    .wa-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .wa-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #25D366, #128C7E); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .wa-body { color: rgba(255, 255, 255, 0.85); line-height: 1.5; }
+    .wa-highlight-orange { color: #F39337; }
+    .wa-highlight-green { color: #25D366; }
+
+    .ping-row { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; font-size: 0.82rem; font-family: monospace; }
+    .ping-label { color: var(--text-muted); flex-grow: 1; }
+    .ping-ok { color: #22C55E; }
+    .ping-fail { color: #EF4444; }
+    .ping-ms { color: var(--pay-orange); font-weight: 700; }
+    .ping-status-err { color: #EF4444; font-weight: 700; }
+
+    .workflow-step:hover { border-color: rgba(212, 62, 122, 0.3); }
+    .step-num { background: rgba(212, 62, 122, 0.12); border: 1px solid rgba(212, 62, 122, 0.3); color: #D43E7A; }
+
+    .cta-glow {
+        background: radial-gradient(ellipse, rgba(212,62,122,0.12) 0%, rgba(243,147,55,0.08) 50%, transparent 70%);
+    }
+  </style>
+
+  <section class="hero-section">
+      <div class="hero-glow"></div>
+      <div class="hero-glow-2"></div>
+      <div class="container position-relative hero-content-layer">
+          <div class="row justify-content-center text-center">
+              <div class="col-lg-9">
+                  <div class="hero-badge">
+                      <i class="ph-fill ph-wallet" aria-hidden="true"></i>
+                      Gestión Financiera · FIN-03
+                  </div>
+                  <h1 class="hero-title">
+                      <span class="text-gradient">Los morosos no son el problema.</span><br>
+                      <span class="text-pay">El proceso de cobro lo era.</span>
+                  </h1>
+                  <p class="hero-subtitle mx-auto">
+                      JahPayControl automatiza todo el ciclo de recuperación de cartera: identifica morosos en WispHub, envía notificaciones masivas por WhatsApp, diagnostica el estado de la ONT en tiempo real y coordina las suspensiones sin intervención manual.
+                  </p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mt-4">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" rel="noopener noreferrer" class="btn-pay text-decoration-none">Agendar llamada</a>
+                      <a href="#features" class="btn-outline-ghost">Ver el Sistema</a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="stats-bar">
+              <div class="row g-4 align-items-center">
+                  <div class="col-6 col-md-3 text-center">
+                      <div class="stat-number text-pay">+38%</div>
+                      <div class="stat-label">Recuperación de cartera vencida</div>
+                  </div>
+                  <div class="col-6 col-md-3 text-center">
+                      <div class="stat-number text-pay">-90%</div>
+                      <div class="stat-label">Tiempo en gestión manual de cobros</div>
+                  </div>
+                  <div class="col-6 col-md-3 text-center">
+                      <div class="stat-number text-pay">WispHub</div>
+                      <div class="stat-label">Sincronización nativa certificada</div>
+                  </div>
+                  <div class="col-6 col-md-3 text-center">
+                      <div class="stat-number text-pay">Real-time</div>
+                      <div class="stat-label">Diagnóstico Ping ONT en vivo</div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section id="features" class="features-section">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-7">
+                  <span class="section-label">Módulo FIN-03</span>
+                  <h2 class="section-title text-gradient">La cartera que se cobra sola.</h2>
+                  <p class="section-subtitle">JahPayControl convierte el proceso de gestión de morosos — que normalmente requiere 3 personas y 5 herramientas — en un flujo automatizado que opera en segundo plano mientras tu equipo se enfoca en crecer.</p>
+              </div>
+              <div class="col-lg-5 text-center text-lg-end d-none d-lg-block position-relative">
+                  <img src="/images/paycontrol/figura-1-1.png" alt="PayControl Dashboard" class="img-fluid rounded-4 shadow-lg border img-module-preview">
+              </div>
+          </div>
+
+          <div class="bento-grid">
+              <div class="feature-card accent-card" style="grid-column: span 2;">
+                  <div class="d-flex align-items-start gap-4 flex-wrap">
+                      <div class="feat-icon"><i class="ph-fill ph-plugs-connected" aria-hidden="true"></i></div>
+                      <div class="flex-grow-1">
+                          <span class="tag-pill tag-pay mb-2"><i class="ph-bold ph-check-circle me-1" aria-hidden="true"></i> Integración Certificada</span>
+                          <h3 class="feat-title mb-2">Sincronización Nativa con WispHub</h3>
+                          <p class="feat-desc">JahPayControl se conecta directamente a la API de WispHub y mantiene sincronización continua: detecta automáticamente qué suscriptores han vencido su factura, cuántos días llevan de retraso y cuál es su saldo pendiente. Segmenta la cartera por antigüedad (1-7 días, 8-15 días, +15 días) y crea campañas de notificación diferenciadas por tramo. Sin importaciones manuales. Sin hojas de cálculo. Siempre actualizado.</p>
+                      </div>
+                  </div>
+                  <div class="d-flex flex-column gap-2 mt-3">
+                      <div class="moroso-pill">
+                          <div class="d-flex align-items-center gap-3">
+                              <i class="ph-bold ph-warning-circle icon-warn" aria-hidden="true"></i>
+                              <div>
+                                  <div class="moroso-title">García López, Roberto — Plan 50Mbps</div>
+                                  <div class="moroso-meta">Vencimiento: hace 8 días · ONT: Activa</div>
+                              </div>
+                          </div>
+                          <div class="moroso-amount">$349 MXN</div>
+                      </div>
+                      <div class="moroso-pill">
+                          <div class="d-flex align-items-center gap-3">
+                              <i class="ph-bold ph-x-circle icon-err" aria-hidden="true"></i>
+                              <div>
+                                  <div class="moroso-title">Martínez Ruiz, Ana — Plan 100Mbps</div>
+                                  <div class="moroso-meta">Vencimiento: hace 22 días · ONT: Suspendida</div>
+                              </div>
+                          </div>
+                          <div class="moroso-amount">$698 MXN</div>
+                      </div>
+                      <div class="moroso-pill">
+                          <div class="d-flex align-items-center gap-3">
+                              <i class="ph-bold ph-clock icon-muted" aria-hidden="true"></i>
+                              <div>
+                                  <div class="moroso-title">Rodríguez Soto, Luis — Plan 30Mbps</div>
+                                  <div class="moroso-meta">Vencimiento: hace 3 días · ONT: Activa</div>
+                              </div>
+                          </div>
+                          <div class="moroso-amount">$249 MXN</div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-whatsapp-logo" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Notificaciones Masivas por WhatsApp</h3>
+                  <p class="feat-desc">Envía campañas de cobro personalizadas a toda tu cartera morosa con un solo clic. Los mensajes incluyen nombre del cliente, monto adeudado, fecha de vencimiento y enlace de pago. Las respuestas de los clientes se registran automáticamente en el sistema. Tasas de apertura de WhatsApp vs. SMS: 98% vs. 20%. Tus clientes leen el mensaje.</p>
+                  <div class="wa-bubble mt-auto align-self-center">
+                      <div class="wa-header">
+                          <div class="wa-avatar">📡</div>
+                          <div>
+                              <div class="wa-sender">JAH WiFi — Cobranza</div>
+                              <div class="moroso-meta">+52 449 313 4110</div>
+                          </div>
+                      </div>
+                      <div class="wa-body">Hola <strong>Roberto</strong> 👋, tu servicio de internet tiene un saldo pendiente de <strong class="wa-highlight-orange">$349 MXN</strong> con 8 días de retraso. Paga hoy para evitar la suspensión:<br><span class="wa-highlight-green">→ pagar.jahwifi.mx/roberto-g</span></div>
+                      <div class="wa-time">12:34 PM ✓✓</div>
+                  </div>
+                  <span class="tag-pill tag-pay mt-4 align-self-start">Campañas Automatizadas</span>
+              </div>
+
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-broadcast" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Diagnóstico Ping ONT en Tiempo Real</h3>
+                  <p class="feat-desc">Antes de llamar a un cliente o suspender el servicio, JahPayControl verifica el estado real de su ONT. Sabe si está en línea, si responde al ping, cuál es su latencia y si el equipo tiene señal óptica. Toma decisiones basadas en datos, no en suposiciones.</p>
+                  <div class="d-flex flex-column gap-2 mt-auto">
+                      <div class="ping-row"><i class="ph-bold ph-check-circle ping-ok" aria-hidden="true"></i><span class="ping-label">192.168.1.101 — García, R.</span><span class="ping-ms">4ms</span></div>
+                      <div class="ping-row"><i class="ph-bold ph-x-circle ping-fail" aria-hidden="true"></i><span class="ping-label">192.168.1.87 — Martínez, A.</span><span class="ping-status-err">Sin respuesta</span></div>
+                      <div class="ping-row"><i class="ph-bold ph-check-circle ping-ok" aria-hidden="true"></i><span class="ping-label">192.168.1.134 — Rodríguez, L.</span><span class="ping-ms">8ms</span></div>
+                  </div>
+                  <span class="tag-pill tag-pay mt-4 align-self-start">Estado en Vivo</span>
+              </div>
+
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-lock-simple" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Suspensión y Reactivación Automática</h3>
+                  <p class="feat-desc">Define reglas de suspensión por tramo de mora: a los 15 días sin pago, el sistema suspende el servicio en WispHub automáticamente. Cuando el cliente paga, el servicio se reactiva al instante.</p>
+                  
+                  <div class="mt-auto mb-4 p-3 rounded" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color);">
+                      <div class="d-flex align-items-center justify-content-between mb-3">
+                          <div>
+                              <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">Servicio Internet 100M</div>
+                              <div style="font-size: 0.75rem; color: var(--text-muted);">Mora: 16 días</div>
+                          </div>
+                          <div class="tag-pill badge-err px-3 py-1" style="font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                              <div style="width: 8px; height: 8px; border-radius: 50%; background: #EF4444; box-shadow: 0 0 8px #EF4444;"></div>
+                              SUSPENDIDO
+                          </div>
+                      </div>
+                      <div style="height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 12px;"></div>
+                      <div class="d-flex align-items-center justify-content-between" style="opacity: 0.5;">
+                          <div>
+                              <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">Servicio Internet 50M</div>
+                              <div style="font-size: 0.75rem; color: var(--text-muted);">Pago detectado hace 2m</div>
+                          </div>
+                          <div class="tag-pill tag-main px-3 py-1" style="font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                              <div style="width: 8px; height: 8px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 8px #22C55E;"></div>
+                              ACTIVO
+                          </div>
+                      </div>
+                  </div>
+
+                  <span class="tag-pill tag-pay align-self-start">Ciclo Automatizado</span>
+              </div>
+
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-chart-pie-slice" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Reportes de Cartera y Cobranza</h3>
+                  <p class="feat-desc">Dashboard de cartera vencida con antigüedad, tasa de recuperación y proyección de flujo de caja. Los gerentes obtienen visibilidad financiera inmediata.</p>
+                  <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                      <img src="/images/paycontrol/figura-3-2.png" alt="Reporte Cartera" class="img-fluid rounded-3 border shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                  </div>
+              </div>
+
+              <div class="feature-card d-flex flex-column" style="grid-column: span 2;">
+                  <div class="feat-icon"><i class="ph-fill ph-megaphone-simple" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Campañas Multi-Canal Segmentadas</h3>
+                  <p class="feat-desc">Diseña flujos de comunicación por tramo de mora. Canales disponibles: WhatsApp, SMS y correo. Cada mensaje es personalizado con los datos de WispHub.</p>
+                  <div class="mt-auto mb-4 d-flex justify-content-between align-items-center px-4">
+                      <div class="text-center">
+                          <div style="background: rgba(34,197,94,0.1); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px auto; border: 1px solid rgba(34,197,94,0.3);">
+                              <i class="ph-fill ph-whatsapp-logo" style="color: #22C55E; font-size: 1.5rem;" aria-hidden="true"></i>
+                          </div>
+                          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600;">WHATSAPP</div>
+                      </div>
+                      <div style="width: 40px; height: 2px; background: rgba(255,255,255,0.1);"></div>
+                      <div class="text-center">
+                          <div style="background: rgba(59,130,246,0.1); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px auto; border: 1px solid rgba(59,130,246,0.3);">
+                              <i class="ph-fill ph-chat-text" style="color: #3B82F6; font-size: 1.5rem;" aria-hidden="true"></i>
+                          </div>
+                          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600;">SMS</div>
+                      </div>
+                      <div style="width: 40px; height: 2px; background: rgba(255,255,255,0.1);"></div>
+                      <div class="text-center">
+                          <div style="background: rgba(239,68,68,0.1); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px auto; border: 1px solid rgba(239,68,68,0.3);">
+                              <i class="ph-fill ph-envelope" style="color: #EF4444; font-size: 1.5rem;" aria-hidden="true"></i>
+                          </div>
+                          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600;">EMAIL</div>
+                      </div>
+                  </div>
+                  <span class="tag-pill tag-pay align-self-start mt-auto">Omnicanalidad</span>
+              </div>
+
+          </div>
+      </div>
+  </section>
+
+  <section class="workflow-section">
+      <div class="container">
+          <div class="text-center mb-5">
+              <span class="section-label">Ciclo de Cobranza</span>
+              <h2 class="section-title text-gradient">De la factura vencida al pago recibido</h2>
+              <p class="section-subtitle mx-auto">Un proceso automatizado de recuperación de cartera que opera los 7 días de la semana, las 24 horas del día, sin necesidad de un gestor de cobros dedicado.</p>
+          </div>
+          <div class="row justify-content-center">
+              <div class="col-lg-8">
+                  <div class="d-flex flex-column gap-4">
+                      <div class="workflow-step">
+                          <div class="step-num">01</div>
+                          <div>
+                              <h5>Detección Automática de Vencimientos</h5>
+                              <p>JahPayControl consulta WispHub cada hora y detecta automáticamente qué facturas han vencido, segmentando la cartera por tramo de antigüedad. Cada cliente entra al flujo de cobranza correspondiente a su situación sin que nadie tenga que identificarlo manualmente.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">02</div>
+                          <div>
+                              <h5>Campaña de Notificación Escalonada</h5>
+                              <p>El sistema envía mensajes de WhatsApp personalizados según el día de mora del cliente. El tono y la urgencia escalan progresivamente: de un recordatorio amable al día 3 hasta una notificación de suspensión inminente al día 14. Cada mensaje incluye el monto exacto y un enlace de pago directo.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">03</div>
+                          <div>
+                              <h5>Verificación de Estado ONT en Tiempo Real</h5>
+                              <p>Antes de cualquier acción (llamada, suspensión, visita técnica), JahPayControl verifica el estado actual de la ONT del cliente. Si el equipo no responde, el equipo de soporte sabe que hay un problema técnico adicional al de la mora, y puede coordinar una solución integral.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">04</div>
+                          <div>
+                              <h5>Suspensión Programada y Reactivación Inmediata</h5>
+                              <p>Al alcanzar el umbral de mora configurado, el sistema ejecuta la suspensión en WispHub sin intervención manual. Cuando el pago llega, la reactivación es instantánea y automática. El cliente recibe una confirmación de reactivación por WhatsApp. Ciclo completo cerrado.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="cta-section" id="contacto">
+      <div class="container">
+          <div class="cta-card" style="background: linear-gradient(135deg, #140709 0%, rgba(212, 62, 122, 0.1) 50%, rgba(243, 147, 55, 0.06) 100%);">
+              <div class="cta-glow"></div>
+              <div class="cta-container">
+                  <div class="hero-badge" style="margin-bottom:24px;">
+                      <i class="ph-fill ph-wallet" aria-hidden="true"></i> JahPayControl — Módulo FIN-03
+                  </div>
+                  <h2 class="cta-title text-gradient">Tu cartera vencida es dinero esperando ser cobrado.</h2>
+                  <p class="cta-subtitle">Contáctanos para una demostración. Te mostramos cuánto dinero en cartera vencida puedes recuperar con JahPayControl en los primeros 30 días de operación.</p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" rel="noopener noreferrer" class="btn-pay text-decoration-none">
+                          <i class="ph-bold ph-calendar-check me-2" aria-hidden="true"></i>Agendar llamada
+                      </a>
+                      <a href="/" class="btn-outline-ghost">
+                          <i class="ph-bold ph-arrow-left me-2" aria-hidden="true"></i>Ver Todo el Ecosistema
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+</Layout>

@@ -1,0 +1,199 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Jah Central | Control de Inventario y Logística de Campo para ISPs"
+  description="Jah Central es el módulo de gestión de hardware e inventario del ecosistema JAH Nexus. Control de CPEs Huawei, TP-Link y MikroTik."
+  currentPage="central"
+>
+  <style slot="head" is:global>
+    :root {
+        /* Configuración del Color de Énfasis de Módulo (Esmeralda Logístico) */
+        --accent: #10B981;
+        --accent-dim: rgba(16, 185, 129, 0.12);
+        --accent-glow: rgba(16, 185, 129, 0.25);
+        --hover-border: rgba(16, 185, 129, 0.35);
+        --hover-shadow: 0 20px 60px rgba(16, 185, 129, 0.08);
+    }
+
+    /* Tokens de Marcas de CPE de Campo */
+    .cpe-badge { padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; font-family: monospace; display: inline-block; }
+    .cpe-huawei { background: rgba(255,0,0,0.08); color: #FC8181; }
+    .cpe-tplink { background: rgba(22,163,74,0.1); color: #4ADE80; }
+    .cpe-mikrotik { background: rgba(59,130,246,0.1); color: #93C5FD; }
+  </style>
+
+  <section class="hero-section">
+      <div class="hero-glow"></div>
+      <div class="container position-relative hero-content-layer">
+          <div class="row justify-content-center text-center">
+              <div class="col-lg-9">
+                  <div class="hero-badge"><i class="ph-fill ph-package" aria-hidden="true"></i> Inventario INV-02</div>
+                  <h1 class="hero-title"><span class="text-gradient">Cada equipo, cada técnico,</span><br><span class="text-accent">cada activo bajo control.</span></h1>
+                  <p class="hero-subtitle mx-auto">Jah Central es el módulo de control de hardware y logística de campo que elimina las fugas de inventario, las pérdidas de CPEs y el caos de los almacenes. Sabe exactamente qué equipo tiene cada técnico, en qué cliente está instalado y qué hay en bodega.</p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mt-4">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" rel="noopener noreferrer" class="btn-brand text-decoration-none">Agendar llamada</a>
+                      <a href="#features" class="btn-outline-ghost">Ver el Módulo</a>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="stats-bar">
+              <div class="row g-4 align-items-center">
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">-85%</div><div class="stat-label">Reducción en fugas de hardware</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">100%</div><div class="stat-label">Trazabilidad de CPEs instalados</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">3 Marcas</div><div class="stat-label">Huawei · TP-Link · MikroTik</div></div>
+                  <div class="col-6 col-md-3 text-center"><div class="stat-number">Tiempo Real</div><div class="stat-label">Stock actualizado al instante</div></div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section id="features" class="features-section">
+      <div class="container">
+          <div class="row mb-5">
+              <div class="col-lg-7">
+                  <span class="section-label">Módulo INV-02</span>
+                  <h2 class="section-title text-gradient">El almacén invisible que estaba costándote dinero</h2>
+                  <p class="section-subtitle">Cada CPE sin número de serie registrado es un activo que puede desaparecer. Jah Central convierte tu inventario en un activo estratégico gestionado con precisión milimétrica.</p>
+              </div>
+              <div class="col-lg-5 text-center text-lg-end d-none d-lg-block position-relative">
+                  <img src="/images/central/dashboard.png" alt="Dashboard Central" class="img-fluid rounded-4 shadow-lg border img-module-preview">
+              </div>
+          </div>
+          <div class="bento-grid">
+              <div class="feature-card accent-card" style="grid-column: span 2;">
+                  <div class="d-flex align-items-start gap-4 flex-wrap">
+                      <div class="feat-icon"><i class="ph-fill ph-cpu" aria-hidden="true"></i></div>
+                      <div class="flex-grow-1">
+                          <span class="tag-pill tag-main mb-2">Control de CPEs</span>
+                          <h3 class="feat-title mb-2">Gestión Centralizada de Equipos por Fabricante</h3>
+                          <p class="feat-desc">Registra y controla cada ONT, router CPE y radio de acceso por número de serie, modelo, MAC address y estado operativo. Jah Central soporta de forma nativa las tres marcas dominantes del mercado ISP latinoamericano, con plantillas preconfiguradas para la activación rápida y ficha técnica integrada por modelo de equipo.</p>
+                      </div>
+                  </div>
+                  <div class="d-flex gap-3 flex-wrap mt-2">
+                      <span class="cpe-badge cpe-huawei">HUAWEI · EG8145V5 · HG8347R</span>
+                      <span class="cpe-badge cpe-tplink">TP-LINK · TL-WA850RE · Archer</span>
+                      <span class="cpe-badge cpe-mikrotik">MIKROTIK · hAP AC3 · RB4011</span>
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-user-gear" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Asignación de Equipos a Técnicos</h3>
+                  <p class="feat-desc">Cada técnico de campo tiene su propia cartera digital de equipos. Al salir del almacén, escanea el CPE y queda registrado bajo su responsabilidad. Al instalarlo, el sistema transfiere la responsabilidad al cliente. Sin papel, sin excusas.</p>
+                  <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                      <img src="/images/central/asignacion.png" alt="Asignación a técnicos" class="img-fluid rounded-3 border shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-chart-pie-slice" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Auditoría de Consumos</h3>
+                  <p class="feat-desc">Reportes automáticos de entradas y salidas de almacén, depreciación de activos, costo por instalación y eficiencia por técnico. Los gerentes obtienen una foto exacta del estado del inventario en cualquier momento sin levantar el teléfono.</p>
+                  <div class="mt-auto pt-3 pb-2 text-center overflow-hidden">
+                      <img src="/images/central/reportes.png" alt="Auditoría y reportes" class="img-fluid rounded-3 border shadow-lg mx-auto" style="border-color: rgba(255,255,255,0.1) !important; max-height: 200px; object-fit: cover; object-position: center top; max-width: 95%;">
+                  </div>
+              </div>
+              
+              <div class="feature-card d-flex flex-column" style="grid-column: span 1;">
+                  <div class="feat-icon"><i class="ph-fill ph-shield-warning" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Prevención de Fugas de Hardware</h3>
+                  <p class="feat-desc">Alertas automáticas cuando un equipo no ha sido instalado en el plazo esperado tras ser asignado, o cuando un CPE sin registro de devolución aparece como disponible en almacén.</p>
+                  
+                  <div class="mt-auto mb-4 p-3 rounded" style="background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.3);">
+                      <div class="d-flex align-items-center mb-2">
+                          <i class="ph-fill ph-warning-circle me-2" style="color: #EF4444; font-size: 1.2rem;" aria-hidden="true"></i>
+                          <span style="font-size: 0.85rem; color: #EF4444; font-weight: 600;">ALERTA DE INCONSISTENCIA</span>
+                      </div>
+                      <div style="font-size: 0.8rem; color: var(--text-main); margin-bottom: 8px;">
+                          <strong>ONU ZTE F670L (SN: ZTEG81AB2)</strong> asignada al técnico <em>M. Ruiz</em> hace 72 horas sin registro de instalación ni devolución.
+                      </div>
+                      <div class="d-flex align-items-center gap-2">
+                          <span class="tag-pill badge-err" style="font-size: 0.7rem; padding: 2px 8px;">Acción requerida</span>
+                          <span class="ms-auto" style="font-size: 0.7rem; color: var(--text-muted); font-family: monospace;">CRIT-INV-001</span>
+                      </div>
+                  </div>
+
+                  <span class="tag-pill tag-main align-self-start">Anti-Fuga Activo</span>
+              </div>
+              
+              <div class="feature-card">
+                  <div class="feat-icon"><i class="ph-fill ph-warehouse" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Gestión de Almacén Múltiple</h3>
+                  <p class="feat-desc">Para ISPs con múltiples sucursales o zonas de operación, Jah Central admite almacenes virtuales independientes con sus propios stocks, responsables y flujos de transferencia entre bodegas. La visibilidad es global, el control es local.</p>
+                  <span class="tag-pill tag-main align-self-start mt-auto">Multi-Almacén</span>
+              </div>
+              
+              <div class="feature-card" style="grid-column: span 2;">
+                  <div class="feat-icon"><i class="ph-fill ph-qr-code" aria-hidden="true"></i></div>
+                  <h3 class="feat-title">Etiquetado QR y Escaneo Móvil</h3>
+                  <p class="feat-desc">Genera etiquetas QR únicas para cada activo. Los técnicos escanean con el celular para registrar entradas, salidas e instalaciones desde cualquier lugar. El almacén físico y el sistema siempre están sincronizados.</p>
+                  <span class="tag-pill tag-main align-self-start mt-auto">QR Mobile</span>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="workflow-section">
+      <div class="container">
+          <div class="text-center mb-5">
+              <span class="section-label">Ciclo Logístico</span>
+              <h2 class="section-title text-gradient">Del almacén al cliente, sin fisuras</h2>
+              <p class="section-subtitle mx-auto">Un flujo de trabajo que elimina la pérdida de información en cada transición del equipamiento.</p>
+          </div>
+          <div class="row justify-content-center">
+              <div class="col-lg-8">
+                  <div class="d-flex flex-column gap-4">
+                      <div class="workflow-step">
+                          <div class="step-num">01</div>
+                          <div>
+                              <h5>Recepción y Registro en Almacén</h5>
+                              <p>Al recibir nueva mercancía, el responsable de almacén registra cada equipo con número de serie, modelo y estado. Se genera la etiqueta QR automáticamente.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">02</div>
+                          <div>
+                              <h5>Asignación al Técnico de Campo</h5>
+                              <p>El técnico escanea los CPEs que lleva a su ruta del día. El sistema registra la salida del almacén y asigna la responsabilidad al técnico en tiempo real.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">03</div>
+                          <div>
+                              <h5>Instalación y Transferencia al Cliente</h5>
+                              <p>Al instalar el equipo, el técnico registra la instalación desde la app móvil. El CPE queda vinculado al expediente del cliente con fecha, técnico responsable y firma de recepción.</p>
+                          </div>
+                      </div>
+                      <div class="workflow-step">
+                          <div class="step-num">04</div>
+                          <div>
+                              <h5>Devolución, Reacondicionamiento y Re-stock</h5>
+                              <p>Al dar de baja un cliente, el CPE se registra como devuelto, se evalúa su estado y se reincorporpora al inventario o se da de baja definitiva. Ciclo completo sin pérdidas.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="cta-section">
+      <div class="container">
+          <div class="cta-card" style="background: linear-gradient(135deg, #060F0B 0%, rgba(16,185,129,0.08) 100%);">
+              <div class="cta-glow"></div>
+              <div class="position-relative cta-container" style="z-index: 1;">
+                  <div class="hero-badge" style="margin-bottom: 24px;"><i class="ph-fill ph-package" aria-hidden="true"></i> Jah Central — Módulo INV-02</div>
+                  <h2 class="cta-title text-gradient">Cierra la brecha en tu inventario.</h2>
+                  <p class="cta-subtitle">Solicita una demostración y te mostramos cuánto hardware estás perdiendo actualmente y cómo Jah Central lo detiene desde el primer día.</p>
+                  <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                      <a href="https://wa.me/524493134110?text=Hola,%20me%20interesa%20agendar%20una%20llamada%20estrat%C3%A9gica%20para%20conocer%20m%C3%A1s%20sobre%20JAH%20Nexus." target="_blank" rel="noopener noreferrer" class="btn-brand text-decoration-none"><i class="ph-bold ph-calendar-check me-2" aria-hidden="true"></i>Agendar llamada</a>
+                      <a href="/" class="btn-outline-ghost"><i class="ph-bold ph-arrow-left me-2" aria-hidden="true"></i>Ver Todo el Ecosistema</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+</Layout>
